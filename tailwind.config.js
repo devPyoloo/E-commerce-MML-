@@ -19,7 +19,11 @@ export default {
         dimpink: "#C39EA0",
         satpink: "#FA255E",
         offpink: "#F4E7E8"
-      }
+      },
+      fontFamily: {
+        'russo': ['Russo One', 'sans'],
+        'lora': ['Lora', 'serif']
+      },
     },
   },
   plugins: [],
