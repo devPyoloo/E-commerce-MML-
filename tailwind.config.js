@@ -18,7 +18,8 @@ export default {
         mutedpink: "#F8E5E5",
         dimpink: "#C39EA0",
         satpink: "#FA255E",
-        offpink: "#F4E7E8"
+        offpink: "#F4E7E8",
+        lightpurple: "#F4E7F4"
       },
       fontFamily: {
         'russo': ['Russo One', 'sans'],
