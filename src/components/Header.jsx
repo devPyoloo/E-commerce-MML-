@@ -39,7 +39,7 @@ export default function Header() {
     <nav
       className={`${
         onScroll.showNav ? "opacity-100" : "opacity-0"
-      } mt-7 w-full flex items-center justify-center space-x-40 text-xl px-5 pb-8 font-semibold text-gray-800 z-10`}
+      } mt-7 w-full flex items-center justify-center space-x-40 font-lora text-xl px-5 pb-8 font-medium text-gray-800 z-10`}
     >
       <NavLink to={"/"}>Home</NavLink>
       <NavLink to={"about"}>About us</NavLink>

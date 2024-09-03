@@ -1,13 +1,13 @@
 import axios from "axios";
-import { useState } from "react";
-import { useEffect } from "react";
-import { IoIosPricetags } from "react-icons/io";
+import { useState, useEffect } from "react";
 
 export default function ProductsList() {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [category, setCategory] = useState("All");
   const [error, setError] = useState("");
+  const [isFetching, setIsFetching] = useState(true);
+  const [imageLoaded, setImageLoaded] = useState({}); 
 
   const API_URL =
     "https://my-mockup-product-data.s3.ap-southeast-2.amazonaws.com/products.json";
@@ -20,21 +20,27 @@ export default function ProductsList() {
         setFilteredProducts(response.data.products);
       } catch (error) {
         setError(error.message);
+      } finally {
+        setIsFetching(false);
       }
     };
     fetchData();
   }, []);
 
-  const fulterByCategory = (cat) => {
-    setCategory(cat);
-    if (category === "All") {
+  const filterByCategory = (selectedCategory) => {
+    setCategory(selectedCategory);
+    if (selectedCategory === "All") {
       setFilteredProducts(products);
     } else {
       const filtered = products.filter(
-        (product) => product.category === category
+        (product) => product.category === selectedCategory
       );
       setFilteredProducts(filtered);
     }
+  };
+
+  const handleImageLoad = (id) => {
+    setImageLoaded((prev) => ({ ...prev, [id]: true }));
   };
 
   const categories = [
@@ -48,46 +54,50 @@ export default function ProductsList() {
   ];
 
   return (
-    <div className="mx-20">
+    <div className="m-20 font-lora">
       {error && <p>Error: {error}</p>}
-      <div className="category-button flex justify-between mb-20">
+      <div className="category-button flex justify-between mb-20 border-b-2 border-b-gray-200">
         {categories.map((cat) => (
-          <div key={cat}>
+          <div className="mb-5" key={cat}>
             <button
-              className={`py-2 px-8 rounded-md ${
+              className={`py-2 px-8 rounded-sm font-lora text-gray-600 ${
                 cat === category
-                  ? "bg-gray-200"
+                  ? "border-b-4 border-b-gray-500 "
                   : "bg-gray-100 hover:bg-gray-200"
               }`}
-              onClick={() => fulterByCategory(cat)}
+              onClick={() => filterByCategory(cat)}
             >
               {cat}
             </button>
           </div>
         ))}
       </div>
-      <div className="grid grid-cols-4 gap-5 mx-20">
+      {isFetching && <p>Loading...</p>}
+      <div className="grid grid-cols-3 gap-y-32 mx-20 cursor-pointer">
         {filteredProducts.map((product) => (
           <figure className="product-card" key={product.id}>
-            <img
-              className="w-14 drop-shadow-2xl hover:scale-110 transition-transform duration-200 ease-in-out"
-              src={product.image}
-              alt={product.name}
-            />
+            <div className="bg-mutedgray flex justify-center items-center w-72 h-72 overflow-hidden">
+              {!imageLoaded[product.id] && (
+                <div className="w-28 h-28 bg-gray-200 animate-pulse"></div>
+              )}
+              <img
+                className={`w-28 object-center drop-shadow-lg hover:scale-125 transition-transform duration-300 ease-out ${
+                  imageLoaded[product.id] ? "block" : "hidden"
+                }`}
+                src={product.image}
+                alt={product.name}
+                onLoad={() => handleImageLoad(product.id)}
+              />
+            </div>
 
-            <div
-              className=" relative flex flex-col justify-center items-center p-3 rounded-2xl gap-3"
-              
-            >
-              <span className="absolute right-0 top-0 font-bold">
-                {" "}
-                Stock left: {product.stock}
-              </span>
-
-              <label>{product.name}</label>
-              <span className="flex justify-between items-center">
-                <IoIosPricetags /> ${product.price}
-              </span>
+            <div className="relative flex flex-col items-start gap-y-1">
+              <label className="font-semibold truncate w-full">
+                {product.name}
+              </label>
+              <label className="text-gray-700">Stock left: {product.stock}</label>
+              <label className="flex justify-between items-center">
+                $ {product.price}
+              </label>
             </div>
           </figure>
         ))}

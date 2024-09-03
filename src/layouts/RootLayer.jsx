@@ -9,7 +9,7 @@ export default function RootLayer() {
   return (
     <>
       <Header />
-      <main className="mt-36">
+      <main className="mt-40">
         <Outlet />
       </main>
       <Footer />
