@@ -19,7 +19,13 @@ export default {
         dimpink: "#C39EA0",
         satpink: "#FA255E",
         offpink: "#F4E7E8",
-        lightpurple: "#F4E7F4"
+        lightpurple: "#F4E7F4",
+        offwhite:'#FAF9F6',
+        eggshell: '#FFF9E3',
+        aliceblue: '#F0F8FF',
+        pearl: '#FBFCF8',
+        coconut: '#FFF1E6',
+        parchment: '#FBF5DF',
       },
       fontFamily: {
         'russo': ['Russo One', 'sans'],

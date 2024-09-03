@@ -1,6 +1,5 @@
 
-import About from "./About";
-import Footer from "./Footer";
+import About from "../pages/About";
 import HeroSection from "./HeroSection";
 import Products from "./Products";
 
@@ -10,7 +9,7 @@ export default function Home() {
       <HeroSection />
       <About />
       <Products />
-      <Footer />
+
     </>
   );
 }

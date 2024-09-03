@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function HeroSection() {
   return (
     <>
@@ -13,10 +15,13 @@ export default function HeroSection() {
             <p className="text-2xl font-light text-justify mr-20 mb-10 leading-10">
               Discover curated cosmetics, skincare, and wellness products to
               enhance your glow. Explore and find your new essentials.
-            </p>
+            </p> 
+            <Link to={'products'}>
             <button className="bg-black px-8 py-4 text-xl text-white rounded-full font-semibold hover:bg-white hover:text-black transition duration-500 ease-in-out">
               Shop Now
             </button>
+            </Link>
+           
           </section>
 
           <img
