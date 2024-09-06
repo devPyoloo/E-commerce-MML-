@@ -1,0 +1,279 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "CeraVe Hydrating Cleanser",
+      "price": 15.99,
+      "category": "Skincare",
+      "description": "A gentle cleanser that hydrates and cleanses the skin.",
+      "image": "/public/assets/CeraVe.png",
+      "stock": 25
+    },
+    {
+      "id": 2,
+      "name": "Thayers Witch Hazel Toner",
+      "price": 10.99,
+      "category": "Skincare",
+      "description": "A soothing toner with witch hazel and aloe vera.",
+      "image": "/public/assets/Thayers.png",
+      "stock": 30
+    },
+    {
+      "id": 3,
+      "name": "Neutrogena Hydro Boost",
+      "price": 18.99,
+      "category": "Skincare",
+      "description": "A hydrating gel that plumps and smooths the skin.",
+      "image": "/public/assets/Neutrogena.png",
+      "stock": 18
+    },
+    {
+      "id": 4,
+      "name": "The Ordinary Hyaluronic Acid 2% + B5",
+      "price": 7.50,
+      "category": "Skincare",
+      "description": "A hydrating serum that helps retain skin moisture.",
+      "image": "/public/assets/The_Ordinary.png",
+      "stock": 22
+    },
+    {
+      "id": 5,
+      "name": "La Roche-Posay Anthelios",
+      "price": 29.99,
+      "category": "Skincare",
+      "description": "A high SPF sunscreen with broad-spectrum protection.",
+      "image": "/public/assets/La_Roche.png",
+      "stock": 15
+    },
+
+    {
+      "id": 6,
+      "name": "Fenty Beauty Pro Filt'r Foundation",
+      "price": 35.00,
+      "category": "Makeup",
+      "description": "A long-wear foundation that provides buildable coverage.",
+      "image": "/public/assets/Fenty.png",
+      "stock": 30
+    },
+    {
+      "id": 7,
+      "name": "Maybelline Fit Me Concealer",
+      "price": 6.99,
+      "category": "Makeup",
+      "description": "A concealer that brightens and conceals imperfections.",
+      "image": "/public/assets/Maybelline.png",
+      "stock": 40
+    },
+    {
+      "id": 8,
+      "name": "Too Faced Better Than Sex Mascara",
+      "price": 28.00,
+      "category": "Makeup",
+      "description": "A volumizing mascara for dramatic lashes.",
+      "image": "/public/assets/Too.png",
+      "stock": 25
+    },
+    {
+      "id": 9,
+      "name": "Anastasia Beverly Hills Brow Wiz",
+      "price": 23.00,
+      "category": "Makeup",
+      "description": "A brow pencil that provides natural-looking definition.",
+      "image": "/public/assets/Anastasia.png",
+      "stock": 25
+    },
+    {
+      "id": 10,
+      "name": "NARS Radiant Creamy Concealer",
+      "price": 30.00,
+      "category": "Makeup",
+      "description": "A creamy concealer that brightens and covers imperfections.",
+      "image": "/public/assets/NARS.png",
+      "stock": 20
+    },
+
+    {
+      "id": 11,
+      "name": "Olaplex No. 3 Hair Perfector",
+      "price": 28.00,
+      "category": "Haircare",
+      "description": "A treatment that strengthens and repairs damaged hair.",
+      "image": "/public/assets/Olaplex.png",
+      "stock": 15
+    },
+    {
+      "id": 12,
+      "name": "Moroccanoil Treatment",
+      "price": 44.00,
+      "category": "Haircare",
+      "description": "An oil treatment that nourishes and adds shine.",
+      "image": "/public/assets/Moroccanoil.png",
+      "stock": 20
+    },
+    {
+      "id": 13,
+      "name": "Redken Extreme Shampoo",
+      "price": 21.00,
+      "category": "Haircare",
+      "description": "A shampoo that strengthens and fortifies damaged hair.",
+      "image": "/public/assets/Redken.png",
+      "stock": 12
+    },
+    {
+      "id": 14,
+      "name": "Living Proof Perfect Hair Day Dry Shampoo",
+      "price": 30.00,
+      "category": "Haircare",
+      "description": "A dry shampoo that refreshes and volumizes hair.",
+      "image": "/public/assets/Living.png",
+      "stock": 18
+    },
+    {
+      "id": 15,
+      "name": "Paul Mitchell Tea Tree Special Conditioner",
+      "price": 22.00,
+      "category": "Haircare",
+      "description": "A conditioner that invigorates and moisturizes hair.",
+      "image": "/public/assets/Paul.png",
+      "stock": 25
+    },
+
+    {
+      "id": 16,
+      "name": "Aveeno Daily Moisturizing Body Lotion",
+      "price": 10.99,
+      "category": "Body Care",
+      "description": "A daily lotion that provides long-lasting moisture.",
+      "image": "/public/assets/Aveeno.png",
+      "stock": 40
+    },
+    {
+      "id": 17,
+      "name": "Neutrogena Body Oil",
+      "price": 11.99,
+      "category": "Body Care",
+      "description": "A body oil that deeply moisturizes and smooths skin.",
+      "image": "/public/assets/Neutrogena.png",
+      "stock": 22
+    },
+    {
+      "id": 18,
+      "name": "L'Occitane Almond Milk Concentrate",
+      "price": 55.00,
+      "category": "Body Care",
+      "description": "A rich body cream that firms and hydrates.",
+      "image": "/public/assets/L'Occitane.png",
+      "stock": 12
+    },
+    {
+      "id": 19,
+      "name": "Bath & Body Works Japanese Cherry Blossom Body Cream",
+      "price": 14.50,
+      "category": "Body Care",
+      "description": "A body cream with a delicate cherry blossom scent.",
+      "image": "/public/assets/Bath.png",
+      "stock": 30
+    },
+    {
+      "id": 20,
+      "name": "Nivea Essentially Enriched Body Lotion",
+      "price": 7.99,
+      "category": "Body Care",
+      "description": "A nourishing body lotion for dry skin.",
+      "image": "/public/assets/Nivea.png",
+      "stock": 50
+    },
+
+    {
+      "id": 21,
+      "name": "Chanel No. 5 Eau de Parfum",
+      "price": 105.00,
+      "category": "Fragrance",
+      "description": "A classic fragrance with a timeless scent.",
+      "image": "/public/assets/Chanel.png",
+      "stock": 10
+    },
+    {
+      "id": 22,
+      "name": "Dolce & Gabbana Light Blue",
+      "price": 84.00,
+      "category": "Fragrance",
+      "description": "A fresh and fruity fragrance with a Mediterranean touch.",
+      "image": "/public/assets/Dolce.png",
+      "stock": 22
+    },
+    {
+      "id": 23,
+      "name": "Yves Saint Laurent Black Opium",
+      "price": 98.00,
+      "category": "Fragrance",
+      "description": "A bold fragrance with coffee and vanilla notes.",
+      "image": "/public/assets/Yves.png",
+      "stock": 18
+    },
+    {
+      "id": 24,
+      "name": "Marc Jacobs Daisy",
+      "price": 88.00,
+      "category": "Fragrance",
+      "description": "A floral fragrance with a playful touch.",
+      "image": "/public/assets/Marc.png",
+      "stock": 25
+    },
+    {
+      "id": 25,
+      "name": "Gucci Bloom",
+      "price": 120.00,
+      "category": "Fragrance",
+      "description": "A rich floral fragrance with notes of tuberose and jasmine.",
+      "image": "/public/assets/Gucci.png",
+      "stock": 12
+    },
+
+    {
+      "id": 26,
+      "name": "Vital Proteins Collagen Peptides",
+      "price": 43.00,
+      "category": "Supplements",
+      "description": "A collagen supplement to support skin health.",
+      "image": "/public/assets/Vital.png",
+      "stock": 20
+    },
+    {
+      "id": 27,
+      "name": "NeoCell Super Collagen + C",
+      "price": 22.00,
+      "category": "Supplements",
+      "description": "A collagen supplement with added Vitamin C.",
+      "image": "/public/assets/NeoCell.png",
+      "stock": 25
+    },
+    {
+      "id": 28,
+      "name": "Nature's Bounty Hair, Skin & Nails Gummies",
+      "price": 15.00,
+      "category": "Supplements",
+      "description": "Gummies that support healthy hair, skin, and nails.",
+      "image": "/public/assets/Nature's.png",
+      "stock": 30
+    },
+    {
+      "id": 29,
+      "name": "Garden of Life Vitamin Code Raw Zinc",
+      "price": 19.00,
+      "category": "Supplements",
+      "description": "A supplement to support skin and immune health.",
+      "image": "/public/assets/Garden.png",
+      "stock": 18
+    },
+    {
+      "id": 30,
+      "name": "Ollie Beauty Gummies",
+      "price": 29.00,
+      "category": "Supplements",
+      "description": "Gummies designed for radiant skin and strong nails.",
+      "image": "/public/assets/Ollie.png",
+      "stock": 25
+    }
+  ]
+}

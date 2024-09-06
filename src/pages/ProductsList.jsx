@@ -1,43 +1,25 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
+import { BASE_API_URL } from "../../public/api";
+import { useQuery } from "@tanstack/react-query";
+
+const fetchProductsData = async () => {
+  const { data } = await axios.get(BASE_API_URL);
+  return data.products
+}
 
 export default function ProductsList() {
-  const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [category, setCategory] = useState("All");
-  const [error, setError] = useState("");
-  const [isFetching, setIsFetching] = useState(true);
   const [imageLoaded, setImageLoaded] = useState({});
 
-  const API_URL =
-    "https://my-mockup-product-data.s3.ap-southeast-2.amazonaws.com/products.json";
 
-  useEffect(() => {
-    const abortController = new AbortController();
-
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(API_URL, {
-          signal: abortController.signal,
-        });
-        setProducts(response.data.products);
-        setFilteredProducts(response.data.products);
-      } catch (error) {
-        if (axios.isCancel(error)) {
-          console.log("Request cancelled", error.message);
-        } else {
-          setError(error.message);
-        }
-      } finally {
-        setIsFetching(false);
-      }
-    };
-    fetchData();
-    return () => {
-      abortController.abort();
-    };
-  }, []);
+  const { data: products = [], isLoading, error: fetchError } = useQuery({
+    queryKey: ["products"],
+    queryFn: fetchProductsData,
+    staleTime: 30000
+  });
 
   useEffect(() => {
     if (category === "All") {
@@ -65,7 +47,7 @@ export default function ProductsList() {
 
   return (
     <div className="m-20 font-lora">
-      {error && <p>Error: {error}</p>}
+      {fetchError && <p>Error: {fetchError.message}</p>}
       <div className="category-button flex justify-between mb-20 border-b-2 border-b-gray-200">
         {categories.map((cat) => (
           <div className="mb-5" key={cat}>
@@ -82,7 +64,7 @@ export default function ProductsList() {
           </div>
         ))}
       </div>
-      {isFetching ? (
+      { isLoading ? (
         <p className="text-center">Loading...</p>
       ) : (
         <div className="grid grid-cols-3 gap-y-32 mx-20 cursor-pointer">
