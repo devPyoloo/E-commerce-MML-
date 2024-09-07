@@ -25,7 +25,7 @@ export default function HeroSection() {
           </section>
 
           <img
-            src="/src/assets/img_1.png"
+            src="/assets/img_1.png"
             className="w-80 drop-shadow-2xl"
             alt="Perfume Photo"
             loading="lazy"

@@ -12,28 +12,28 @@ export default function Footer() {
       <div className="flex justify-evenly items-center gap-40 pb-20">
         <div className="social flex gap-5">
           <img
-            src="/src/assets/twitter_logo.png"
+            src="/assets/tiktok_logo.png"
             alt="Twitter Logo"
             aria-label="Twitter"
             className="w-16 hover:scale-110 transition-all duration-500 ease-in-out cursor-pointer"
             loading="lazy"
           />
           <img
-            src="/src/assets/fb_logo.png"
+            src="/assets/fb_logo.png"
             alt="Facebook Logo"
             aria-label="Facebook"
             className="w-16 hover:scale-110 transition-all duration-500 ease-in-out cursor-pointer"
             loading="lazy"
           />
           <img
-            src="/src/assets/ig_logo.png"
+            src="/assets/ig_logo.png"
             alt="Instagram Logo"
             aria-label="Instagram"
             className="w-16 hover:scale-110 transition-all duration-500 ease-in-out cursor-pointer"
             loading="lazy"
           />
           <img
-            src="/src/assets/tiktok_logo.png"
+            src="/assets/tiktok_logo.png"
             alt="Tiktok Logo"
             aria-label="Tiktok"
             className="w-16 hover:scale-110 transition-all duration-500 ease-in-out cursor-pointer"

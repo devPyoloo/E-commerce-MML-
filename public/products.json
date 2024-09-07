@@ -6,7 +6,7 @@
       "price": 15.99,
       "category": "Skincare",
       "description": "A gentle cleanser that hydrates and cleanses the skin.",
-      "image": "/public/assets/CeraVe.png",
+      "image": "/assets/CeraVe.png",
       "stock": 25
     },
     {
@@ -15,7 +15,7 @@
       "price": 10.99,
       "category": "Skincare",
       "description": "A soothing toner with witch hazel and aloe vera.",
-      "image": "/public/assets/Thayers.png",
+      "image": "/assets/Thayers.png",
       "stock": 30
     },
     {
@@ -24,7 +24,7 @@
       "price": 18.99,
       "category": "Skincare",
       "description": "A hydrating gel that plumps and smooths the skin.",
-      "image": "/public/assets/Neutrogena.png",
+      "image": "/assets/Neutrogena.png",
       "stock": 18
     },
     {
@@ -33,7 +33,7 @@
       "price": 7.50,
       "category": "Skincare",
       "description": "A hydrating serum that helps retain skin moisture.",
-      "image": "/public/assets/The_Ordinary.png",
+      "image": "/assets/The_Ordinary.png",
       "stock": 22
     },
     {
@@ -42,7 +42,7 @@
       "price": 29.99,
       "category": "Skincare",
       "description": "A high SPF sunscreen with broad-spectrum protection.",
-      "image": "/public/assets/La_Roche.png",
+      "image": "/assets/La_Roche.png",
       "stock": 15
     },
 
@@ -52,7 +52,7 @@
       "price": 35.00,
       "category": "Makeup",
       "description": "A long-wear foundation that provides buildable coverage.",
-      "image": "/public/assets/Fenty.png",
+      "image": "/assets/Fenty.png",
       "stock": 30
     },
     {
@@ -61,7 +61,7 @@
       "price": 6.99,
       "category": "Makeup",
       "description": "A concealer that brightens and conceals imperfections.",
-      "image": "/public/assets/Maybelline.png",
+      "image": "/assets/Maybelline.png",
       "stock": 40
     },
     {
@@ -70,7 +70,7 @@
       "price": 28.00,
       "category": "Makeup",
       "description": "A volumizing mascara for dramatic lashes.",
-      "image": "/public/assets/Too.png",
+      "image": "/assets/Too.png",
       "stock": 25
     },
     {
@@ -79,7 +79,7 @@
       "price": 23.00,
       "category": "Makeup",
       "description": "A brow pencil that provides natural-looking definition.",
-      "image": "/public/assets/Anastasia.png",
+      "image": "/assets/Anastasia.png",
       "stock": 25
     },
     {
@@ -88,7 +88,7 @@
       "price": 30.00,
       "category": "Makeup",
       "description": "A creamy concealer that brightens and covers imperfections.",
-      "image": "/public/assets/NARS.png",
+      "image": "/assets/NARS.png",
       "stock": 20
     },
 
@@ -98,7 +98,7 @@
       "price": 28.00,
       "category": "Haircare",
       "description": "A treatment that strengthens and repairs damaged hair.",
-      "image": "/public/assets/Olaplex.png",
+      "image": "/assets/Olaplex.png",
       "stock": 15
     },
     {
@@ -107,7 +107,7 @@
       "price": 44.00,
       "category": "Haircare",
       "description": "An oil treatment that nourishes and adds shine.",
-      "image": "/public/assets/Moroccanoil.png",
+      "image": "/assets/Moroccanoil.png",
       "stock": 20
     },
     {
@@ -116,7 +116,7 @@
       "price": 21.00,
       "category": "Haircare",
       "description": "A shampoo that strengthens and fortifies damaged hair.",
-      "image": "/public/assets/Redken.png",
+      "image": "/assets/Redken.png",
       "stock": 12
     },
     {
@@ -125,7 +125,7 @@
       "price": 30.00,
       "category": "Haircare",
       "description": "A dry shampoo that refreshes and volumizes hair.",
-      "image": "/public/assets/Living.png",
+      "image": "/assets/Living.png",
       "stock": 18
     },
     {
@@ -134,7 +134,7 @@
       "price": 22.00,
       "category": "Haircare",
       "description": "A conditioner that invigorates and moisturizes hair.",
-      "image": "/public/assets/Paul.png",
+      "image": "/assets/Paul.png",
       "stock": 25
     },
 
@@ -144,7 +144,7 @@
       "price": 10.99,
       "category": "Body Care",
       "description": "A daily lotion that provides long-lasting moisture.",
-      "image": "/public/assets/Aveeno.png",
+      "image": "/assets/Aveeno.png",
       "stock": 40
     },
     {
@@ -153,7 +153,7 @@
       "price": 11.99,
       "category": "Body Care",
       "description": "A body oil that deeply moisturizes and smooths skin.",
-      "image": "/public/assets/Neutrogena.png",
+      "image": "/assets/Neutrogena.png",
       "stock": 22
     },
     {
@@ -162,7 +162,7 @@
       "price": 55.00,
       "category": "Body Care",
       "description": "A rich body cream that firms and hydrates.",
-      "image": "/public/assets/L'Occitane.png",
+      "image": "/assets/L'Occitane.png",
       "stock": 12
     },
     {
@@ -171,7 +171,7 @@
       "price": 14.50,
       "category": "Body Care",
       "description": "A body cream with a delicate cherry blossom scent.",
-      "image": "/public/assets/Bath.png",
+      "image": "/assets/Bath.png",
       "stock": 30
     },
     {
@@ -180,7 +180,7 @@
       "price": 7.99,
       "category": "Body Care",
       "description": "A nourishing body lotion for dry skin.",
-      "image": "/public/assets/Nivea.png",
+      "image": "/assets/Nivea.png",
       "stock": 50
     },
 
@@ -190,7 +190,7 @@
       "price": 105.00,
       "category": "Fragrance",
       "description": "A classic fragrance with a timeless scent.",
-      "image": "/public/assets/Chanel.png",
+      "image": "/assets/Chanel.png",
       "stock": 10
     },
     {
@@ -199,7 +199,7 @@
       "price": 84.00,
       "category": "Fragrance",
       "description": "A fresh and fruity fragrance with a Mediterranean touch.",
-      "image": "/public/assets/Dolce.png",
+      "image": "/assets/Dolce.png",
       "stock": 22
     },
     {
@@ -208,7 +208,7 @@
       "price": 98.00,
       "category": "Fragrance",
       "description": "A bold fragrance with coffee and vanilla notes.",
-      "image": "/public/assets/Yves.png",
+      "image": "/assets/Yves.png",
       "stock": 18
     },
     {
@@ -217,7 +217,7 @@
       "price": 88.00,
       "category": "Fragrance",
       "description": "A floral fragrance with a playful touch.",
-      "image": "/public/assets/Marc.png",
+      "image": "/assets/Marc.png",
       "stock": 25
     },
     {
@@ -226,7 +226,7 @@
       "price": 120.00,
       "category": "Fragrance",
       "description": "A rich floral fragrance with notes of tuberose and jasmine.",
-      "image": "/public/assets/Gucci.png",
+      "image": "/assets/Gucci.png",
       "stock": 12
     },
 
@@ -236,7 +236,7 @@
       "price": 43.00,
       "category": "Supplements",
       "description": "A collagen supplement to support skin health.",
-      "image": "/public/assets/Vital.png",
+      "image": "/assets/Vital.png",
       "stock": 20
     },
     {
@@ -245,7 +245,7 @@
       "price": 22.00,
       "category": "Supplements",
       "description": "A collagen supplement with added Vitamin C.",
-      "image": "/public/assets/NeoCell.png",
+      "image": "/assets/NeoCell.png",
       "stock": 25
     },
     {
@@ -254,7 +254,7 @@
       "price": 15.00,
       "category": "Supplements",
       "description": "Gummies that support healthy hair, skin, and nails.",
-      "image": "/public/assets/Nature's.png",
+      "image": "/assets/Nature's.png",
       "stock": 30
     },
     {
@@ -263,7 +263,7 @@
       "price": 19.00,
       "category": "Supplements",
       "description": "A supplement to support skin and immune health.",
-      "image": "/public/assets/Garden.png",
+      "image": "/assets/Garden.png",
       "stock": 18
     },
     {
@@ -272,7 +272,7 @@
       "price": 29.00,
       "category": "Supplements",
       "description": "Gummies designed for radiant skin and strong nails.",
-      "image": "/public/assets/Ollie.png",
+      "image": "/assets/Ollie.png",
       "stock": 25
     }
   ]

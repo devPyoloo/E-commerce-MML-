@@ -44,7 +44,7 @@ export default function Header() {
       <NavLink to={"/"}>Home</NavLink>
       <NavLink to={"about"}>About us</NavLink>
       <img
-        src="/src/assets/logo.png"
+        src="/assets/logo.png"
         alt="Logo"
         className="drop-shadow-2xl"
         loading="lazy"

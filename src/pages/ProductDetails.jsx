@@ -1,24 +1,41 @@
 import axios from "axios";
-import { useLoaderData } from "react-router-dom"
+import { useParams } from "react-router-dom";
+import { BASE_API_URL } from "/api";
+import { useQuery } from "@tanstack/react-query";
 
+const fetchProductDetails = async (productId) => {
+  const { data } = await axios.get(BASE_API_URL);
+  const product = data.products.find((product) => product.id === parseInt(productId))
+  console.log(product)
+  return product;
+};
 
 export default function ProductDetails() {
-  const product = useLoaderData()
+  const { productId } = useParams();
+
+  const {
+    data: product,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["products", productId],
+    queryFn: () => fetchProductDetails(productId),
+    staleTime: 30000,
+  });
+
+  if (isLoading) return <div> Loading... </div>;
+  if (error) return <div>{error.message} : Cannot fetch product details </div>;
+
+
+  const { name, description, price } = product;
 
   return (
-    <div>{product.name} - {product.price}</div>
-  )
-}
-
-export const productDetailsLoader = async ({ params }) => {
-  const API_URL = "https://my-mockup-product-data.s3.ap-southeast-2.amazonaws.com/products.json";
-  const { id } = params;
-
-  try {
-    const response = await axios.get(API_URL + id);
-    return response.data
-  } catch (error) {
-    throw new Error("Could not find that product", error)
-  }
-
+    <>
+      <div>
+        {productId}
+        {name} - {price}
+      </div>
+      <p>{description}</p>
+    </>
+  );
 }

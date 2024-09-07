@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Link, Outlet } from "react-router-dom";
-import { BASE_API_URL } from "../../public/api";
+import { Link } from "react-router-dom";
+import { BASE_API_URL } from "/api";
 import { useQuery } from "@tanstack/react-query";
 
 const fetchProductsData = async () => {
@@ -101,8 +101,6 @@ export default function ProductsList() {
           ))}
         </div>
       )}
-      
-      <Outlet />
     </div>
   );
 }
