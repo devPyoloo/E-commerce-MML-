@@ -8,11 +8,11 @@ export default function Footer() {
 
   
   return (
-    <footer className="bg-satpink px-20 pt-20">
+    <footer className="bg-mutedblack px-20 pt-20">
       <div className="flex justify-evenly items-center gap-40 pb-20">
         <div className="social flex gap-5">
           <img
-            src="/assets/tiktok_logo.png"
+            src="/assets/twitter_logo.png"
             alt="Twitter Logo"
             aria-label="Twitter"
             className="w-16 hover:scale-110 transition-all duration-500 ease-in-out cursor-pointer"

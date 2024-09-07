@@ -13,7 +13,9 @@ export default {
     },
     extend: {
       colors: {
-        mutedblack: "#1D1D1D",
+        mutedblack: "#0E0E10",
+        semiblack: "#0B0B0C",
+        lighblack: "#121212",
         lightpink: "#FADADD",
         mutedpink: "#F8E5E5",
         dimpink: "#C39EA0",
@@ -21,12 +23,15 @@ export default {
         offpink: "#F4E7E8",
         lightpurple: "#F4E7F4",
         offwhite:'#FAF9F6',
-        mutedgray: '#F5F5F5'
+        mutedgray: '#EBEBEB',
       },
       fontFamily: {
         'russo': ['Russo One', 'sans'],
         'lora': ['Lora', 'serif']
       },
+      backgroundColor: {
+        graygradient: "radial-gradient(circle, rgba(196,196,196,1) 0%, rgba(229,231,235,1) 100%);"
+      }
     },
   },
   plugins: [],

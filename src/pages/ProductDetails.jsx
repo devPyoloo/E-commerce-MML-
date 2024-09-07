@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { BASE_API_URL } from "/api";
+import { BASE_API_URL } from "../../public/api";
 import { useQuery } from "@tanstack/react-query";
 
 const fetchProductDetails = async (productId) => {

@@ -2,9 +2,9 @@ import { PropTypes } from 'prop-types'
 
 export default function ProductCard({imgSrc, altText, customCss, labelText}) {
  return (
-     <div className="bg-white flex flex-col items-center p-10 gap-5 rounded-3xl hover:-translate-y-6 transition-transform duration-500 ease-in-out cursor-pointer">
+     <div className="bg-white flex flex-col items-center p-10 gap-5 rounded-xl hover:-translate-y-6 transition-transform duration-500 ease-in-out cursor-pointer">
      <img
-            src={`/src/assets/${imgSrc}`}
+            src={`/assets/${imgSrc}`}
             alt={`${altText}`}
             className={`drop-shadow-2xl ${customCss}`}
           />

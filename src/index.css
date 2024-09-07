@@ -8,3 +8,27 @@
 body{
   @apply  bg-offwhite
 }
+
+/* Styles for nav links */
+nav a {
+  position: relative;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* Create the underline effect */
+nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px; /* Adjust based on your design */
+  width: 0;
+  height: 2px; /* Adjust thickness */
+  background-color: #C39EA0; /* Tailwind's sky-600 or your preferred color */
+  transition: width 0.3s ease-in-out; /* Animation timing */
+}
+
+/* Animation on hover */
+nav a:hover::after {
+  width: 100%; /* Full width on hover */
+}

@@ -7,7 +7,14 @@
       "category": "Skincare",
       "description": "A gentle cleanser that hydrates and cleanses the skin.",
       "image": "/assets/CeraVe.png",
-      "stock": 25
+      "stock": 25,
+      "brand": "CeraVe",
+      "rating": 4.5,
+      "reviewCount": 120,
+      "ingredients": "Water, Glycerin, CeraVe Hydrating Cleanser, etc.",
+      "size": "237ml",
+      "usage": "Apply to wet skin and massage in a circular motion.",
+      "expirationDate": "2025-12-01"
     },
     {
       "id": 2,
@@ -16,7 +23,14 @@
       "category": "Skincare",
       "description": "A soothing toner with witch hazel and aloe vera.",
       "image": "/assets/Thayers.png",
-      "stock": 30
+      "stock": 30,
+      "brand": "Thayers",
+      "rating": 4.6,
+      "reviewCount": 85,
+      "ingredients": "Witch Hazel Extract, Aloe Vera, etc.",
+      "size": "355ml",
+      "usage": "Apply with a cotton pad after cleansing.",
+      "expirationDate": "2025-10-15"
     },
     {
       "id": 3,
@@ -25,7 +39,14 @@
       "category": "Skincare",
       "description": "A hydrating gel that plumps and smooths the skin.",
       "image": "/assets/Neutrogena.png",
-      "stock": 18
+      "stock": 18,
+      "brand": "Neutrogena",
+      "rating": 4.7,
+      "reviewCount": 150,
+      "ingredients": "Water, Hyaluronic Acid, Glycerin, etc.",
+      "size": "50ml",
+      "usage": "Apply to face and neck in the morning and evening.",
+      "expirationDate": "2026-03-01"
     },
     {
       "id": 4,
@@ -34,7 +55,14 @@
       "category": "Skincare",
       "description": "A hydrating serum that helps retain skin moisture.",
       "image": "/assets/The_Ordinary.png",
-      "stock": 22
+      "stock": 22,
+      "brand": "The Ordinary",
+      "rating": 4.8,
+      "reviewCount": 200,
+      "ingredients": "Hyaluronic Acid, Vitamin B5, etc.",
+      "size": "30ml",
+      "usage": "Apply a few drops to face in the morning and evening.",
+      "expirationDate": "2025-09-01"
     },
     {
       "id": 5,
@@ -43,9 +71,15 @@
       "category": "Skincare",
       "description": "A high SPF sunscreen with broad-spectrum protection.",
       "image": "/assets/La_Roche.png",
-      "stock": 15
+      "stock": 15,
+      "brand": "La Roche-Posay",
+      "rating": 4.9,
+      "reviewCount": 180,
+      "ingredients": "Water, Titanium Dioxide, Zinc Oxide, etc.",
+      "size": "50ml",
+      "usage": "Apply generously to face and neck 15 minutes before sun exposure.",
+      "expirationDate": "2024-12-01"
     },
-
     {
       "id": 6,
       "name": "Fenty Beauty Pro Filt'r Foundation",
@@ -53,7 +87,14 @@
       "category": "Makeup",
       "description": "A long-wear foundation that provides buildable coverage.",
       "image": "/assets/Fenty.png",
-      "stock": 30
+      "stock": 30,
+      "brand": "Fenty Beauty",
+      "rating": 4.6,
+      "reviewCount": 210,
+      "ingredients": "Water, Dimethicone, Titanium Dioxide, etc.",
+      "size": "32ml",
+      "usage": "Apply to face with a brush or sponge.",
+      "expirationDate": "2025-05-01"
     },
     {
       "id": 7,
@@ -62,7 +103,14 @@
       "category": "Makeup",
       "description": "A concealer that brightens and conceals imperfections.",
       "image": "/assets/Maybelline.png",
-      "stock": 40
+      "stock": 40,
+      "brand": "Maybelline",
+      "rating": 4.4,
+      "reviewCount": 130,
+      "ingredients": "Water, Cyclopentasiloxane, Mica, etc.",
+      "size": "6.8ml",
+      "usage": "Apply under eyes and on blemishes.",
+      "expirationDate": "2025-07-01"
     },
     {
       "id": 8,
@@ -71,7 +119,14 @@
       "category": "Makeup",
       "description": "A volumizing mascara for dramatic lashes.",
       "image": "/assets/Too.png",
-      "stock": 25
+      "stock": 25,
+      "brand": "Too Faced",
+      "rating": 4.5,
+      "reviewCount": 150,
+      "ingredients": "Water, Beeswax, Carnauba Wax, etc.",
+      "size": "8ml",
+      "usage": "Apply to lashes from root to tip.",
+      "expirationDate": "2024-11-01"
     },
     {
       "id": 9,
@@ -80,7 +135,14 @@
       "category": "Makeup",
       "description": "A brow pencil that provides natural-looking definition.",
       "image": "/assets/Anastasia.png",
-      "stock": 25
+      "stock": 25,
+      "brand": "Anastasia Beverly Hills",
+      "rating": 4.7,
+      "reviewCount": 170,
+      "ingredients": "Hydrogenated Castor Oil, Silica, etc.",
+      "size": "0.085g",
+      "usage": "Define and fill brows with short strokes.",
+      "expirationDate": "2025-01-01"
     },
     {
       "id": 10,
@@ -89,9 +151,15 @@
       "category": "Makeup",
       "description": "A creamy concealer that brightens and covers imperfections.",
       "image": "/assets/NARS.png",
-      "stock": 20
+      "stock": 20,
+      "brand": "NARS",
+      "rating": 4.6,
+      "reviewCount": 140,
+      "ingredients": "Water, Dimethicone, Silica, etc.",
+      "size": "6.2ml",
+      "usage": "Apply to areas needing coverage and blend.",
+      "expirationDate": "2025-08-01"
     },
-
     {
       "id": 11,
       "name": "Olaplex No. 3 Hair Perfector",
@@ -99,7 +167,14 @@
       "category": "Haircare",
       "description": "A treatment that strengthens and repairs damaged hair.",
       "image": "/assets/Olaplex.png",
-      "stock": 15
+      "stock": 15,
+      "brand": "Olaplex",
+      "rating": 4.8,
+      "reviewCount": 160,
+      "ingredients": "Water, Bis-Aminopropyl Diglycol Dimaleate, etc.",
+      "size": "100ml",
+      "usage": "Apply to damp hair, leave on for 10 minutes, then rinse.",
+      "expirationDate": "2025-06-01"
     },
     {
       "id": 12,
@@ -108,7 +183,14 @@
       "category": "Haircare",
       "description": "An oil treatment that nourishes and adds shine.",
       "image": "/assets/Moroccanoil.png",
-      "stock": 20
+      "stock": 20,
+      "brand": "Moroccanoil",
+      "rating": 4.7,
+      "reviewCount": 180,
+      "ingredients": "Argan Oil, Linseed Oil, etc.",
+      "size": "100ml",
+      "usage": "Apply a small amount to damp hair and style as usual.",
+      "expirationDate": "2025-11-01"
     },
     {
       "id": 13,
@@ -117,7 +199,14 @@
       "category": "Haircare",
       "description": "A shampoo that strengthens and fortifies damaged hair.",
       "image": "/assets/Redken.png",
-      "stock": 12
+      "stock": 12,
+      "brand": "Redken",
+      "rating": 4.5,
+      "reviewCount": 110,
+      "ingredients": "Water, Sodium Lauryl Sulfate, etc.",
+      "size": "300ml",
+      "usage": "Apply to wet hair, lather, and rinse.",
+      "expirationDate": "2024-10-01"
     },
     {
       "id": 14,
@@ -126,7 +215,14 @@
       "category": "Haircare",
       "description": "A dry shampoo that refreshes and volumizes hair.",
       "image": "/assets/Living.png",
-      "stock": 18
+      "stock": 18,
+      "brand": "Living Proof",
+      "rating": 4.5,
+      "reviewCount": 120,
+      "ingredients": "Isobutane, Propane, Cyclopentasiloxane, etc.",
+      "size": "198ml",
+      "usage": "Shake well, spray onto roots from 6-10 inches away.",
+      "expirationDate": "2025-03-15"
     },
     {
       "id": 15,
@@ -135,9 +231,15 @@
       "category": "Haircare",
       "description": "A conditioner that invigorates and moisturizes hair.",
       "image": "/assets/Paul.png",
-      "stock": 25
+      "stock": 25,
+      "brand": "Paul Mitchell",
+      "rating": 4.7,
+      "reviewCount": 95,
+      "ingredients": "Water, Cetyl Alcohol, Tea Tree Oil, etc.",
+      "size": "300ml",
+      "usage": "Apply to wet hair after shampooing, leave for 1-2 minutes, then rinse.",
+      "expirationDate": "2025-06-10"
     },
-
     {
       "id": 16,
       "name": "Aveeno Daily Moisturizing Body Lotion",
@@ -145,7 +247,14 @@
       "category": "Body Care",
       "description": "A daily lotion that provides long-lasting moisture.",
       "image": "/assets/Aveeno.png",
-      "stock": 40
+      "stock": 40,
+      "brand": "Aveeno",
+      "rating": 4.8,
+      "reviewCount": 150,
+      "ingredients": "Water, Glycerin, Dimethicone, etc.",
+      "size": "532ml",
+      "usage": "Apply generously all over the body, as needed.",
+      "expirationDate": "2026-01-20"
     },
     {
       "id": 17,
@@ -154,7 +263,14 @@
       "category": "Body Care",
       "description": "A body oil that deeply moisturizes and smooths skin.",
       "image": "/assets/Neutrogena.png",
-      "stock": 22
+      "stock": 22,
+      "brand": "Neutrogena",
+      "rating": 4.6,
+      "reviewCount": 80,
+      "ingredients": "Mineral Oil, Sesame Oil, etc.",
+      "size": "237ml",
+      "usage": "Apply to damp skin after a shower for best results.",
+      "expirationDate": "2025-05-25"
     },
     {
       "id": 18,
@@ -163,7 +279,14 @@
       "category": "Body Care",
       "description": "A rich body cream that firms and hydrates.",
       "image": "/assets/L'Occitane.png",
-      "stock": 12
+      "stock": 12,
+      "brand": "L'Occitane",
+      "rating": 4.9,
+      "reviewCount": 60,
+      "ingredients": "Almond Milk, Almond Oil, Shea Butter, etc.",
+      "size": "200ml",
+      "usage": "Massage into body, focusing on dry areas.",
+      "expirationDate": "2025-11-30"
     },
     {
       "id": 19,
@@ -172,7 +295,14 @@
       "category": "Body Care",
       "description": "A body cream with a delicate cherry blossom scent.",
       "image": "/assets/Bath.png",
-      "stock": 30
+      "stock": 30,
+      "brand": "Bath & Body Works",
+      "rating": 4.4,
+      "reviewCount": 110,
+      "ingredients": "Water, Shea Butter, Coconut Oil, etc.",
+      "size": "226ml",
+      "usage": "Apply generously to skin, reapply as needed.",
+      "expirationDate": "2025-08-15"
     },
     {
       "id": 20,
@@ -181,7 +311,14 @@
       "category": "Body Care",
       "description": "A nourishing body lotion for dry skin.",
       "image": "/assets/Nivea.png",
-      "stock": 50
+      "stock": 50,
+      "brand": "Nivea",
+      "rating": 4.5,
+      "reviewCount": 140,
+      "ingredients": "Water, Almond Oil, Glycerin, etc.",
+      "size": "400ml",
+      "usage": "Apply evenly to body, especially to dry areas.",
+      "expirationDate": "2026-02-10"
     },
 
     {
@@ -191,7 +328,14 @@
       "category": "Fragrance",
       "description": "A classic fragrance with a timeless scent.",
       "image": "/assets/Chanel.png",
-      "stock": 10
+      "stock": 10,
+      "brand": "Chanel",
+      "rating": 4.8,
+      "reviewCount": 120,
+      "ingredients": "Alcohol, Fragrance, Water",
+      "size": "100ml",
+      "usage": "Spray on pulse points.",
+      "expirationDate": "2026-09-15"
     },
     {
       "id": 22,
@@ -200,7 +344,14 @@
       "category": "Fragrance",
       "description": "A fresh and fruity fragrance with a Mediterranean touch.",
       "image": "/assets/Dolce.png",
-      "stock": 22
+      "stock": 22,
+      "brand": "Dolce & Gabbana",
+      "rating": 4.6,
+      "reviewCount": 98,
+      "ingredients": "Alcohol, Fragrance, Water",
+      "size": "50ml",
+      "usage": "Apply to the neck and wrists.",
+      "expirationDate": "2025-11-20"
     },
     {
       "id": 23,
@@ -209,7 +360,14 @@
       "category": "Fragrance",
       "description": "A bold fragrance with coffee and vanilla notes.",
       "image": "/assets/Yves.png",
-      "stock": 18
+      "stock": 18,
+      "brand": "Yves Saint Laurent",
+      "rating": 4.7,
+      "reviewCount": 110,
+      "ingredients": "Alcohol, Fragrance, Water",
+      "size": "90ml",
+      "usage": "Spray on pulse points.",
+      "expirationDate": "2026-03-10"
     },
     {
       "id": 24,
@@ -218,7 +376,14 @@
       "category": "Fragrance",
       "description": "A floral fragrance with a playful touch.",
       "image": "/assets/Marc.png",
-      "stock": 25
+      "stock": 25,
+      "brand": "Marc Jacobs",
+      "rating": 4.5,
+      "reviewCount": 85,
+      "ingredients": "Alcohol, Fragrance, Water",
+      "size": "75ml",
+      "usage": "Apply to the neck and wrists.",
+      "expirationDate": "2025-12-25"
     },
     {
       "id": 25,
@@ -227,9 +392,15 @@
       "category": "Fragrance",
       "description": "A rich floral fragrance with notes of tuberose and jasmine.",
       "image": "/assets/Gucci.png",
-      "stock": 12
+      "stock": 12,
+      "brand": "Gucci",
+      "rating": 4.9,
+      "reviewCount": 130,
+      "ingredients": "Alcohol, Fragrance, Water",
+      "size": "100ml",
+      "usage": "Spray on pulse points.",
+      "expirationDate": "2026-07-05"
     },
-
     {
       "id": 26,
       "name": "Vital Proteins Collagen Peptides",
@@ -237,7 +408,14 @@
       "category": "Supplements",
       "description": "A collagen supplement to support skin health.",
       "image": "/assets/Vital.png",
-      "stock": 20
+      "stock": 20,
+      "brand": "Vital Proteins",
+      "rating": 4.7,
+      "reviewCount": 75,
+      "ingredients": "Collagen Peptides",
+      "size": "284g",
+      "usage": "Mix with water or smoothies.",
+      "expirationDate": "2025-06-30"
     },
     {
       "id": 27,
@@ -246,7 +424,14 @@
       "category": "Supplements",
       "description": "A collagen supplement with added Vitamin C.",
       "image": "/assets/NeoCell.png",
-      "stock": 25
+      "stock": 25,
+      "brand": "NeoCell",
+      "rating": 4.6,
+      "reviewCount": 60,
+      "ingredients": "Collagen Type 1 & 3, Vitamin C",
+      "size": "150g",
+      "usage": "Take with water or juice.",
+      "expirationDate": "2025-04-15"
     },
     {
       "id": 28,
@@ -255,7 +440,14 @@
       "category": "Supplements",
       "description": "Gummies that support healthy hair, skin, and nails.",
       "image": "/assets/Nature's.png",
-      "stock": 30
+      "stock": 30,
+      "brand": "Nature's Bounty",
+      "rating": 4.8,
+      "reviewCount": 90,
+      "ingredients": "Vitamins A, C, D, E, Biotin",
+      "size": "60 Gummies",
+      "usage": "Chew 2 gummies daily.",
+      "expirationDate": "2024-11-01"
     },
     {
       "id": 29,
@@ -264,7 +456,14 @@
       "category": "Supplements",
       "description": "A supplement to support skin and immune health.",
       "image": "/assets/Garden.png",
-      "stock": 18
+      "stock": 18,
+      "brand": "Garden of Life",
+      "rating": 4.5,
+      "reviewCount": 50,
+      "ingredients": "Raw Zinc",
+      "size": "120 Capsules",
+      "usage": "Take 1 capsule daily.",
+      "expirationDate": "2025-02-28"
     },
     {
       "id": 30,
@@ -273,7 +472,14 @@
       "category": "Supplements",
       "description": "Gummies designed for radiant skin and strong nails.",
       "image": "/assets/Ollie.png",
-      "stock": 25
+      "stock": 25,
+      "brand": "Ollie",
+      "rating": 4.7,
+      "reviewCount": 70,
+      "ingredients": "Biotin, Vitamin C, E",
+      "size": "45 Gummies",
+      "usage": "Chew 2 gummies daily.",
+      "expirationDate": "2025-05-10"
     }
   ]
 }
