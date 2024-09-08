@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { BASE_API_URL } from "../../public/api";
 import { useQuery } from "@tanstack/react-query";
 import { IoChevronDownSharp } from "react-icons/io5";
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 
 const fetchProductsData = async () => {
   const { data } = await axios.get(BASE_API_URL);
@@ -56,11 +57,7 @@ export default function ProductsList() {
             {categories.map((cat) => (
               <div className="border-t border-t-lightblack pt-2" key={cat}>
                 <button
-                  className={` ${
-                    cat === category
-                      ? "font-medium"
-                      : ""
-                  }`}
+                  className={` ${cat === category ? "font-medium" : ""}`}
                   onClick={() => setCategory(cat)}
                 >
                   {cat}
@@ -70,14 +67,39 @@ export default function ProductsList() {
           </aside>
 
           <div className="flex flex-col">
-            <div className="flex items-center">
-              <span aria-label="Sort" className="flex">
-                Sort By
-                <button className="flex items-center py-1 px-4 rounded-sm">
-                 <IoChevronDownSharp />
-                </button>
-              </span>
-            </div>
+            <Menu as="div" className="relative inline-block text-left">
+              <div>
+                <MenuButton className="inline-flex justify-center gap-x-1.5 rounded-md px-3 py-2 text-md font-normal">
+                  Sort By Price
+                  <IoChevronDownSharp
+                    aria-hidden="true"
+                    className="-mr-1 h-5 w-5 "
+                  />
+                </MenuButton>
+              </div>
+
+              <MenuItems
+                transition
+                className="absolute left-20 z-10 w-40 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+              >
+                <div className="py-1">
+                  <MenuItem>
+                    <span
+                      className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900"
+                    >
+                      High - Low
+                    </span>
+                  </MenuItem>
+                  <MenuItem>
+                    <span
+                      className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900"
+                    >
+                      Low - High
+                    </span>
+                  </MenuItem>
+                </div>
+              </MenuItems>
+            </Menu>
 
             <main className="grid gap-x-16 md:grid-cols-4 gap-y-32 cursor-pointer">
               {filteredProducts.map((product) => (
