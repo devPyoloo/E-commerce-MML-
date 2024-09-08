@@ -51,9 +51,9 @@ export default function ProductsList() {
         <p className="text-center">Loading...</p>
       ) : (
         
-          <div className="flex justify-evenly pt-40">
-            <aside>
-              <div className="category-button justify-between mb-20 border-b-2 border-b-gray-200">
+          <div className="flex justify-evenly pt-40 items-start">
+            <aside className="sticky top-0 mr-20 py-20">
+              {/* <div className="category-button justify-between mb-20 border-b-2 border-b-gray-200"> */}
                 {categories.map((cat) => (
                   <div className="mb-5" key={cat}>
                     <button
@@ -68,7 +68,7 @@ export default function ProductsList() {
                     </button>
                   </div>
                 ))}
-              </div>
+              {/* </div> */}
             </aside>
 
             <div className="flex flex-col">
@@ -81,7 +81,7 @@ export default function ProductsList() {
             </span>
               </div>
            
-            <div className="grid xl:grid-cols-4 grid-cols-3 xl:gap-x-10 gap-y-32 cursor-pointer">
+            <main className="grid xl:grid-cols-4 grid-cols-3 xl:gap-x-10 gap-y-32 cursor-pointer">
               {filteredProducts.map((product) => (
                 <figure className="product-card" key={product.id}>
                   <Link to={product.id.toString()}>
@@ -113,7 +113,7 @@ export default function ProductsList() {
                   </Link>
                 </figure>
               ))}
-            </div>
+            </main>
           </div>
         </div>
       )}
