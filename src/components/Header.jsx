@@ -29,7 +29,7 @@ export default function Header() {
     };
   }, [prevScrollPos]);
   return (
-    <header className="fixed top-0 left-0 right-0 group flex justify-center items-center z-10">
+    <header className="fixed top-0 left-0 right-0 group flex justify-center items-center z-20">
     <div
       className={`absolute inset-0 bg-white shadow-md transform -translate-y-full ${
         onScroll.showBg ? "translate-y-0" : ""
