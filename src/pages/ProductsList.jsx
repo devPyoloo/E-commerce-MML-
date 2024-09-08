@@ -2,11 +2,11 @@ import axios from "axios";
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { BASE_API_URL } from "../../public/api";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { IoChevronDownSharp } from "react-icons/io5";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 
-const fetchProductsData = async () => {
+const fetchProductsData = async ({ pageParam = 1 }) => {
   const { data } = await axios.get(BASE_API_URL);
   return data.products;
 };
@@ -24,6 +24,12 @@ export default function ProductsList() {
     queryFn: fetchProductsData,
     staleTime: 30000,
   });
+
+  const { data, isLoading: fetchData, error } = useInfiniteQuery({
+    queryKey: ["products"],
+    queryFn: fetchProductsData,
+    initialPageParam: 1
+  })
 
   const filteredProducts = useMemo(() => {
     if (category === "All") return products;
