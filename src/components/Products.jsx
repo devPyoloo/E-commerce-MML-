@@ -4,7 +4,7 @@ export default function Products() {
   return (
     <div className="flex flex-col justify-center items-center p-40 gap-20">
       <section>
-        <h1 className="font-russo tracking-wider text-4xl font-extrabold">
+        <h1 className="font-poppins text-4xl font-extrabold">
           PRODUCTS
         </h1>
       </section>
