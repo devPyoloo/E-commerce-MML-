@@ -1,10 +1,11 @@
 import axios from "axios";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { BASE_API_URL } from "../../public/api";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { IoChevronDownSharp } from "react-icons/io5";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import { useInView } from "react-intersection-observer";
 
 const fetchProductsData = async ({ pageParam = 1 }) => {
   const { data } = await axios.get(BASE_API_URL);
@@ -17,26 +18,38 @@ const fetchProductsData = async ({ pageParam = 1 }) => {
 export default function ProductsList() {
   const [category, setCategory] = useState("All");
   const [imageLoaded, setImageLoaded] = useState({});
+  const { ref, inView } = useInView()
 
-  const {
-    data: products = [],
-    isLoading,
-    error: fetchError,
-  } = useQuery({
+  // const {
+  //   data: products = [],
+  //   isLoading,
+  //   error: fetchError,
+  // } = useQuery({
+  //   queryKey: ["products"],
+  //   queryFn: fetchProductsData,
+  //   staleTime: 30000,
+  // });
+
+  const { data: products = [], isLoading, isFetching, error: fetchError, fetchNextPage } = useInfiniteQuery({
     queryKey: ["products"],
     queryFn: fetchProductsData,
-    staleTime: 30000,
-  });
-
-  const { data, isLoading: fetchData, error, fetchNextPage } = useInfiniteQuery({
-    queryKey: ["products"],
-    queryFn: fetchProductsData,
-    initialPageParam: 1
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages) => {
+        return lastPage.length > 0 ? allPages.length + 1 : undefined;
+    },
+    staleTime: 30000
   })
 
+  useEffect(() => {
+    if(inView) {
+      fetchNextPage()
+    }
+  }, [inView, fetchNextPage])
+
   const filteredProducts = useMemo(() => {
-    if (category === "All") return products;
-    return products.filter((product) => product.category === category);
+    if(!products) return [];
+    const allProducts = products.pages?.flat();
+    return (category === "All") ? allProducts : allProducts.filter((product) => product.category === category);
   }, [category, products]);
 
   const handleImageLoad = (id) => {
@@ -108,7 +121,8 @@ export default function ProductsList() {
 
           <div className="flex flex-col">
             <main className="grid gap-x-16 md:grid-cols-4 gap-y-32 cursor-pointer">
-              {filteredProducts.map((product) => (
+              {filteredProducts.length > 0 ? (
+              filteredProducts.map((product) => (
                 <figure className="product-card" key={product.id}>
                   <Link to={product.id.toString()}>
                     <div className="bg-mutedgray mb-3 flex justify-center items-center 2xl:w-72 2xl:h-72 w-56 h-56 overflow-hidden">
@@ -137,8 +151,16 @@ export default function ProductsList() {
                       </label>
                     </div>
                   </Link>
+                  {/* // Loads the reamining products */}
+                <div ref={ref}>{isFetching && <p>Loading...</p>}</div>
                 </figure>
-              ))}
+              ))
+          ) : (
+                <p>No products found.</p>
+              )}
+
+              
+              
             </main>
           </div>
         </div>
