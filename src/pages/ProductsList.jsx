@@ -8,7 +8,10 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 
 const fetchProductsData = async ({ pageParam = 1 }) => {
   const { data } = await axios.get(BASE_API_URL);
-  return data.products;
+  const productsPerPage = 8;
+  const start = ( pageParam - 1 ) * productsPerPage;
+  const end = start + productsPerPage;
+  return data.products.slice(start, end);
 };
 
 export default function ProductsList() {
@@ -25,7 +28,7 @@ export default function ProductsList() {
     staleTime: 30000,
   });
 
-  const { data, isLoading: fetchData, error } = useInfiniteQuery({
+  const { data, isLoading: fetchData, error, fetchNextPage } = useInfiniteQuery({
     queryKey: ["products"],
     queryFn: fetchProductsData,
     initialPageParam: 1
