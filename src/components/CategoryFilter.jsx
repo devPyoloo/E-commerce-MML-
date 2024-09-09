@@ -30,5 +30,5 @@ export default function CategoryFilter({ category, setCategory }) {
 
 CategoryFilter.propTypes = {
   category: PropTypes.string.isRequired,
-  setCategory: PropTypes.string.isRequired
+  setCategory: PropTypes.func.isRequired
 }
