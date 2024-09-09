@@ -3,9 +3,9 @@ import { useState, useMemo, useEffect } from "react";
 import { BASE_API_URL } from "../../public/api";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
-import CategoryFilter from "../components/CategoryFilter";
-import RenderProducts from "../components/RenderProducts";
-import MenuBar from "../components/MenuBar";
+import CategoryFilter from "../components/Products Page/CategoryFilter";
+import RenderProducts from "../components/Products Page/RenderProducts";
+import MenuBar from "../components/Products Page/MenuBar";
 
 const fetchProductsData = async ({ pageParam = 1 }) => {
   const { data } = await axios.get(BASE_API_URL);

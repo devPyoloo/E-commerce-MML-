@@ -1,6 +1,6 @@
 import { createBrowserRouter, createRoutesFromChildren, Route, RouterProvider } from "react-router-dom"
 import RootLayer from "./layouts/RootLayer"
-import Home from "./components/Home"
+import Home from "./components/Landing Page/Home"
 import ProductsList from "./pages/ProductsList"
 import ProductDetails from "./pages/ProductDetails"
 import ProductsLayer from "./layouts/ProductsLayer"

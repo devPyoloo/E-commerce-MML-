@@ -1,13 +1,13 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import React from "react";
 
-export default function RenderProducts({
+const RenderProducts = React.forwardRef(function RenderProducts({
   sortedProducts,
   imageLoaded,
   handleImageLoad,
-  ref,
   isFetching,
-}) {
+}, ref) {
   return (
     <div className="flex flex-col">
       <main className="grid gap-x-16 md:grid-cols-4 gap-y-32 cursor-pointer">
@@ -41,22 +41,23 @@ export default function RenderProducts({
                   </label>
                 </div>
               </Link>
-              {/* // Loads the reamining products */}
-              <div ref={ref}>{isFetching && <p>Loading...</p>}</div>
             </figure>
           ))
         ) : (
           <p>No products found.</p>
         )}
       </main>
+      {/* Loads the remaining products */}
+      <div ref={ref}>{isFetching && <p>Loading...</p>}</div>
     </div>
   );
-}
+});
 
 RenderProducts.propTypes = {
   sortedProducts: PropTypes.array.isRequired,
   imageLoaded: PropTypes.object.isRequired,
   handleImageLoad: PropTypes.func.isRequired,
-  ref: PropTypes.object.isRequired,
   isFetching: PropTypes.bool.isRequired,
 };
+
+export default RenderProducts;

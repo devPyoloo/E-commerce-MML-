@@ -43,5 +43,5 @@ export default function MenuBar({ setSortBy }) {
 }
 
 MenuBar.propTypes = {
-  setSortBy: PropTypes.string.isRequired
+  setSortBy: PropTypes.func.isRequired
 }
