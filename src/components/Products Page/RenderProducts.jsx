@@ -2,6 +2,8 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import React from "react";
 
+
+//Used React.forwardRef to pass the props to a children
 const RenderProducts = React.forwardRef(function RenderProducts({
   sortedProducts,
   imageLoaded,
