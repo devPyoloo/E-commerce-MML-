@@ -2,9 +2,10 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { BASE_API_URL } from "../../public/api";
 import { useQuery } from "@tanstack/react-query";
-import { IoMdHeartEmpty, IoIosArrowDown } from "react-icons/io";
+import { IoMdHeartEmpty, IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { useState } from "react";
 
-
+//Fetch product
 const fetchProductDetails = async (productId) => {
   const { data } = await axios.get(BASE_API_URL);
   const product = data.products.find(
@@ -16,6 +17,7 @@ const fetchProductDetails = async (productId) => {
 
 export default function ProductDetails() {
   const { productId } = useParams();
+  const [isToggle, setIsToggle] = useState(false);
 
   const {
     data: product,
@@ -30,11 +32,22 @@ export default function ProductDetails() {
   if (isLoading) return <div> Loading... </div>;
   if (error) return <div>{error.message} : Cannot fetch product details </div>;
 
-  const { name, description, price, image, stock } = product;
+  const {
+    name,
+    description,
+    ingredients,
+    price,
+    image,
+    stock,
+    size,
+    usage,
+    expirationDate,
+    reviewCount
+  } = product;
 
   return (
-    <section className="flex justify-evenly items-start mx-20 mb-40 pt-40">
-      <figure className="relative bg-mutedgray flex justify-center items-center md:w-1/2 h-auto md:py-28 overflow-hidden">
+    <section className="flex flex-wrap justify-between items-start mx-20 mb-40 pt-40">
+      <figure className="relative bg-mutedgray flex flex-shrink-0 justify-center items-center md:w-1/2 h-auto md:py-28 overflow-hidden">
         <span className="absolute top-5 left-7 text-lightblack font-bold text-2xl z-10">
           CeRave
         </span>
@@ -45,9 +58,9 @@ export default function ProductDetails() {
         />
       </figure>
 
-      <main className="flex flex-col items-start gap-y-2">
+      <main className="flex flex-col items-start gap-y-2 md:w-2/5">
         <h1 className="font-bold text-2xl truncate w-full">
-          {name}{" "}
+          {name}
           <span className="text-lg text-lighgray font-normal">({stock})</span>
         </h1>
         <p className="text-lg text-lighgray font-light">Skincare</p>
@@ -58,13 +71,97 @@ export default function ProductDetails() {
             Add to Bag
           </button>
           <button className="w-full flex justify-center items-center gap-4 rounded-full text-lightgray border-2 border-lighgray text-xl py-6 hover:border-black">
-            Favourite{" "}
+            Favourite
             <IoMdHeartEmpty className="font-bold text-3xl fill-black" />
           </button>
         </div>
 
-        <div className="w-full flex flex-col">
-          <button className="flex justify-between py-4 items-center border-t border-t-lightgray">About this product <IoIosArrowDown /></button>
+        <div className="flex flex-col w-full">
+          <button
+            onClick={() => setIsToggle(!isToggle)}
+            className="flex justify-between py-4 items-center border-t border-t-lightgray text-lg"
+          >
+            About this product
+            {isToggle ? <IoIosArrowUp /> : <IoIosArrowDown />}
+          </button>
+          {isToggle && (
+            <div className="description">
+              <h1 className="text-lightblack font-semibold text-md">
+                Description
+              </h1>
+              <p className="text-md font-light text-lightgray">
+                
+                {description}
+              </p>
+              <p className="font-light text-lightgray">
+                <span className="text-lightblack font-semibold text-md">
+                  Size
+                </span>
+                : {size}
+              </p>
+              <p className="font-light text-lightgray">
+                <span className="text-lightblack font-semibold text-md">
+                  Expiration data
+                </span>
+                : {expirationDate}
+              </p>
+
+              <h1 className="text-lightblack font-semibold text-md mt-3">
+                Ingredients
+              </h1>
+              <p className="text-md font-light text-lightgray">
+                
+                {ingredients}
+              </p>
+
+              <em className="text-lightgray mt-5 font-light">
+                Usage: {usage}
+              </em>
+            </div>
+          )}
+
+          <div className="flex flex-col w-full">
+            <button
+              onClick={() => setIsToggle(!isToggle)}
+              className="flex justify-between py-4 items-center border-t border-t-lightgray text-lg"
+            >
+             Reviews <span className="text-lightgray text-md">({ reviewCount })</span> 
+              {isToggle ? <IoIosArrowUp /> : <IoIosArrowDown />}
+            </button>
+            <div className="description">
+              <h1 className="text-lightblack font-semibold text-md">
+                Description
+              </h1>
+              <p className="text-md font-light text-lightgray">
+                
+                {description}
+              </p>
+              <p className="font-light text-lightgray">
+                <span className="text-lightblack font-semibold text-md">
+                  Size
+                </span>
+                : {size}
+              </p>
+              <p className="font-light text-lightgray">
+                <span className="text-lightblack font-semibold text-md">
+                  Expiration data
+                </span>
+                : {expirationDate}
+              </p>
+
+              <h1 className="text-lightblack font-semibold text-md mt-3">
+                Ingredients
+              </h1>
+              <p className="text-md font-light text-lightgray">
+                
+                {ingredients}
+              </p>
+
+              <em className="text-lightgray mt-5 font-light">
+                Usage: {usage}
+              </em>
+            </div>
+          </div>
         </div>
       </main>
     </section>
