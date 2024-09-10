@@ -49,10 +49,10 @@ export default function Header() {
         className="drop-shadow-2xl"
         loading="lazy"
       />
-      <NavLink to={"products"}>Products</NavLink>
+      <NavLink to={"products/All"}>Products</NavLink>
       <NavLink to={"cart"} className="relative">
       <BsHandbag className="text-4xl drop-shadow" />
-      <span className="absolute rounded-full px-3 -top-2 -right-5 bg-satpink text-white text-md">1</span>
+      <span className="absolute rounded-full px-2 -top-2 -right-3 bg-satpink text-white text-sm">1</span>
       </NavLink>
     </nav>
   </header>

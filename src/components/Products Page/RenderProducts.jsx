@@ -11,7 +11,7 @@ const RenderProducts = React.forwardRef(function RenderProducts({
   isFetching,
 }, ref) {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col md:w-full">
       <main className="grid gap-x-16 md:grid-cols-4 gap-y-32 cursor-pointer">
         {sortedProducts.length > 0 ? (
           sortedProducts.map((product) => (

@@ -6,6 +6,7 @@ import { useInView } from "react-intersection-observer";
 import CategoryFilter from "../components/Products Page/CategoryFilter";
 import RenderProducts from "../components/Products Page/RenderProducts";
 import MenuBar from "../components/Products Page/MenuBar";
+import { useNavigate, useParams } from "react-router-dom";
 
 const fetchProductsData = async ({ pageParam = 1 }) => {
   const { data } = await axios.get(BASE_API_URL);
@@ -16,7 +17,9 @@ const fetchProductsData = async ({ pageParam = 1 }) => {
 };
 
 export default function ProductsList() {
-  const [category, setCategory] = useState("All");
+  // const [category, setCategory] = useState("All");
+  const { category = "All" } = useParams();
+  const navigate = useNavigate()
   const [imageLoaded, setImageLoaded] = useState({});
   const [sortBy, setSortBy] = useState("");
   const { ref, inView } = useInView();
@@ -67,6 +70,10 @@ export default function ProductsList() {
     setImageLoaded((prev) => ({ ...prev, [id]: true }));
   };
 
+  const handleCategoryChange = (cat) => {
+    navigate(`/products/${cat}`)
+  }
+
   return (
     <div className="font-lora mb-20">
       {fetchError && <p>Error: {fetchError.message}</p>}
@@ -80,7 +87,7 @@ export default function ProductsList() {
       ) : (
         <div className="flex justify-evenly items-start mx-20">
           {/* CategoryFilter */}
-          <CategoryFilter category={category} setCategory={setCategory} />
+          <CategoryFilter category={category} handleCategoryChange={handleCategoryChange} />
 
           {/* Render Products */}
           <RenderProducts

@@ -34,6 +34,7 @@ export default function ProductDetails() {
 
   const {
     name,
+    brand,
     description,
     ingredients,
     price,
@@ -49,7 +50,7 @@ export default function ProductDetails() {
     <section className="flex flex-wrap justify-between items-start mx-20 mb-40 pt-40">
       <figure className="relative bg-mutedgray flex flex-shrink-0 justify-center items-center md:w-1/2 h-auto md:py-28 overflow-hidden">
         <span className="absolute top-5 left-7 text-lightblack font-bold text-2xl z-10">
-          CeRave
+          {brand}
         </span>
         <img
           className="w-56 object-center drop-shadow-lg hover:scale-125 transition-transform duration-300 ease-out"

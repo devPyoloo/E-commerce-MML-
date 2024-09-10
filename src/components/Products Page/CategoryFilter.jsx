@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-export default function CategoryFilter({ category, setCategory }) {
+export default function CategoryFilter({ category, handleCategoryChange }) {
 
   const categories = [
     "All",
@@ -13,12 +13,12 @@ export default function CategoryFilter({ category, setCategory }) {
   ];
 
   return (
-    <aside className="sticky top-40 mr-20 flex flex-col gap-4 w-64">
+    <aside className="sticky top-40 mr-20 flex flex-col gap-4 w-52">
     {categories.map((cat) => (
-      <div className="border-t border-t-lightblack pt-2" key={cat}>
+      <div className="border-t border-t-lightgray pt-2" key={cat}>
         <button
           className={` ${cat === category ? "font-medium" : ""}`}
-          onClick={() => setCategory(cat)}
+          onClick={() => handleCategoryChange(cat)}
         >
           {cat}
         </button>
@@ -30,5 +30,5 @@ export default function CategoryFilter({ category, setCategory }) {
 
 CategoryFilter.propTypes = {
   category: PropTypes.string.isRequired,
-  setCategory: PropTypes.func.isRequired
+  handleCategoryChange: PropTypes.func.isRequired
 }
