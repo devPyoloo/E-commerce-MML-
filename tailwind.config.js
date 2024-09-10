@@ -18,7 +18,7 @@ export default {
       colors: {
         mutedblack: "#0E0E10",
         semiblack: "#0B0B0C",
-        lighblack: "#121212",
+        lightblack: "#121212",
         lightpink: "#FADADD",
         mutedpink: "#F8E5E5",
         dimpink: "#C39EA0",
@@ -28,6 +28,7 @@ export default {
         offwhite:'#FAF9F6',
         lightwhite: '#E0E0E0',
         mutedgray: '#EBEBEB',
+        lightgray: "#424141"
       },
       fontFamily: {
         'russo': ['Russo One', 'sans'],
