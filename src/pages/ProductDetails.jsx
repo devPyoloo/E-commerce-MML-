@@ -17,7 +17,7 @@ const fetchProductDetails = async (productId) => {
 
 export default function ProductDetails() {
   const { productId } = useParams();
-  const [isToggle, setIsToggle] = useState(false);
+  const [isActive, setIsActive] = useState(null);
 
   const {
     data: product,
@@ -78,13 +78,13 @@ export default function ProductDetails() {
 
         <div className="flex flex-col w-full">
           <button
-            onClick={() => setIsToggle(!isToggle)}
+            onClick={() => setIsActive(isActive === "about" ? null : "about")}
             className="flex justify-between py-4 items-center border-t border-t-lightgray text-lg"
           >
             About this product
-            {isToggle ? <IoIosArrowUp /> : <IoIosArrowDown />}
+            {isActive === "about" ? <IoIosArrowUp /> : <IoIosArrowDown />}
           </button>
-          {isToggle && (
+          {isActive === "about" && (
             <div className="description">
               <h1 className="text-lightblack font-semibold text-md">
                 Description
@@ -122,12 +122,16 @@ export default function ProductDetails() {
 
           <div className="flex flex-col w-full">
             <button
-              onClick={() => setIsToggle(!isToggle)}
+              onClick={() => setIsActive(isActive === "reviews" ? null : "reviews")}
               className="flex justify-between py-4 items-center border-t border-t-lightgray text-lg"
             >
-             Reviews <span className="text-lightgray text-md">({ reviewCount })</span> 
-              {isToggle ? <IoIosArrowUp /> : <IoIosArrowDown />}
+              <label htmlFor="">
+              Reviews <span className="text-lightgray text-md">({ reviewCount })</span> 
+              </label>
+            
+              {isActive === "reviews" ? <IoIosArrowUp /> : <IoIosArrowDown />}
             </button>
+            {isActive === "reviews" && (
             <div className="description">
               <h1 className="text-lightblack font-semibold text-md">
                 Description
@@ -136,31 +140,8 @@ export default function ProductDetails() {
                 
                 {description}
               </p>
-              <p className="font-light text-lightgray">
-                <span className="text-lightblack font-semibold text-md">
-                  Size
-                </span>
-                : {size}
-              </p>
-              <p className="font-light text-lightgray">
-                <span className="text-lightblack font-semibold text-md">
-                  Expiration data
-                </span>
-                : {expirationDate}
-              </p>
-
-              <h1 className="text-lightblack font-semibold text-md mt-3">
-                Ingredients
-              </h1>
-              <p className="text-md font-light text-lightgray">
-                
-                {ingredients}
-              </p>
-
-              <em className="text-lightgray mt-5 font-light">
-                Usage: {usage}
-              </em>
             </div>
+            )}
           </div>
         </div>
       </main>
