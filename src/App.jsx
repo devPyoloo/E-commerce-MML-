@@ -4,6 +4,7 @@ import Home from "./components/Landing Page/Home"
 import ProductsList from "./pages/ProductsList"
 import ProductDetails from "./pages/ProductDetails"
 import ProductsLayer from "./layouts/ProductsLayer"
+import ProductCart from "./pages/ProductCart"
 
 
 const router = createBrowserRouter(
@@ -15,6 +16,8 @@ const router = createBrowserRouter(
         <Route index element={<ProductsList />} />
         <Route path=":productId" element={<ProductDetails />} />
       </Route>
+
+      <Route path="cart" element={<ProductCart />} />
     </Route> 
   )
 )

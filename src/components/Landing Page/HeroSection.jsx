@@ -16,7 +16,7 @@ export default function HeroSection() {
               Discover curated cosmetics, skincare, and wellness products to
               enhance your glow. Explore and find your new essentials.
             </p> 
-            <Link to={'products'}>
+            <Link to={"products/All"}>
             <button className="bg-black px-8 py-4 text-xl text-white rounded-full font-semibold hover:bg-white hover:text-black transition duration-500 ease-in-out">
               Shop Now
             </button>

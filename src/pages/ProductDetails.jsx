@@ -4,6 +4,7 @@ import { BASE_API_URL } from "../../public/api";
 import { useQuery } from "@tanstack/react-query";
 import { IoMdHeartEmpty, IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { useState } from "react";
+import { useCartStore } from "../store/useCartStore";
 
 //Fetch product
 const fetchProductDetails = async (productId) => {
@@ -16,6 +17,8 @@ const fetchProductDetails = async (productId) => {
 };
 
 export default function ProductDetails() {
+  const addToCart = useCartStore((state) => state.addToCart)
+
   const { productId } = useParams();
   const [isActive, setIsActive] = useState(null);
 
@@ -68,7 +71,7 @@ export default function ProductDetails() {
         <p className="font-bold text-3xl mt-5">$ {price}</p>
 
         <div className="w-full flex flex-col gap-5 mt-20 mb-10">
-          <button className="w-full bg-mutedblack rounded-full text-white text-xl py-6 hover:opacity-90">
+          <button onClick={() => addToCart(product)} className="w-full bg-mutedblack rounded-full text-white text-xl py-6 hover:opacity-90">
             Add to Bag
           </button>
           <button className="w-full flex justify-center items-center gap-4 rounded-full text-lightgray border-2 border-lighgray text-xl py-6 hover:border-black">
