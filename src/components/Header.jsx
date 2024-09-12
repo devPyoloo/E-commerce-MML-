@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { BsHandbag } from "react-icons/bs";
 import { useEffect, useState } from "react";
-import { useCartStore } from "../store/useCartStore";
+import { useStore } from "../store/useStore";
 
 export default function Header() {
   const [onScroll, setOnScroll] = useState({
@@ -9,7 +9,7 @@ export default function Header() {
     showNav: true,
   });
   const [prevScrollPos, setPrevScrollPos] = useState(0);
-  const cart = useCartStore((state) => state.cart)
+  const cart = useStore((state) => state.cart)
 
   useEffect(() => {
     const handleScroll = () => {

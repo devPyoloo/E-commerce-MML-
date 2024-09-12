@@ -34,7 +34,7 @@ export default function ProductsList() {
     queryKey: ["products"],
     queryFn: fetchProductsData,
     initialPageParam: 1,
-    getNextPageParam: (lastPage, allPages) => {
+    getNextPageParam: (lastPage = [], allPages) => {
       return lastPage.length > 0 ? allPages.length + 1 : undefined;
     },
     staleTime: 30000,
@@ -84,7 +84,7 @@ export default function ProductsList() {
 
       {isLoading ? (
         <p className="text-center">Loading...</p>
-      ) : (
+      ) : ( 
         <div className="flex justify-evenly items-start mx-20">
           {/* CategoryFilter */}
           <CategoryFilter category={category} handleCategoryChange={handleCategoryChange} />
