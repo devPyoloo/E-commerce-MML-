@@ -6,6 +6,7 @@ import { IoMdHeartEmpty, IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { useState } from "react";
 import { useStore } from "../store/useStore";
 import ProductsCarousel from "../components/Products Page/ProductsCarousel";
+import Button from "../components/Button";
 
 //Fetch product details
 const fetchProductDetails = async (productId) => {
@@ -54,7 +55,7 @@ export default function ProductDetails() {
   return (
     <section className="mx-20 mb-40 pt-40">
       <div className="flex flex-wrap justify-between items-start">
-        <figure className="relative bg-mutedgray flex flex-shrink-0 justify-center items-center md:w-1/2 h-auto md:py-28 overflow-hidden">
+        <figure className="relative bg-mutedgray flex flex-shrink-0 justify-center items-center md:w-1/2 h-auto md:py-28">
           <span className="absolute top-5 left-7 text-lightblack font-bold text-2xl z-10">
             {brand}
           </span>
@@ -74,16 +75,12 @@ export default function ProductDetails() {
           <p className="font-bold text-3xl mt-5">$ {price}</p>
 
           <div className="w-full flex flex-col gap-5 mt-20 mb-10">
-            <button
-              onClick={() => addToCart(product)}
-              className="w-full bg-mutedblack rounded-full text-white text-xl py-6 hover:opacity-90"
-            >
-              Add to Bag
-            </button>
-            <button className="w-full flex justify-center items-center gap-4 rounded-full text-lightgray border-2 border-lighgray text-xl py-6 hover:border-black">
+            <Button buttonType={"primary"} onClick={() => addToCart(product)}> Add to Bag </Button>
+
+            <Button buttonType={"secondary"}>
               Favourite
-              <IoMdHeartEmpty className="font-bold text-3xl fill-black" />
-            </button>
+            <IoMdHeartEmpty className="font-bold text-3xl fill-black" />
+            </Button>
           </div>
 
           <div className="flex flex-col w-full">
@@ -159,10 +156,7 @@ export default function ProductDetails() {
         </main>
       </div>
 
-      <div className="mt-60 flex flex-col">
-        <h1 className="text-3xl font-semibold mb-20">YOU MIGHT ALSO LIKE</h1>
-        <ProductsCarousel category={category} / >
-      </div>
+      <ProductsCarousel category={category} />
     </section>
   );
 }

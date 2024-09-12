@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 const fetchProductsData = async (category) => {
   const { data } = await axios.get(BASE_API_URL);
   const filteredProducts = data.products.filter(
-    (product) => product.category === category
+    (product) => product.category !== category
   );
   return filteredProducts;
 };
@@ -58,24 +58,27 @@ export default function ProductsCarousel({ category }) {
     return <div>Error: {error.message}. Cannot fetch products data.</div>;
 
   return (
-    <Carousel responsive={responsive}>
-      {products.map((product) => (
-        <figure key={product.id}>
-          <Link to={`/products/${category}/${product.id}`}>
-            <div className="bg-mutedgray mb-3 flex justify-center items-center md:w-72 md:h-72 hover:cursor-pointer hover:shadow-md">
-              <img
-                className="md:w-24 w-24 object-center drop-shadow-lg"
-                src={product.image}
-                alt={product.name}
-              />
-            </div>
-          </Link>
-        </figure>
-      ))}
-    </Carousel>
+    <div className="mt-60 flex flex-col">
+      <h1 className="text-3xl font-semibold mb-20">YOU MIGHT ALSO LIKE</h1>
+      <Carousel responsive={responsive}>
+        {products.map((product) => (
+          <figure key={product.id}>
+            <Link to={`/products/${category}/${product.id}`}>
+              <div className="bg-mutedgray mb-3 flex justify-center items-center md:w-72 md:h-72 hover:cursor-pointer hover:shadow-md">
+                <img
+                  className="md:w-24 w-24 object-center drop-shadow-lg"
+                  src={product.image}
+                  alt={product.name}
+                />
+              </div>
+            </Link>
+          </figure>
+        ))}
+      </Carousel>
+    </div>
   );
 }
 
 ProductsCarousel.propTypes = {
-  category: PropTypes.string.isRequired,
+  category: PropTypes.string,
 };
