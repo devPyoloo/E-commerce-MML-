@@ -14,8 +14,8 @@ export default function ProductCart() {
   return (
     <>
       {cart.length > 0 ? (
-        <section className="flex flex-wrap justify-evenly items-start mx-20 mb-40 pt-32">
-          <div className="flex flex-col w-1/2">
+        <section className="flex flex-wrap justify-evenly items-start mb-40 pt-32">
+          <div className="flex flex-col w-5/12">
             <h1 className="text-3xl font-semibold">Your Bag</h1>
             {cart.map((item) => (
               <figure
@@ -31,8 +31,7 @@ export default function ProductCart() {
                   />
                 </div>
 
-                <div className="relative w-1/2 flex flex-col items-start gap-y-10 text-xl">
-                  <div className="w-full flex items-start justify-between">
+                <div className="relative w-1/2 flex flex-col items-start gap-y-10 2xl:text-xl text-lg">
                     <div className="flex flex-col gap-y-3">
                       <label className="font-semibold truncate w-full">
                         {item.name}
@@ -44,39 +43,49 @@ export default function ProductCart() {
                           <IoIosArrowDown />
                         </span>
                       </label>
-                    </div>
-                    <label className="flex justify-between items-center">
+                      <label className="text-xl font-semibold">
                       $ {item.price}
                     </label>
-                  </div>
+                    </div>
 
-                  <div className="flex justify-between">
-                    <span>
-                      <IoMdHeartEmpty />
-                    </span>
-                    <span>
-                      <GoTrash />
-                    </span>
+                  <div className="flex justify-between w-20 text-3xl text-lightgray">
+                    <IoMdHeartEmpty />
+                    <GoTrash />
                   </div>
                 </div>
               </figure>
             ))}
           </div>
 
-          <aside className="flex flex-col w-1/5 gap-4">
-            <h1 className="text-xl">Order Summary</h1>
-            <p className="flex justify-between w-full">
-              SubTotal: <span>${subTotal.toFixed(2)}</span>{" "}
-            </p>
-            <div className="">
+          <aside className="w-1/4">
+            <div className="flex flex-col gap-4 text-xl">
+              <h1 className="text-2xl font-medium">Order Summary</h1>
               <p className="flex justify-between w-full">
-                Standard Shipping: <span>Free</span>{" "}
+                SubTotal: <span>${subTotal.toFixed(2)}</span>{" "}
               </p>
-              <p>Estimated delivery 2 - 5 working days</p>
+
+              <div>
+                <p className="flex justify-between w-full">
+                  Standard Shipping: <span>Free</span>{" "}
+                </p>
+                <p className="text-base text-lightgray">
+                  Estimated delivery 2 - 5 working days
+                </p>
+              </div>
+
+              <p className="flex justify-between w-full">
+                Total: <span>${subTotal.toFixed(2)}</span>{" "}
+              </p>
             </div>
 
-            <button>Checkout</button>
-            <button>Continue shopping</button>
+            <div className="w-full flex flex-col gap-5 mt-20 mb-10">
+              <button className="w-full bg-mutedblack rounded-full text-white text-xl py-6 hover:opacity-90">
+                Checkout
+              </button>
+              <button className="w-full flex justify-center items-center gap-4 rounded-full text-lightgray border-2 border-lighgray text-xl py-6 hover:border-black">
+                Continue shopping
+              </button>
+            </div>
           </aside>
         </section>
       ) : (
