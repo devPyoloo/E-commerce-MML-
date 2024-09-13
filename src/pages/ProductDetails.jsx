@@ -75,11 +75,12 @@ export default function ProductDetails() {
           <p className="font-bold text-3xl mt-5">$ {price}</p>
 
           <div className="w-full flex flex-col gap-5 mt-20 mb-10">
-            <Button buttonType={"primary"} onClick={() => addToCart(product)}> Add to Bag </Button>
-
+            <Button buttonType={"primary"} onClick={() => addToCart(product)}>
+              Add to Bag
+            </Button>
             <Button buttonType={"secondary"}>
               Favourite
-            <IoMdHeartEmpty className="font-bold text-3xl fill-black" />
+              <IoMdHeartEmpty className="font-bold text-3xl fill-black" />
             </Button>
           </div>
 
@@ -133,7 +134,7 @@ export default function ProductDetails() {
                 className="flex justify-between py-4 items-center border-t border-t-lightgray text-lg"
               >
                 <label htmlFor="">
-                  Reviews{" "}
+                  Reviews
                   <span className="text-lightgray text-md">
                     ({reviewCount})
                   </span>

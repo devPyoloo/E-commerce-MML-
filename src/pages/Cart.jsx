@@ -62,7 +62,7 @@ export default function ProductCart() {
               ))}
             </div>
 
-            <aside className="w-1/3">
+            <aside className="w-1/3`">
               <div className="flex flex-col gap-4 text-xl">
                 <h1 className="text-2xl font-medium">Order Summary</h1>
                 <p className="flex justify-between w-full">
@@ -84,12 +84,15 @@ export default function ProductCart() {
               </div>
 
               <div className="w-full flex flex-col gap-5 mt-20 mb-10">
-                <Button
-                  buttonType={"primary"}
-                  customCss={"bg-mutedblack text-white hover:opacity-90"}
-                >
-                  Checkout
-                </Button>
+                <Link to={"checkout"}>
+                  <Button
+                    buttonType={"primary"}
+                    customCss={"bg-mutedblack text-white hover:opacity-90"}
+                  >
+                    Checkout
+                  </Button>
+                </Link>
+                
 
                 <Button
                   buttonType={"secondary"}
