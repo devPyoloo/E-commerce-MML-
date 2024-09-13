@@ -8,7 +8,7 @@ export default function Footer() {
 
   
   return (
-    <footer className="bg-mutedblack px-20 pt-20">
+    <footer className="bg-mutedblack text-offwhite px-20 pt-20">
       <div className="flex justify-evenly items-center gap-40 pb-20">
         <div className="social flex gap-5">
           <img

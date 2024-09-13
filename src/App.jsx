@@ -3,9 +3,9 @@ import RootLayer from "./layouts/RootLayer"
 import Home from "./components/Landing Page/Home"
 import ProductDetails from "./pages/ProductDetails"
 import ProductsLayer from "./layouts/ProductsLayer"
-import ProductCart from "./pages/ProductCart"
+import Cart from "./pages/Cart"
 import Checkout from "./pages/Checkout"
-import Products from "./components/Landing Page/Products"
+import Products from "./pages/Products"
 
 
 const router = createBrowserRouter(
@@ -18,8 +18,9 @@ const router = createBrowserRouter(
         <Route path=":productId" element={<ProductDetails />} />
       </Route>
 
-      <Route path="cart" element={<ProductCart />} />
       <Route path="checkout" element={<Checkout />} />
+      <Route path="cart" element={<Cart />} />
+      
     </Route> 
   )
 )

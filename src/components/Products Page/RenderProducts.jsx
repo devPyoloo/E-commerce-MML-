@@ -22,7 +22,7 @@ const RenderProducts = React.forwardRef(function RenderProducts({
                     <div className="w-28 h-28 bg-gray-200 animate-pulse"></div>
                   )}
                   <img
-                    className={`2xl:w-28 w-20 object-center drop-shadow-lg hover:scale-125 transition-transform duration-300 ease-out ${
+                    className={`2xl:w-28 w-20 object-center drop-shadow-md hover:scale-125 transition-transform duration-300 ease-out ${
                       imageLoaded[product.id] ? "block" : "hidden"
                     }`}
                     src={product.image}

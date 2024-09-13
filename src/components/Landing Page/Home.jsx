@@ -1,7 +1,7 @@
 import About from "./About";
 import HeroSection from "./HeroSection";
 
-import Products from "./Products";
+import Products from "./FeaturedProducts";
 
 
 export default function Home() {
