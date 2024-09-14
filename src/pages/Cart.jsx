@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useStore } from "../store/useStore";
-import { IoMdHeartEmpty, IoIosArrowDown } from "react-icons/io";
+import { IoMdHeartEmpty } from "react-icons/io";
 import { GoTrash } from "react-icons/go";
 import { Link } from "react-router-dom";
 import Button from "../components/Button";
@@ -9,10 +9,14 @@ import { BsPaypal } from "react-icons/bs";
 import { FaLock, FaCcVisa, FaCcMastercard, FaAlipay } from "react-icons/fa";
 
 export default function ProductCart() {
-  const cart = useStore((state) => state.cart);
+  const {cart, updateCartQuantity, removeCartProduct} = useStore((state) => ({
+    cart: state.cart,
+    updateCartQuantity: state.updateCartQuantity,
+    removeCartProduct: state.removeCartProduct
+  }));
 
   const subTotal = useMemo(() => {
-    return cart.reduce((start, item) => start + (item.price * item.quantity), 0);
+    return cart.reduce((start, item) => start + item.price * item.quantity, 0);
   }, [cart]);
 
   return (
@@ -43,10 +47,13 @@ export default function ProductCart() {
                       </label>
                       <label className="text-gray-700">{item.category}</label>
                       <label className="text-gray-700 flex gap-x-6">
-                        Quantity: {item.quantity}{" "}
-                        <span>
-                          <IoIosArrowDown />
-                        </span>
+                        <button onClick={() => updateCartQuantity(item.id, -1)} className="bg-mutedgray px-2 hover:opacity-80">
+                          -
+                        </button>
+                        {item.quantity}
+                        <button onClick={() => updateCartQuantity(item.id, 1)} className="bg-mutedgray px-2 hover:opacity-80">
+                          +
+                        </button>
                       </label>
                       <label className="text-xl font-semibold">
                         $ {item.price}
@@ -55,7 +62,10 @@ export default function ProductCart() {
 
                     <div className="flex justify-between w-20 text-3xl text-lightgray">
                       <IoMdHeartEmpty />
-                      <GoTrash />
+                      <GoTrash onClick={() => {
+  console.log("Removing item with ID:", item.id); // Add this for debugging
+  removeCartProduct(item.id);
+}} />
                     </div>
                   </div>
                 </figure>
@@ -66,20 +76,20 @@ export default function ProductCart() {
               <div className="flex flex-col gap-4 text-xl">
                 <h1 className="text-2xl font-medium">Order Summary</h1>
                 <p className="flex justify-between w-full">
-                  SubTotal: <span>${subTotal.toFixed(2)}</span>{" "}
+                  SubTotal: <span>${subTotal.toFixed(2)}</span>
                 </p>
 
                 <div>
                   <p className="flex justify-between w-full">
-                    Standard Shipping: <span>Free</span>{" "}
+                    Standard Shipping: <span>Free</span>
                   </p>
                   <p className="text-base text-lightgray">
                     Estimated delivery 2 - 5 working days
                   </p>
                 </div>
 
-                <p className="flex justify-between w-full">
-                  Total: <span>${subTotal.toFixed(2)}</span>{" "}
+                <p className="flex justify-between w-full border-y border-y-mutedgray py-4 my-10">
+                  Total: <span>${subTotal.toFixed(2)}</span>
                 </p>
               </div>
 
@@ -92,7 +102,6 @@ export default function ProductCart() {
                     Checkout
                   </Button>
                 </Link>
-                
 
                 <Button
                   buttonType={"secondary"}
@@ -118,7 +127,7 @@ export default function ProductCart() {
               <p className="flex items-center gap-x-3">
                 <span className="text-2xl">
                   <FaLock />
-                </span>{" "}
+                </span>
                 Secure Payments
               </p>
               <p>Available payment methods</p>
