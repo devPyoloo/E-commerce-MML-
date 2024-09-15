@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useStore } from "../store/useStore";
 import ProductsCarousel from "../components/Products Page/ProductsCarousel";
 import Button from "../components/Button";
+import StarRating from "../components/StarRating";
 
 //Fetch product details
 const fetchProductDetails = async (productId) => {
@@ -53,6 +54,7 @@ export default function ProductDetails() {
     usage,
     expirationDate,
     reviewCount,
+    rating
   } = product;
 
   return (
@@ -98,7 +100,7 @@ export default function ProductDetails() {
               {isActive === "about" ? <IoIosArrowUp /> : <IoIosArrowDown />}
             </button>
             {isActive === "about" && (
-              <div className="description">
+              <div className="description pb-10">
                 <h1 className="text-lightblack font-semibold text-md">
                   Description
                 </h1>
@@ -125,9 +127,9 @@ export default function ProductDetails() {
                   {ingredients}
                 </p>
 
-                <em className="text-lightgray mt-5 font-light">
-                  Usage: {usage}
-                </em>
+                <p className="text-lightgray mt-5 font-normal">
+                  <em>Usage: {usage}</em>
+                </p>
               </div>
             )}
 
@@ -138,24 +140,26 @@ export default function ProductDetails() {
                 }
                 className="flex justify-between py-4 items-center border-t border-t-lightgray text-lg"
               >
-                <label htmlFor="">
+                <label>
                   Reviews
                   <span className="text-lightgray text-md">
                     ({reviewCount})
                   </span>
                 </label>
-
-                {isActive === "reviews" ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                <div className="ratings flex justify-end items-center gap-x-3">
+                  <p className="text-md font-light text-lightgray">
+                    <StarRating rating={rating} />
+                  </p>
+                  <h1 className="text-lightblack font-semibold text-md">
+                    {rating}
+                  </h1>
+                  {isActive === "reviews" ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                </div>
+                
               </button>
               {isActive === "reviews" && (
-                <div className="description">
-                  <h1 className="text-lightblack font-semibold text-md">
-                    Description
-                  </h1>
-                  <p className="text-md font-light text-lightgray">
-                    {description}
-                  </p>
-                </div>
+                <em className="text-light text-lightgray">These display all lthe reviews and feedback about the product</em>
+              
               )}
             </div>
           </div>

@@ -112,20 +112,18 @@ export default function ProductCart() {
                 <Link to={"/checkout"}>
                   <Button
                     buttonType={"primary"}
-                    customCss={"bg-mutedblack text-white hover:opacity-90"}
                   >
                     Checkout
                   </Button>
                 </Link>
 
+                <Link to={"/products/All"}>
                 <Button
                   buttonType={"secondary"}
-                  customCss={
-                    "flex justify-center items-center gap-4 text-lightgray border-2 border-lighgray hover:border-black"
-                  }
                 >
                   Continue shopping
                 </Button>
+                </Link>
 
                 <button className=""></button>
               </div>

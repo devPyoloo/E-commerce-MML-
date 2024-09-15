@@ -67,7 +67,7 @@ export default function Header() {
       
       <NavLink to={"cart"} className="relative">
       <BsHandbag className="text-4xl drop-shadow" />
-      {cartTotal > 0 && <span className="absolute rounded-full px-2 -top-2 -right-3 bg-satpink text-white text-sm"> {cartTotal}</span>}
+      {cartTotal > 0 && <span className="absolute rounded-full px-2 -top-2 -right-2 bg-satpink text-white text-sm"> {cartTotal}</span>}
       </NavLink>
       </div>
       
