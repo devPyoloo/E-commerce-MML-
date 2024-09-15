@@ -9,10 +9,11 @@ import { BsPaypal } from "react-icons/bs";
 import { FaLock, FaCcVisa, FaCcMastercard, FaAlipay } from "react-icons/fa";
 
 export default function ProductCart() {
-  const {cart, updateCartQuantity, removeCartProduct} = useStore((state) => ({
+  const { cart, updateCartQuantity, removeCartProduct, addtoFavourite } = useStore((state) => ({
     cart: state.cart,
     updateCartQuantity: state.updateCartQuantity,
-    removeCartProduct: state.removeCartProduct
+    removeCartProduct: state.removeCartProduct,
+    addtoFavourite: state.addtoFavourite
   }));
 
   const subTotal = useMemo(() => {
@@ -46,26 +47,40 @@ export default function ProductCart() {
                         {item.name}
                       </label>
                       <label className="text-gray-700">{item.category}</label>
-                      <label className="text-gray-700 flex gap-x-6">
-                        <button onClick={() => updateCartQuantity(item.id, -1)} className="bg-mutedgray px-2 hover:opacity-80">
+                      <div className="text-gray-700 flex gap-x-6 py-3">
+                        <button
+                          onClick={() => updateCartQuantity(item.id, -1)}
+                          className="bg-mutedgray px-2 hover:opacity-80"
+                        >
                           -
                         </button>
                         {item.quantity}
-                        <button onClick={() => updateCartQuantity(item.id, 1)} className="bg-mutedgray px-2 hover:opacity-80">
+                        <button
+                          onClick={() => updateCartQuantity(item.id, 1)}
+                          className="bg-mutedgray px-2 hover:opacity-80"
+                        >
                           +
                         </button>
-                      </label>
+                      </div>
                       <label className="text-xl font-semibold">
                         $ {item.price}
                       </label>
                     </div>
 
                     <div className="flex justify-between w-20 text-3xl text-lightgray">
+                      <button onClick={() => {
+                          addtoFavourite(item);
+                        }}>
                       <IoMdHeartEmpty />
-                      <GoTrash onClick={() => {
-  console.log("Removing item with ID:", item.id); // Add this for debugging
-  removeCartProduct(item.id);
-}} />
+                      </button>
+                     
+                      <button
+                        onClick={() => {
+                          removeCartProduct(item.id);
+                        }}
+                      >
+                        <GoTrash />
+                      </button>
                     </div>
                   </div>
                 </figure>

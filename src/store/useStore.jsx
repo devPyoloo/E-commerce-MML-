@@ -2,6 +2,7 @@ import { create } from "zustand";
 
 export const useStore = create((set) => ({
   cart: [],
+  favourite: [],
   total: 0,
   addToCart: (product) =>
     set((state) => {
@@ -35,15 +36,36 @@ export const useStore = create((set) => ({
         )
         .filter((item) => item.quantity > 0);
 
-      return { cart: updateCart };
+        const updatedTotal = updateCart.reduce(
+          (sum, item) => sum + item.price * item.quantity,
+          0
+        );
+  
+        return {
+          cart: updateCart,
+          total: updatedTotal,
+        };
     }),
 
   removeCartProduct: (productId) =>
     set((state) => {
-      const updatedCart = state.cart.filter((item) => 
-        item.id !== productId
-      );
-      
+      const updatedCart = state.cart.filter((item) => item.id !== productId);
+
       return { cart: updatedCart };
+    }),
+
+  addtoFavourite: (product) =>
+    set((state) => {
+      const productExist = state.favourite.find(
+        (item) => item.id === product.id
+      );
+
+      const updatedFavourite = !productExist
+        ? [...state.favourite, { ...product}]
+        : [...state.favourite];
+
+      console.log("current wishlist", updatedFavourite)
+
+      return { favourite: updatedFavourite };
     }),
 }));

@@ -10,7 +10,7 @@ export default function Checkout() {
         CHECKOUT
       </h1>
       <section className="flex justify-evenly items-start">
-        <main className="w-3/5 pr-56">
+        <form className="w-3/5 pr-56 mb-40">
           <div className="contact flex flex-col gap-y-5 pb-10">
             <h1 className="group text-xl font-semibold">Contact</h1>
             <input
@@ -187,7 +187,14 @@ export default function Checkout() {
               placeholder="Country"
             />
           </div>
-        </main>
+
+<div className="flex justify-center">
+<button className="w-1/2 rounded-full text-xl py-6 bg-mutedblack text-white hover:opacity-90">
+      Place Order
+    </button>
+</div>
+          
+        </form>
 
         <aside className="w-1/3">
           <div className="flex flex-col gap-4 text-xl">

@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { BsHandbag } from "react-icons/bs";
+import { IoMdHeartEmpty } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { useStore } from "../store/useStore";
 
@@ -9,7 +10,12 @@ export default function Header() {
     showNav: true,
   });
   const [prevScrollPos, setPrevScrollPos] = useState(0);
-  const cart = useStore((state) => state.cart)
+  const { cart, favourite } = useStore((state) => ({
+    cart: state.cart,
+    favourite: state.favourite
+  }))
+
+  const cartTotal = cart.reduce((start, item) => start + item.quantity, 0)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -52,10 +58,19 @@ export default function Header() {
         loading="lazy"
       />
       <NavLink to={"products/All"}>Products</NavLink>
+      
+      <div className="flex justify-center items-center gap-x-7">
+      <NavLink to={"favourite"} className="relative">
+      <IoMdHeartEmpty className="text-4xl drop-shadow" />
+      {favourite.length > 0 && <span className="absolute rounded-full px-2 -top-2 -right-3 bg-satpink text-white text-sm"> {favourite.length}</span>}
+      </NavLink>
+      
       <NavLink to={"cart"} className="relative">
       <BsHandbag className="text-4xl drop-shadow" />
-      <span className="absolute rounded-full px-2 -top-2 -right-3 bg-satpink text-white text-sm">{cart.length}</span>
+      {cartTotal > 0 && <span className="absolute rounded-full px-2 -top-2 -right-3 bg-satpink text-white text-sm"> {cartTotal}</span>}
       </NavLink>
+      </div>
+      
     </nav>
   </header>
   );

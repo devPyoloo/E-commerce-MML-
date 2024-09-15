@@ -19,7 +19,10 @@ const fetchProductDetails = async (productId) => {
 };
 
 export default function ProductDetails() {
-  const addToCart = useStore((state) => state.addToCart);
+  const { addToCart, addtoFavourite } = useStore((state) => ({
+    addToCart: state.addToCart,
+    addtoFavourite: state.addtoFavourite
+  }));
 
   const { productId } = useParams();
   const [isActive, setIsActive] = useState(null);
@@ -78,7 +81,9 @@ export default function ProductDetails() {
             <Button buttonType={"primary"} onClick={() => addToCart(product)}>
               Add to Bag
             </Button>
-            <Button buttonType={"secondary"}>
+            <Button buttonType={"secondary"} onClick={() => {
+                          addtoFavourite(product);
+                        }}>
               Favourite
               <IoMdHeartEmpty className="font-bold text-3xl fill-black" />
             </Button>
