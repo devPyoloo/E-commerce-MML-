@@ -1,4 +1,5 @@
 import { FaStar, FaStarHalfAlt, FaRegStar } from 'react-icons/fa';
+import PropTypes from 'prop-types'
 
 
 export default function StarRating({ rating, maxRating = 5 }) {
@@ -21,3 +22,7 @@ export default function StarRating({ rating, maxRating = 5 }) {
   )
 }
 
+StarRating.propTypes = {
+  rating: PropTypes.number.isRequired,
+  maxRating: PropTypes.number.isRequired
+}
