@@ -22,7 +22,7 @@ const fetchProductDetails = async (productId) => {
 export default function ProductDetails() {
   const { addToCart, addtoFavourite } = useStore((state) => ({
     addToCart: state.addToCart,
-    addtoFavourite: state.addtoFavourite
+    addtoFavourite: state.addtoFavourite,
   }));
 
   const { productId } = useParams();
@@ -54,7 +54,7 @@ export default function ProductDetails() {
     usage,
     expirationDate,
     reviewCount,
-    rating
+    rating,
   } = product;
 
   return (
@@ -83,9 +83,12 @@ export default function ProductDetails() {
             <Button buttonType={"primary"} onClick={() => addToCart(product)}>
               Add to Bag
             </Button>
-            <Button buttonType={"secondary"} onClick={() => {
-                          addtoFavourite(product);
-                        }}>
+            <Button
+              buttonType={"secondary"}
+              onClick={() => {
+                addtoFavourite(product);
+              }}
+            >
               Favourite
               <IoMdHeartEmpty className="font-bold text-3xl fill-black" />
             </Button>
@@ -147,19 +150,22 @@ export default function ProductDetails() {
                   </span>
                 </label>
                 <div className="ratings flex justify-end items-center gap-x-3">
-                  <p className="text-md font-light text-lightgray">
-                    <StarRating rating={rating} />
-                  </p>
+                  <StarRating rating={rating} />
+
                   <h1 className="text-lightblack font-semibold text-md">
                     {rating}
                   </h1>
-                  {isActive === "reviews" ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                  {isActive === "reviews" ? (
+                    <IoIosArrowUp />
+                  ) : (
+                    <IoIosArrowDown />
+                  )}
                 </div>
-                
               </button>
               {isActive === "reviews" && (
-                <em className="text-light text-lightgray">These display all lthe reviews and feedback about the product</em>
-              
+                <em className="text-light text-lightgray">
+                  These display all lthe reviews and feedback about the product
+                </em>
               )}
             </div>
           </div>

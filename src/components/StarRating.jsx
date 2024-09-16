@@ -24,5 +24,5 @@ export default function StarRating({ rating, maxRating = 5 }) {
 
 StarRating.propTypes = {
   rating: PropTypes.number.isRequired,
-  maxRating: PropTypes.number.isRequired
+  maxRating: PropTypes.number
 }
