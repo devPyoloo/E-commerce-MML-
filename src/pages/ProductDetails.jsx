@@ -2,7 +2,12 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { BASE_API_URL } from "../../public/api";
 import { useQuery } from "@tanstack/react-query";
-import { IoMdHeartEmpty, IoMdHeart , IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import {
+  IoMdHeartEmpty,
+  IoMdHeart,
+  IoIosArrowDown,
+  IoIosArrowUp,
+} from "react-icons/io";
 import { useState } from "react";
 import { useStore } from "../store/useStore";
 import ProductsCarousel from "../components/Products Page/ProductsCarousel";
@@ -24,11 +29,14 @@ export default function ProductDetails() {
   const { addToCart, addtoFavourite, favourite } = useStore((state) => ({
     addToCart: state.addToCart,
     addtoFavourite: state.addtoFavourite,
-    favourite: state.favourite
+    favourite: state.favourite,
   }));
 
-  const alreadyFavourite = favourite.find((item) => item.id === parseInt(productId))
+  const arrayFavourite = Array.isArray(favourite) ? favourite : [];
 
+  const alreadyFavourite = arrayFavourite.some(
+    (item) => item.id === parseInt(productId)
+  );
 
   const [isActive, setIsActive] = useState(null);
 
@@ -41,7 +49,6 @@ export default function ProductDetails() {
     queryFn: () => fetchProductDetails(productId),
     staleTime: 30000,
   });
-
 
   if (isLoading) return <div> Loading... </div>;
   if (error) return <div>{error.message} : Cannot fetch product details </div>;
@@ -89,17 +96,16 @@ export default function ProductDetails() {
               Add to Bag
             </Button>
             <Button
-  buttonType={"secondary"}
-  onClick={() => addtoFavourite(product)}
->
-  Favourite
-  {alreadyFavourite ? (
-    <IoMdHeart className="font-bold text-3xl fill-red-600" />
-  ) : (
-    <IoMdHeartEmpty className="font-bold text-3xl" />
-  )}
-</Button>
-
+              buttonType={"secondary"}
+              onClick={() => addtoFavourite(product)}
+            >
+              Favourite
+              {alreadyFavourite ? (
+                <IoMdHeart className="font-bold text-3xl fill-red-600" />
+              ) : (
+                <IoMdHeartEmpty className="font-bold text-3xl" />
+              )}
+            </Button>
           </div>
 
           <div className="flex flex-col w-full">

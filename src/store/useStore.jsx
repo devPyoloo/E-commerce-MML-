@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import toast from "react-hot-toast";
 
 export const useStore = create(
   persist(
@@ -25,6 +26,14 @@ export const useStore = create(
             (sum, item) => sum + item.price * item.quantity,
             0
           );
+
+          toast.success("Added to cart", {
+            style: {
+              borderRadius: "5px",
+              background: "#EBEBEB",
+              color: "#0B0B0C",
+            },
+          });
 
           return {
             cart: updatedCart,
@@ -58,6 +67,14 @@ export const useStore = create(
             (item) => item.id !== productId
           );
 
+          toast.success("Removed from cart", {
+            style: {
+              borderRadius: "5px",
+              background: "#EBEBEB",
+              color: "#0B0B0C",
+            },
+          });
+
           return { cart: updatedCart };
         }),
 
@@ -67,13 +84,22 @@ export const useStore = create(
             (item) => item.id === product.id
           );
 
-          return isFavourite
-            ? {
-                favourite: state.favourite.filter(
-                  (item) => item.id !== product.id
-                ),
-              }
-            : { favourite: [...state.favourite, product] };
+          const updatedFavourite = isFavourite
+            ? state.favourite.filter((item) => item.id !== product.id)
+            : [...state.favourite, product];
+
+          toast[isFavourite ? "error" : "success"](
+            isFavourite ? "Removed from cart" : "Added to favourite",
+            {
+              style: {
+                borderRadius: "5px",
+                background: "#EBEBEB",
+                color: "#0B0B0C",
+              },
+            }
+          );
+
+          return { favourite: updatedFavourite };
         }),
     }),
     {
