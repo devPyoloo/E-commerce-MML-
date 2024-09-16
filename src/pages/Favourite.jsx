@@ -1,26 +1,35 @@
 
 import { useStore } from "../store/useStore";
 import { Link } from "react-router-dom";
+import { FaHeart } from "react-icons/fa6";
 
 export default function Favourite() {
   const favourite = useStore((state) => state.favourite);
 
   return (
-    <section className="flex flex-col justify-center items-center mb-20 pt-20">
-      <header className="flex">
+    <section className="mb-20 pt-20 mx-20">
+      <header className="flex justify-start mb-10 sticky top-0 py-3 bg-offwhite z-10">
         <h1 className="text-3xl font-semibold">
           Your {favourite.length > 1 ? "Favourites" : "Favourite"} <span className="text-xl text-lightgray">({favourite.length})</span>
-        </h1>
+        </h1>        
         </header>
         
      
 
       {favourite.length > 0 ? (
-        <div className="grid gap-x-16 md:grid-cols-4 gap-y-32 cursor-pointer m-20">
+        <div className="grid gap-x-16 md:grid-cols-4 gap-y-32 cursor-pointer">
           {favourite.map((item) => (
             <figure className="item-card" key={item.id}>
               <Link to={`/products/${item.category}/${item.id.toString()}`}>
-                <div className="bg-mutedgray mb-3 flex justify-center items-center 2xl:w-72 2xl:h-72 w-56 h-56 overflow-hidden">
+                <div className="relative bg-mutedgray mb-3 flex justify-center items-center 2xl:w-72 2xl:h-72 w-56 h-56 overflow-hidden">
+                <button
+                        // onClick={() => {
+                        //   removeCartProduct(item.id);
+                        // }}
+                        className="absolute right-2 top-2"
+                      >
+                        <FaHeart className="text-xl text-red-600" />
+                      </button>
                   <img
                     className="2xl:w-28 w-20 object-center drop-shadow-md"
                     src={item.image}
