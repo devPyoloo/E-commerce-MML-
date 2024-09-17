@@ -4,6 +4,9 @@ import { IoMdHeartEmpty } from "react-icons/io";
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 import { useEffect, useState } from "react";
 import { useStore } from "../store/useStore";
+import { AnimatePresence, motion } from "framer-motion";
+
+
 
 export default function Header() {
   const [onScroll, setOnScroll] = useState({
@@ -11,7 +14,7 @@ export default function Header() {
     showNav: true,
   });
   const [prevScrollPos, setPrevScrollPos] = useState(0);
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false);
   const { cart, favourite } = useStore((state) => ({
     cart: state.cart,
     favourite: state.favourite,
@@ -38,6 +41,19 @@ export default function Header() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [prevScrollPos]);
+
+  const menuVariants = {
+    hidden: {
+      height: 0,
+      opacity: 0,
+      transition: { duration: 0.2 },
+    },
+    visible: {
+      height: "auto",
+      opacity: 1,
+      transition: { duration: 0.1 },
+    },
+  };
   return (
     <header className="fixed top-0 left-0 right-0 group flex justify-center items-center z-20">
       <div
@@ -46,18 +62,17 @@ export default function Header() {
         }  transition-transform duration-200 ease-in-out z-0 rounded-b-2xl`}
       ></div>
 
-      {/* MOBILE NAVBIGATION */}
+      {/* MOBILE NAVIGATION */}
       <nav
         className={`${
           onScroll.showNav ? "opacity-100" : "opacity-0"
-        } mt-7 w-full flex items-center justify-center space-x-40 font-lora text-xl px-5 pb-8 font-medium text-lightblack z-10 md:hidden`}
+        } mt-7 w-full flex items-center justify-between font-lora text-xl px-5 pb-8 font-medium text-lightblack z-10 md:hidden`}
       >
         <div className="flex justify-center items-center gap-x-1">
           <NavLink to={"favourite"} className="relative">
             <IoMdHeartEmpty className="text-4xl drop-shadow" />
             {favourite.length > 0 && (
               <span className="absolute rounded-full px-2 -top-2 -right-3 bg-satpink text-white text-sm">
-                {" "}
                 {favourite.length}
               </span>
             )}
@@ -67,7 +82,6 @@ export default function Header() {
             <BsHandbag className="text-4xl drop-shadow" />
             {cartTotal > 0 && (
               <span className="absolute rounded-full px-2 -top-2 -right-2 bg-satpink text-white text-sm">
-                {" "}
                 {cartTotal}
               </span>
             )}
@@ -82,21 +96,82 @@ export default function Header() {
           loading="lazy"
         />
 
-        <button onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <HiOutlineX /> : <HiOutlineMenu />}</button>
+        {/* HAMBURGER MENU TOGGLE */}
+        <button
+          className="text-5xl"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <motion.div
+            initial={{ rotate: 0 }}
+            animate={{ rotate: menuOpen ? 90 : 0 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
+          >
+            {menuOpen ? <HiOutlineX /> : <HiOutlineMenu />}
+          </motion.div>
+        </button>
 
-        {menuOpen && <div className="absolute top-20 left-0 right-0 bg-lightgray flex flex-col">
-          <NavLink to={"/"}>Home</NavLink>
-        <NavLink to={"about"}>About us</NavLink>
-        <NavLink to={"products/All"}>Products</NavLink>
-        </div> }
-
-        
-
-        
+        {/* ANIMATED MENU */}
+        <AnimatePresence>
+          {menuOpen && (
+            <motion.div
+              key="menu"
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              variants={menuVariants}
+              className="absolute grid grid-cols-1 py-10 justify-items-center gap-y-5 top-24 left-0 right-0 bg-mutedgray shadow-2xl mx-5"
+            >
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 260,
+                  damping: 20,
+                  delay: 0,
+                }}
+              >
+                <NavLink onClick={() => setMenuOpen(prev => !prev)} to={"/"}>
+                Home
+                </NavLink>
+                
+              </motion.div>
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 260,
+                  damping: 20,
+                  delay: 0.1,
+                }}
+              >
+                <NavLink onClick={() => { setMenuOpen(prev => !prev); () => { const element = document.getElementById('about-section'); element?.scrollIntoView({ behaviour: 'smooth' }); }
+               }}>
+                About Us
+                </NavLink>
+                
+              </motion.div>
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 260,
+                  damping: 20,
+                  delay: 0.2,
+                }}
+              >
+               <NavLink onClick={() => setMenuOpen(prev => !prev)} to={"products/All"}>
+                Products
+                </NavLink>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
 
-
-{/* DESKTOP NAVIGATION */}
+      {/* DESKTOP NAVIGATION */}
       <nav
         className={`${
           onScroll.showNav ? "opacity-100" : "opacity-0"
