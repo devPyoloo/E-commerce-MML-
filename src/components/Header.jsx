@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { BsHandbag } from "react-icons/bs";
 import { IoMdHeartEmpty } from "react-icons/io";
+import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 import { useEffect, useState } from "react";
 import { useStore } from "../store/useStore";
 
@@ -10,12 +11,13 @@ export default function Header() {
     showNav: true,
   });
   const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false)
   const { cart, favourite } = useStore((state) => ({
     cart: state.cart,
-    favourite: state.favourite
-  }))
+    favourite: state.favourite,
+  }));
 
-  const cartTotal = cart.reduce((start, item) => start + item.quantity, 0)
+  const cartTotal = cart.reduce((start, item) => start + item.quantity, 0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,40 +40,100 @@ export default function Header() {
   }, [prevScrollPos]);
   return (
     <header className="fixed top-0 left-0 right-0 group flex justify-center items-center z-20">
-    <div
-      className={`absolute inset-0 bg-white shadow-md transform -translate-y-full ${
-        onScroll.showBg ? "translate-y-0" : ""
-      }  transition-transform duration-200 ease-in-out z-0 rounded-b-2xl`}
-    ></div>
+      <div
+        className={`absolute inset-0 bg-white shadow-md transform -translate-y-full ${
+          onScroll.showBg ? "translate-y-0" : ""
+        }  transition-transform duration-200 ease-in-out z-0 rounded-b-2xl`}
+      ></div>
 
-    <nav
-      className={`${
-        onScroll.showNav ? "opacity-100" : "opacity-0"
-      } mt-7 w-full flex items-center justify-center space-x-40 font-lora text-xl px-5 pb-8 font-medium text-lightblack z-10`}
-    >
-      <NavLink to={"/"}>Home</NavLink>
-      <NavLink to={"about"}>About us</NavLink>
-      <img
-        src="/assets/logo.png"
-        alt="Logo"
-        className="drop-shadow-2xl"
-        loading="lazy"
-      />
-      <NavLink to={"products/All"}>Products</NavLink>
-      
-      <div className="flex justify-center items-center gap-x-7">
-      <NavLink to={"favourite"} className="relative">
-      <IoMdHeartEmpty className="text-4xl drop-shadow" />
-      {favourite.length > 0 && <span className="absolute rounded-full px-2 -top-2 -right-3 bg-satpink text-white text-sm"> {favourite.length}</span>}
-      </NavLink>
-      
-      <NavLink to={"cart"} className="relative">
-      <BsHandbag className="text-4xl drop-shadow" />
-      {cartTotal > 0 && <span className="absolute rounded-full px-2 -top-2 -right-2 bg-satpink text-white text-sm"> {cartTotal}</span>}
-      </NavLink>
-      </div>
-      
-    </nav>
-  </header>
+      {/* MOBILE NAVBIGATION */}
+      <nav
+        className={`${
+          onScroll.showNav ? "opacity-100" : "opacity-0"
+        } mt-7 w-full flex items-center justify-center space-x-40 font-lora text-xl px-5 pb-8 font-medium text-lightblack z-10 md:hidden`}
+      >
+        <div className="flex justify-center items-center gap-x-1">
+          <NavLink to={"favourite"} className="relative">
+            <IoMdHeartEmpty className="text-4xl drop-shadow" />
+            {favourite.length > 0 && (
+              <span className="absolute rounded-full px-2 -top-2 -right-3 bg-satpink text-white text-sm">
+                {" "}
+                {favourite.length}
+              </span>
+            )}
+          </NavLink>
+
+          <NavLink to={"cart"} className="relative">
+            <BsHandbag className="text-4xl drop-shadow" />
+            {cartTotal > 0 && (
+              <span className="absolute rounded-full px-2 -top-2 -right-2 bg-satpink text-white text-sm">
+                {" "}
+                {cartTotal}
+              </span>
+            )}
+          </NavLink>
+        </div>
+
+        {/* LOGO */}
+        <img
+          src="/assets/logo.png"
+          alt="Logo"
+          className="drop-shadow-2xl"
+          loading="lazy"
+        />
+
+        <button onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <HiOutlineX /> : <HiOutlineMenu />}</button>
+
+        {menuOpen && <div className="absolute top-20 left-0 right-0 bg-lightgray flex flex-col">
+          <NavLink to={"/"}>Home</NavLink>
+        <NavLink to={"about"}>About us</NavLink>
+        <NavLink to={"products/All"}>Products</NavLink>
+        </div> }
+
+        
+
+        
+      </nav>
+
+
+{/* DESKTOP NAVIGATION */}
+      <nav
+        className={`${
+          onScroll.showNav ? "opacity-100" : "opacity-0"
+        } mt-7 w-full md:flex items-center justify-center space-x-40 font-lora text-xl px-5 pb-8 font-medium text-lightblack z-10 hidden`}
+      >
+        <NavLink to={"/"}>Home</NavLink>
+        <NavLink to={"about"}>About us</NavLink>
+        <img
+          src="/assets/logo.png"
+          alt="Logo"
+          className="drop-shadow-2xl"
+          loading="lazy"
+        />
+        <NavLink to={"products/All"}>Products</NavLink>
+
+        <div className="flex justify-center items-center gap-x-7">
+          <NavLink to={"favourite"} className="relative">
+            <IoMdHeartEmpty className="text-4xl drop-shadow" />
+            {favourite.length > 0 && (
+              <span className="absolute rounded-full px-2 -top-2 -right-3 bg-satpink text-white text-sm">
+                {" "}
+                {favourite.length}
+              </span>
+            )}
+          </NavLink>
+
+          <NavLink to={"cart"} className="relative">
+            <BsHandbag className="text-4xl drop-shadow" />
+            {cartTotal > 0 && (
+              <span className="absolute rounded-full px-2 -top-2 -right-2 bg-satpink text-white text-sm">
+                {" "}
+                {cartTotal}
+              </span>
+            )}
+          </NavLink>
+        </div>
+      </nav>
+    </header>
   );
 }

@@ -4,13 +4,17 @@ export default function Checkout() {
   const cart = useStore((state) => state.cart);
   const subTotal = useStore((state) => state.total);
 
+  const handleSubmitOrder = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div className="flex flex-col mx-20 pt-20">
       <h1 className="text-center text-lightblack text-4xl font-bold mb-20">
         CHECKOUT
       </h1>
       <section className="flex justify-evenly items-start">
-        <form className="w-3/5 pr-56 mb-40">
+        <form onSubmit={handleSubmitOrder} className="w-3/5 pr-56 mb-40">
           <div className="contact flex flex-col gap-y-5 pb-10">
             <h1 className="group text-xl font-semibold">Contact</h1>
             <input
@@ -188,12 +192,11 @@ export default function Checkout() {
             />
           </div>
 
-<div className="flex justify-center">
-<button className="w-1/2 rounded-full text-xl py-6 bg-mutedblack text-white hover:opacity-90">
-      Place Order
-    </button>
-</div>
-          
+          <div className="flex justify-center">
+            <button className="w-1/2 rounded-full text-xl py-6 bg-mutedblack text-white hover:opacity-90">
+              Place Order
+            </button>
+          </div>
         </form>
 
         <aside className="w-1/3">

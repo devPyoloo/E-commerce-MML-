@@ -1,43 +1,15 @@
-import ProductCard from "./ProductCard";
+import SlideShow from "./SlideShow";
 
 export default function Products() {
   return (
-    <div className="flex flex-col justify-center items-center p-40 gap-20">
+    <div className="flex flex-col justify-center items-center py-40 px-20 gap-20">
       <section>
         <h1 className="font-poppins text-4xl font-extrabold">
           PRODUCTS
         </h1>
       </section>
 
-      <div className="grid grid-cols-4 gap-10">
-        <ProductCard
-          imgSrc={"skincare.png"}
-          altText={"Skincare Photo"}
-          customCss={"md:w-16 pt-5"}
-          labelText={"SKIN CARE"}
-        />
-
-        <ProductCard
-          imgSrc={"haircare.png"}
-          altText={"Haircare Photo"}
-          customCss={"md:w-44 pt-12"}
-          labelText={"HAIR CARE"}
-        />
-
-        <ProductCard
-          imgSrc={"bodycare.png"}
-          altText={"Bodycare Photo"}
-          customCss={"md:w-20 pt-5"}
-          labelText={"BODY CARE"}
-        />
-
-        <ProductCard
-          imgSrc={"supplement.png"}
-          altText={"Supplement Photo"}
-          customCss={"md:w-24 pt-9"}
-          labelText={"SUPPLEMENT"}
-        />
-      </div>
+        <SlideShow />
     </div>
   );
 }
