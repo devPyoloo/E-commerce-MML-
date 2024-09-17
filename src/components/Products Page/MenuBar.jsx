@@ -21,7 +21,7 @@ export default function MenuBar({ setSortBy }) {
           <div className="py-1">
             <MenuItem>
               <span
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900"
+                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 hover:cursor-pointer"
                 onClick={() => setSortBy("High - Low")}
               >
                 High - Low
@@ -29,7 +29,7 @@ export default function MenuBar({ setSortBy }) {
             </MenuItem>
             <MenuItem>
               <span
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900"
+                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 hover:cursor-pointer"
                 onClick={() => setSortBy("Low - High")}
               >
                 Low - High

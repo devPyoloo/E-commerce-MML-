@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useStore } from "../store/useStore";
-import { IoMdHeartEmpty } from "react-icons/io";
+import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { GoTrash } from "react-icons/go";
 import { Link } from "react-router-dom";
 import Button from "../components/Button";
@@ -9,12 +9,21 @@ import { BsPaypal } from "react-icons/bs";
 import { FaLock, FaCcVisa, FaCcMastercard, FaAlipay } from "react-icons/fa";
 
 export default function ProductCart() {
-  const { cart, updateCartQuantity, removeCartProduct, addtoFavourite } = useStore((state) => ({
+  const {
+    cart,
+    updateCartQuantity,
+    removeCartProduct,
+    addtoFavourite,
+    favourite,
+  } = useStore((state) => ({
     cart: state.cart,
     updateCartQuantity: state.updateCartQuantity,
     removeCartProduct: state.removeCartProduct,
-    addtoFavourite: state.addtoFavourite
+    addtoFavourite: state.addtoFavourite,
+    favourite: state.favourite,
   }));
+
+  const arrayFavourite = Array.isArray(favourite) ? favourite : [];
 
   const subTotal = useMemo(() => {
     return cart.reduce((start, item) => start + item.price * item.quantity, 0);
@@ -68,12 +77,20 @@ export default function ProductCart() {
                     </div>
 
                     <div className="flex justify-between w-20 text-3xl text-lightgray">
-                      <button onClick={() => {
+                      <button
+                        onClick={() => {
                           addtoFavourite(item);
-                        }}>
-                      <IoMdHeartEmpty />
+                        }}
+                      >
+                        {arrayFavourite.some(
+                          (product) => product.id === item.id
+                        ) ? (
+                          <IoMdHeart className="font-bold text-3xl fill-red-600" />
+                        ) : (
+                          <IoMdHeartEmpty className="font-bold text-3xl" />
+                        )}
                       </button>
-                     
+
                       <button
                         onClick={() => {
                           removeCartProduct(item.id);
@@ -110,19 +127,11 @@ export default function ProductCart() {
 
               <div className="w-full flex flex-col gap-5 mt-20 mb-10">
                 <Link to={"/checkout"}>
-                  <Button
-                    buttonType={"primary"}
-                  >
-                    Checkout
-                  </Button>
+                  <Button buttonType={"primary"}>Checkout</Button>
                 </Link>
 
                 <Link to={"/products/All"}>
-                <Button
-                  buttonType={"secondary"}
-                >
-                  Continue shopping
-                </Button>
+                  <Button buttonType={"secondary"}>Continue shopping</Button>
                 </Link>
 
                 <button className=""></button>

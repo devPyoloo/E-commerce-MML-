@@ -30,8 +30,8 @@ export const useStore = create(
           toast.success("Added to cart", {
             style: {
               borderRadius: "5px",
-              background: "#EBEBEB",
-              color: "#0B0B0C",
+              background: "#424141",
+              color: "#FAF9F6",
             },
           });
 
@@ -70,8 +70,8 @@ export const useStore = create(
           toast.success("Removed from cart", {
             style: {
               borderRadius: "5px",
-              background: "#EBEBEB",
-              color: "#0B0B0C",
+              background: "#424141",
+              color: "#FAF9F6",
             },
           });
 
@@ -93,8 +93,8 @@ export const useStore = create(
             {
               style: {
                 borderRadius: "5px",
-                background: "#EBEBEB",
-                color: "#0B0B0C",
+                background: "#424141",
+                color: "#FAF9F6",
               },
             }
           );
