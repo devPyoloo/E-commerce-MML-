@@ -5,8 +5,7 @@ import { GoTrash } from "react-icons/go";
 import { Link } from "react-router-dom";
 import Button from "../components/Button";
 import { PiShieldCheckeredFill } from "react-icons/pi";
-import { BsPaypal } from "react-icons/bs";
-import { FaLock, FaCcVisa, FaCcMastercard, FaAlipay } from "react-icons/fa";
+import { FaLock} from "react-icons/fa";
 
 export default function ProductCart() {
   const {
@@ -32,31 +31,31 @@ export default function ProductCart() {
   return (
     <>
       {cart.length > 0 ? (
-        <div className="mb-40 pt-32 mx-20">
-          <section className="flex flex-wrap justify-between items-start">
-            <div className="flex flex-col w-1/2">
+        <div className="mb-40 pt-20 lg:pt-32 mx-10 lg:mx-20">
+          <section className="flex flex-col justify-between lg:flex-row lg:items-start">
+            <div className="flex flex-col lg:w-1/2">
               <h1 className="text-3xl font-semibold">Your Bag</h1>
               {cart.map((item) => (
                 <figure
-                  className="flex justify-between items-start border-b border-b-gray-200 py-10"
+                  className="flex justify-between items-center lg:items-start border-b border-b-gray-200 py-10"
                   key={item.id}
                 >
-                  <div className="bg-mutedgray mb-3 flex justify-center items-center 2xl:w-72 2xl:h-72 w-56 h-56">
+                  <div className="bg-mutedgray mb-3 flex justify-center items-center 2xl:w-72 2xl:h-72 lg:w-56 lg:h-56 w-32 h-32">
                     <img
-                      className={`2xl:w-28 w-20 object-center drop-shadow-lg"
+                      className={`2xl:w-28 lg:w-20 w-12 object-center drop-shadow-lg"
                     }`}
                       src={item.image}
                       alt={item.name}
                     />
                   </div>
 
-                  <div className="relative w-1/2 flex flex-col items-start gap-y-10 2xl:text-xl text-lg">
-                    <div className="flex flex-col gap-y-3">
-                      <label className="font-semibold truncate w-full">
+                  <div className="relative w-1/2 flex flex-col items-start gap-y-5 lg:gap-y-10 text-sm 2xl:text-xl lg:text-lg">
+                    <div className="flex flex-col gap-y-2">
+                      <label className="font-semibold lg:truncate lg:w-full">
                         {item.name}
                       </label>
                       <label className="text-gray-700">{item.category}</label>
-                      <div className="text-gray-700 flex gap-x-6 py-3">
+                      <div className="text-gray-700 flex gap-x-6 py-1 lg:py-3">
                         <button
                           onClick={() => updateCartQuantity(item.id, -1)}
                           className="bg-mutedgray px-2 hover:opacity-80"
@@ -71,7 +70,7 @@ export default function ProductCart() {
                           +
                         </button>
                       </div>
-                      <label className="text-xl font-semibold">
+                      <label className="text-base lg:text-xl font-semibold">
                         $ {item.price}
                       </label>
                     </div>
@@ -104,8 +103,8 @@ export default function ProductCart() {
               ))}
             </div>
 
-            <aside className="w-1/3">
-              <div className="flex flex-col gap-4 text-xl">
+            <aside className="mt-10 lg:w-1/3 lg:mt-0">
+              <div className="flex flex-col gap-4 text-base lg:text-xl">
                 <h1 className="text-2xl font-medium">Order Summary</h1>
                 <p className="flex justify-between w-full">
                   SubTotal: <span>${subTotal.toFixed(2)}</span>
@@ -120,7 +119,7 @@ export default function ProductCart() {
                   </p>
                 </div>
 
-                <p className="flex justify-between w-full border-y border-y-mutedgray py-4 my-10">
+                <p className="flex justify-between w-full border-y border-y-mutedgray py-4 lg:my-10">
                   Total: <span>${subTotal.toFixed(2)}</span>
                 </p>
               </div>
@@ -138,34 +137,34 @@ export default function ProductCart() {
               </div>
             </aside>
           </section>
-          <div className="flex justify-between border border-mutedgray shadow py-6 px-8 mt-32">
-            <div className="flex justify-between gap-x-8">
-              <p className="flex items-center gap-x-3">
-                <span className="text-2xl">
+          <div className="grid grid-cols-1 gap-x-10 lg:flex justify-between border border-mutedgray shadow py-6 px-8 mt-32">
+            <div className="grid grid-cols-1 lg:flex justify-between gap-x-8 gap-y-5">
+              <p className="flex items-center gap-x-3 text-xl lg:text-base">
+                <span className="text-3xl lg:text-2xl">
                   <PiShieldCheckeredFill />
                 </span>
                 Privacy Protection
               </p>
-              <p className="flex items-center gap-x-3">
-                <span className="text-2xl">
+              <p className="flex items-center gap-x-3 text-xl lg:text-base">
+                <span className="text-3xl lg:text-2xl">
                   <FaLock />
                 </span>
                 Secure Payments
               </p>
-              <p>Available payment methods</p>
+              <p className="flex items-center text-xl my-10 lg:text-base lg:my-0">Available payment methods</p>
             </div>
-            <div className="flex justify-between gap-x-6 text-3xl">
-              <span>
-                <FaCcVisa />
+            <div className="grid grid-cols-2 place-items-center gap-y-10 lg:flex justify-between gap-x-6 text-3xl">
+              <span className="border">
+                <img className="w-16 lg:w-12" src="/assets/visa-icon.png" alt="Visa" />
               </span>
               <span>
-                <FaCcMastercard />
+              <img className="w-16 lg:w-12" src="/assets/mastercard-icon.png" alt="Mastercard" />
               </span>
               <span>
-                <FaAlipay />
+              <img className="w-24 lg:w-20" src="/assets/alipay-icon.png" alt="Alipay" />
               </span>
               <span>
-                <BsPaypal />
+              <img className="w-24 lg:w-16" src="/assets/paypal-icon.png" alt="Paypal" />
               </span>
             </div>
           </div>

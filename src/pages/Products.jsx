@@ -80,14 +80,17 @@ export default function ProductsList() {
       <hr className="h-px my-8 bg-gray-200 border" />
 
       {/* Menu Bar  */}
-      <MenuBar setSortBy={setSortBy} />
+      <MenuBar setSortBy={setSortBy} category={category} handleCategoryChange={handleCategoryChange} />
 
       {isLoading ? (
         <p className="text-center">Loading...</p>
       ) : ( 
-        <div className="flex justify-evenly items-start mx-5 lg:mx-20">
+        <div className="lg:flex justify-evenly items-start mx-5 lg:mx-20">
           {/* CategoryFilter */}
+          <aside className="sticky top-40 mr-20 md:flex flex-col gap-4 lg:w-52 hidden">
           <CategoryFilter category={category} handleCategoryChange={handleCategoryChange} />
+          </aside>
+          
 
           {/* Render Products */}
           <RenderProducts

@@ -59,12 +59,12 @@ export default function ProductsCarousel({ category }) {
 
   return (
     <div className="mt-60 flex flex-col">
-      <h1 className="text-3xl font-semibold mb-20">YOU MIGHT ALSO LIKE</h1>
-      <Carousel responsive={responsive}>
+      <h1 className="text-xl mb-10 font-semibold lg:mb-20 lg:text-3xl">YOU MIGHT ALSO LIKE</h1>
+      <Carousel responsive={responsive} infinite={true} autoPlay={true}>
         {products.map((product) => (
           <figure key={product.id}>
-            <Link to={`/products/${category}/${product.id}`}>
-              <div className="bg-mutedgray mb-3 flex justify-center items-center md:w-72 md:h-72 hover:cursor-pointer hover:shadow-md">
+            <Link className="flex justify-center" to={`/products/${category}/${product.id}`}>
+              <div className="bg-mutedgray mb-3 flex justify-center items-center w-72 h-72 hover:cursor-pointer hover:shadow-md">
                 <img
                   className="md:w-24 w-24 object-center drop-shadow-lg"
                   src={product.image}

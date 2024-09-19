@@ -1,11 +1,18 @@
 import { IoChevronDownSharp } from "react-icons/io5";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import PropTypes from 'prop-types'
+import CategoryFilter from "./CategoryFilter";
 
-export default function MenuBar({ setSortBy }) {
+export default function MenuBar({ setSortBy, category, handleCategoryChange }) {
   return (
-    <div className="flex justify-between items-center pr-10 pl-20 sticky top-0 py-3 bg-offwhite z-10">
+    <div className="flex justify-between items-center pl-3 lg:pr-10 lg:pl-20 sticky top-0 py-3 bg-offwhite z-10">
+      <div className="flex items-center">
       <h1 className="font-semibold text-xl">Categories</h1>
+      <div className="lg:hidden">
+      <CategoryFilter category={category} handleCategoryChange={handleCategoryChange} />
+      </div>
+      </div>
+      
       <Menu as="div" className="relative inline-block text-left">
         <div>
           <MenuButton className="inline-flex justify-center gap-x-1.5 rounded-md px-3 py-2 text-md font-normal">
@@ -43,5 +50,7 @@ export default function MenuBar({ setSortBy }) {
 }
 
 MenuBar.propTypes = {
-  setSortBy: PropTypes.func.isRequired
+  setSortBy: PropTypes.func.isRequired,
+  category: PropTypes.string.isRequired,
+  handleCategoryChange: PropTypes.func.isRequired
 }

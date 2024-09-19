@@ -5,6 +5,7 @@ import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 import { useEffect, useState } from "react";
 import { useStore } from "../store/useStore";
 import { AnimatePresence, motion } from "framer-motion";
+import PropTypes from 'prop-types'
 
 
 
@@ -72,7 +73,7 @@ export default function Header({ aboutRef }) {
           onScroll.showNav ? "opacity-100" : "opacity-0"
         } mt-7 w-full flex items-center justify-between font-lora text-xl px-5 pb-8 font-medium text-lightblack z-10 md:hidden`}
       >
-        <div className="flex justify-center items-center gap-x-1">
+        <div className="flex justify-center items-center gap-x-3">
           <NavLink to={"favourite"} className="relative">
             <IoMdHeartEmpty className="text-4xl drop-shadow" />
             {favourite.length > 0 && (
@@ -215,4 +216,8 @@ export default function Header({ aboutRef }) {
       </nav>
     </header>
   );
+}
+
+Header.propTypes = {
+  aboutRef: PropTypes.object.isRequired
 }

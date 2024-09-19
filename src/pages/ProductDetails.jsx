@@ -70,20 +70,20 @@ export default function ProductDetails() {
   } = product;
 
   return (
-    <section className="mx-20 mb-40 pt-40">
-      <div className="flex flex-wrap justify-between items-start">
-        <figure className="relative bg-mutedgray flex flex-shrink-0 justify-center items-center md:w-1/2 h-auto md:py-28">
-          <span className="absolute top-5 left-7 text-lightblack font-bold text-2xl z-10">
+    <section className="mx-10 pt-20 lg:mx-20 mb-40 lg:pt-40">
+      <div className="flex flex-col justify-between lg:flex-wrap lg:items-start">
+        <figure className="relative mb-10 bg-mutedgray flex flex-shrink-0 justify-center items-center lg:w-1/2 h-auto lg:py-28">
+          <span className="absolute top-5 left-7 text-lightblack font-bold text-xl lg:text-2xl z-10">
             {brand}
           </span>
           <img
-            className="w-56 object-center drop-shadow-lg"
+            className="w-40 lg:w-56 object-center drop-shadow-lg py-5"
             src={image}
             alt={name}
           />
         </figure>
 
-        <main className="flex flex-col items-start gap-y-2 md:w-2/5">
+        <main className="flex flex-col items-start gap-y-2 lg:w-2/5">
           <h1 className="font-bold text-2xl truncate w-full">
             {name}
             <span className="text-lg text-lighgray font-normal">({stock})</span>
