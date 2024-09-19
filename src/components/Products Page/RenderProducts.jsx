@@ -12,17 +12,17 @@ const RenderProducts = React.forwardRef(function RenderProducts({
 }, ref) {
   return (
     <div className="flex flex-col md:w-full">
-      <main className="grid gap-x-16 md:grid-cols-4 gap-y-32 cursor-pointer">
+      <main className="grid grid-cols-2 gap-x-2 gap-y-10 md:gap-x-16 md:grid-cols-4 md:gap-y-32 cursor-pointer">
         {sortedProducts.length > 0 ? (
           sortedProducts.map((product) => (
             <figure className="product-card" key={product.id}>
               <Link to={product.id.toString()}>
-                <div className="bg-mutedgray mb-3 flex justify-center items-center 2xl:w-72 2xl:h-72 w-56 h-56 overflow-hidden">
+                <div className="bg-mutedgray mb-3 flex justify-center items-center 2xl:w-72 2xl:h-72 md:w-56 md:h-56 overflow-hidden">
                   {!imageLoaded[product.id] && (
                     <div className="w-28 h-28 bg-gray-200 animate-pulse"></div>
                   )}
                   <img
-                    className={`2xl:w-28 w-20 object-center drop-shadow-md hover:scale-125 transition-transform duration-300 ease-out ${
+                    className={`2xl:w-28 md:w-20 w-12 object-center drop-shadow-md hover:scale-125 transition-transform duration-300 ease-out ${
                       imageLoaded[product.id] ? "block" : "hidden"
                     }`}
                     src={product.image}

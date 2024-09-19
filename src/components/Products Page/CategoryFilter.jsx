@@ -13,7 +13,8 @@ export default function CategoryFilter({ category, handleCategoryChange }) {
   ];
 
   return (
-    <aside className="sticky top-40 mr-20 flex flex-col gap-4 w-52">
+    <>
+     <aside className="sticky top-40 mr-20 md:flex flex-col gap-4 md:w-52 hidden">
     {categories.map((cat) => (
       <div className="border-t border-t-lightgray pt-2" key={cat}>
         <button
@@ -25,6 +26,21 @@ export default function CategoryFilter({ category, handleCategoryChange }) {
       </div>
     ))}
   </aside>
+
+<aside className="sticky top-40 mr-20 flex flex-col gap-4 md:w-52 hidden">
+{categories.map((cat) => (
+  <div className="border-t border-t-lightgray pt-2" key={cat}>
+    <button
+      className={` ${cat === category ? "font-medium" : ""}`}
+      onClick={() => handleCategoryChange(cat)}
+    >
+      {cat}
+    </button>
+  </div>
+))}
+</aside>
+    </>
+   
   )
 }
 

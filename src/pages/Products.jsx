@@ -85,7 +85,7 @@ export default function ProductsList() {
       {isLoading ? (
         <p className="text-center">Loading...</p>
       ) : ( 
-        <div className="flex justify-evenly items-start mx-20">
+        <div className="flex justify-evenly items-start mx-5 lg:mx-20">
           {/* CategoryFilter */}
           <CategoryFilter category={category} handleCategoryChange={handleCategoryChange} />
 

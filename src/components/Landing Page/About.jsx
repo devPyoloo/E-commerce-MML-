@@ -1,6 +1,11 @@
+import { useOutletContext } from "react-router-dom";
+
+
 export default function About() {
+
+  const { aboutRef } = useOutletContext()
   return (
-    <div id="about-section" className="about-section flex flex-col justify-center items-center md:p-40 mx-10">
+    <div ref={aboutRef} className="about-section flex flex-col justify-center items-center md:p-40 mx-10">
       <section className="flex flex-col gap-y-10 md:gap-y-20">
         <h1 className="font-extrabold text-2xl md:text-4xl text-center font-poppins">
           ABOUT US

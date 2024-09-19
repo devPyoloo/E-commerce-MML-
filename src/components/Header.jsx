@@ -8,7 +8,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 
 
-export default function Header() {
+export default function Header({ aboutRef }) {
   const [onScroll, setOnScroll] = useState({
     showBg: false,
     showNav: true,
@@ -19,6 +19,10 @@ export default function Header() {
     cart: state.cart,
     favourite: state.favourite,
   }));
+
+  const scrollToAbout = () => {
+    aboutRef.current.scrollIntoView({ behavior: "smooth" });
+  };
 
   const cartTotal = cart.reduce((start, item) => start + item.quantity, 0);
 
@@ -146,7 +150,7 @@ export default function Header() {
                   delay: 0.1,
                 }}
               >
-                <NavLink onClick={() => { setMenuOpen(prev => !prev); () => { const element = document.getElementById('about-section'); element?.scrollIntoView({ behaviour: 'smooth' }); }
+                <NavLink onClick={() => { setMenuOpen(prev => !prev); scrollToAbout
                }}>
                 About Us
                 </NavLink>
