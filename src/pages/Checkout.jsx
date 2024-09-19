@@ -9,12 +9,12 @@ export default function Checkout() {
   };
 
   return (
-    <div className="flex flex-col mx-20 pt-20">
+    <div className="flex flex-col mx-10 lg:mx-20 pt-20">
       <h1 className="text-center text-lightblack text-4xl font-bold mb-20">
         CHECKOUT
       </h1>
-      <section className="flex justify-evenly items-start">
-        <form onSubmit={handleSubmitOrder} className="w-3/5 pr-56 mb-40">
+      <section className="flex flex-col-reverse justify-evenly items-start lg:flex-row">
+        <form onSubmit={handleSubmitOrder} className="mt-10 mb-40 lg:w-3/5 lg:pr-56 lg:mt-0">
           <div className="contact flex flex-col gap-y-5 pb-10">
             <h1 className="group text-xl font-semibold">Contact</h1>
             <input
@@ -199,8 +199,8 @@ export default function Checkout() {
           </div>
         </form>
 
-        <aside className="w-1/3">
-          <div className="flex flex-col gap-4 text-xl">
+        <aside className="lg:w-1/3">
+          <div className="flex flex-col gap-4 text-base lg:text-xl">
             <h1 className="text-2xl font-medium">Order Summary</h1>
             <p className="flex justify-between w-full">
               SubTotal: <span>${subTotal.toFixed(2)}</span>{" "}
@@ -215,14 +215,14 @@ export default function Checkout() {
               </p>
             </div>
 
-            <p className="flex justify-between w-full border-y border-y-mutedgray py-4 my-10">
+            <p className="flex justify-between w-full border-y border-y-mutedgray py-4 lg:my-10">
               Total: <span>${subTotal.toFixed(2)}</span>{" "}
             </p>
           </div>
 
           {cart.map((item) => (
             <figure
-              className="w-full flex justify-between items-center border-b border-b-gray-200 py-10"
+              className="w-full flex justify-between items-center gap-x-5 border-b border-b-gray-200 py-10"
               key={item.id}
             >
               <div className="bg-mutedgray mb-3 flex justify-center items-center w-44 h-44">
