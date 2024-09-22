@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { BASE_API_URL } from "../../public/api";
+import { BASE_API_URL } from "/api";
 import { useQuery } from "@tanstack/react-query";
 import {
   IoMdHeartEmpty,
@@ -71,7 +71,7 @@ export default function ProductDetails() {
 
   return (
     <section className="mx-10 pt-20 lg:mx-20 mb-40 lg:pt-40">
-      <div className="flex flex-col justify-between lg:flex-wrap lg:items-start">
+      <div className="flex flex-col lg:flex-row justify-between lg:flex-wrap lg:items-start">
         <figure className="relative mb-10 bg-mutedgray flex flex-shrink-0 justify-center items-center lg:w-1/2 h-auto lg:py-28">
           <span className="absolute top-5 left-7 text-lightblack font-bold text-xl lg:text-2xl z-10">
             {brand}
