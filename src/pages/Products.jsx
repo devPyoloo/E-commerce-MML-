@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useMemo, useEffect } from "react";
-import { BASE_API_URL } from "../../public/api";
+import { BASE_API_URL } from '../../public/api';
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 import CategoryFilter from "../components/Products Page/CategoryFilter";
