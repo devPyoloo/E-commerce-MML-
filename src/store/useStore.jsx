@@ -104,7 +104,7 @@ export const useStore = create(
     }),
     {
       name: "store-data",
-      partialize: (state) => ({ cart: state.cart, favourite: state.favourite }), //choose a state you want persist
+      partialize: (state) => ({ cart: state.cart, favourite: state.favourite, total: state.total }), //choose a state you want persist
     }
   )
 );
