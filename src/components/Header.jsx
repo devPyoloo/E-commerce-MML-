@@ -97,13 +97,13 @@ export default function Header({ aboutRef }) {
         <img
           src="/assets/logo.png"
           alt="Logo"
-          className="drop-shadow-2xl"
+          className="drop-shadow-2xl w-32 lg:w-60"
           loading="lazy"
         />
 
         {/* HAMBURGER MENU TOGGLE */}
         <button
-          className="text-5xl"
+          className="text-3xl lg:text-5xl"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           <motion.div
@@ -124,7 +124,7 @@ export default function Header({ aboutRef }) {
               animate="visible"
               exit="hidden"
               variants={menuVariants}
-              className="absolute grid grid-cols-1 py-10 justify-items-center gap-y-5 top-24 left-0 right-0 bg-mutedgray shadow-2xl mx-5"
+              className="absolute grid grid-cols-1 py-7 justify-items-center gap-y-5 top-24 left-0 right-0 bg-mutedgray shadow-2xl mx-5 font-semibold"
             >
               <motion.div
                 initial={{ scale: 0.8, opacity: 0 }}
@@ -194,7 +194,7 @@ export default function Header({ aboutRef }) {
 
         <div className="flex justify-center items-center gap-x-7">
           <NavLink to={"favourite"} className="relative">
-            <IoMdHeartEmpty className="text-4xl drop-shadow" />
+            <IoMdHeartEmpty className="lg:text-4xl drop-shadow" />
             {favourite.length > 0 && (
               <span className="absolute rounded-full px-2 -top-2 -right-3 bg-satpink text-white text-sm">
                 {" "}
@@ -204,7 +204,7 @@ export default function Header({ aboutRef }) {
           </NavLink>
 
           <NavLink to={"cart"} className="relative">
-            <BsHandbag className="text-4xl drop-shadow" />
+            <BsHandbag className="lg:text-4xl drop-shadow" />
             {cartTotal > 0 && (
               <span className="absolute rounded-full px-2 -top-2 -right-2 bg-satpink text-white text-sm">
                 {" "}

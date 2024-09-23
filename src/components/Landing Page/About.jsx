@@ -13,7 +13,7 @@ export default function About() {
 
 
 
-        <p className="font-light md:text-2xl text-justify md:leading-normal">
+        <p className="font-light text-lg lg:text-2xl text-justify md:leading-normal">
           At MML, we believe that beauty is more than skin deep. Founded with a
           passion for enhancing natural beauty, we are dedicated to curating a
           collection of high-quality cosmetics, skincare, and wellness products.
