@@ -7,6 +7,7 @@ import Cart from "./pages/Cart"
 import Checkout from "./pages/Checkout"
 import Products from "./pages/Products"
 import Favourite from "./pages/Favourite"
+import AddProduct from "./pages/AddProduct"
 
 
 const router = createBrowserRouter(
@@ -22,6 +23,8 @@ const router = createBrowserRouter(
       <Route path="cart" element={<Cart />} />
       <Route path="checkout" element={<Checkout />} />
       <Route path="favourite" element={<Favourite />} />
+
+      <Route path="add-product" element={<AddProduct />} />
     </Route> 
   )
 )

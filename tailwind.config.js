@@ -28,7 +28,8 @@ export default {
         offwhite:'#FAF9F6',
         lightwhite: '#E0E0E0',
         mutedgray: '#EBEBEB',
-        lightgray: "#424141"
+        lightgray: "#424141",
+        extraLightGray: "#F3F3F3"
       },
       fontFamily: {
         'russo': ['Russo One', 'sans'],
