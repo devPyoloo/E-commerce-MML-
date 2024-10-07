@@ -8,6 +8,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import PropTypes from 'prop-types'
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { IoChevronDownSharp } from "react-icons/io5";
+import { AiFillProduct } from "react-icons/ai";
+import { MdAddBusiness } from "react-icons/md";
 
 
 
@@ -197,7 +199,7 @@ export default function Header({ aboutRef }) {
         
         <Menu as="div" className="relative inline-block text-left">
         <div>
-          <MenuButton className="inline-flex justify-center items-center gap-x-1.5 rounded-md px-3 py-2 text-md font-normal">
+          <MenuButton className="inline-flex justify-center items-center gap-x-1.5 rounded-md px-3 py-2">
             Products
             <IoChevronDownSharp aria-hidden="true" className="-mr-1 h-5 w-5" />
           </MenuButton>
@@ -205,22 +207,25 @@ export default function Header({ aboutRef }) {
 
         <MenuItems
           transition
-          className="absolute left-0 z-10 w-40 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+          className="absolute -left-14 z-10 w-48 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
         >
-          <div className="py-1">
+          <div>
             <MenuItem>
               <span
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 hover:cursor-pointer"
+                className="flex p-3 gap-x-2 font-lora text-base text-lightgray data-[focus]:bg-gray-100 hover:cursor-pointer"
                 onClick={() => navigate("products/All")}
               >
+                <AiFillProduct className="text-xl" />
                 List Products
               </span>
             </MenuItem>
             <MenuItem>
               <span
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 hover:cursor-pointer"
+                className="flex p-3 gap-x-2 font-lora text-base text-lightgray data-[focus]:bg-gray-100  hover:cursor-pointer"
                 onClick={() => navigate("add-product")}
               >
+                <MdAddBusiness className="text-xl" />
+
                 Add Product
               </span>
             </MenuItem>

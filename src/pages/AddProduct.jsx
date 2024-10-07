@@ -3,22 +3,99 @@ import { MdCancel } from "react-icons/md";
 import { FaCheck } from "react-icons/fa6";
 import { TbCloudUpload } from "react-icons/tb";
 import { useDropzone } from "react-dropzone";
+import axios from "axios";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+
+// Fetch data
+const fetchCategories = async () => {
+  try {
+    const { data } = await axios.get("http://localhost:8080/api/category/all");
+    return data;
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    throw error; // re-throw to allow react-query to handle it
+  }
+};
+
+// Add new category
+const addCategory = async (newCategory) => {
+  await axios.post(
+    "http://localhost:8080/api/category/add-category",
+    { category: newCategory },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+};
 
 export default function AddProduct() {
   const [isToggle, setIsToggle] = useState(false);
-  const [preview, setPreview] = useState(null)
+  const [preview, setPreview] = useState(null);
+  const [newCategory, setNewCategory] = useState("");
+  const queryClient = useQueryClient();
+
+  const {
+    data: categories,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["category"],
+    queryFn: fetchCategories,
+    staleTime: 10000,
+  });
+
+  const {
+    mutate: addCategoryMutate,
+    isLoading: mutationLoading,
+    error: mutationError,
+  } = useMutation({
+    mutationFn: addCategory,
+    onMutate: async (newCategory) => {
+      await queryClient.cancelQueries(["category"]);
+      const previousData = queryClient.getQueryData(["category"]);
+
+      queryClient.setQueryData(["category"], (oldData) => {
+        return [...oldData, newCategory];
+      });
+
+      return { previousData };
+    },
+    onError: (error, _newCategory, context) => {
+      queryClient.setQueryData(["category"], context.previousData);
+      mutationError(error.message || "An error occured while adding category");
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["category"]);
+    },
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (newCategory.trim()) {
+      addCategoryMutate(newCategory);
+      setNewCategory("");
+      setIsToggle(false);
+    } else {
+      alert("Category name cannot be empty.");
+    }
+  };
 
   const onDrop = useCallback((acceptedFiles) => {
-    if(acceptedFiles.length > 0) {
+    if (acceptedFiles.length > 0) {
       const file = acceptedFiles[0];
       const previewURL = URL.createObjectURL(file);
       setPreview(previewURL);
     }
 
-    console.log(acceptedFiles)
+    console.log(acceptedFiles);
     // Upload to backend
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
+  if (isLoading) return <div>Loading Category...</div>;
+  if (error) return <div>Error fetching data: {error.message}</div>;
 
   return (
     <div className="mb-20">
@@ -125,60 +202,74 @@ export default function AddProduct() {
             </main>
 
             <aside className="lg:w-1/3">
-      <figure className="p-5 rounded-md bg-extraLightGray">
-        <h1 className="text-xl font-medium mb-5">Upload Image</h1>
-        <label
-          {...getRootProps()}
-          htmlFor="dropzone-file"
-          className="flex flex-col items-center justify-center w-full h-auto border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-mutedgray"
-        >
-          <input {...getInputProps()} />
-          {preview ? (
-            <img
-              src={preview}
-              alt="Preview"
-              className="object-fit w-4/5 h-auto rounded-md"
-            />
-          ) : (
-            <>
-              {isDragActive ? (
-                <p>Drop the files here ...</p>
-              ) : (
-                <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                  <TbCloudUpload className="text-4xl stroke-lightgray" />
-                  <p className="mb-2 text-sm text-lightgray">
-                    <span className="font-semibold">Click to upload</span>{" "}
-                    or drag and drop
-                  </p>
-                  <p className="text-xs text-lightgray">
-                    SVG, PNG, JPG or GIF (MAX. 800x400px)
-                  </p>
-                </div>
-              )}
-            </>
-          )}
-        </label>
-      </figure>
+              <figure className="p-5 rounded-md bg-extraLightGray">
+                <h1 className="text-xl font-medium mb-5">Upload Image</h1>
+                <label
+                  {...getRootProps()}
+                  htmlFor="dropzone-file"
+                  className="flex flex-col items-center justify-center w-full h-auto border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-mutedgray"
+                >
+                  <input {...getInputProps()} />
+                  {preview ? (
+                    <img
+                      src={preview}
+                      alt="Preview"
+                      className="object-fit w-4/5 h-auto rounded-md"
+                    />
+                  ) : (
+                    <>
+                      {isDragActive ? (
+                        <p>Drop the files here ...</p>
+                      ) : (
+                        <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                          <TbCloudUpload className="text-4xl stroke-lightgray" />
+                          <p className="mb-2 text-sm text-lightgray">
+                            <span className="font-semibold">
+                              Click to upload
+                            </span>{" "}
+                            or drag and drop
+                          </p>
+                          <p className="text-xs text-lightgray">
+                            SVG, PNG, JPG or GIF (MAX. 800x400px)
+                          </p>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </label>
+              </figure>
 
-      <div className="flex flex-col justify-center mb-5 w-full">
-        <select name="" id="">
-          <option value="">Skincare</option>
-        </select>
-        <span
-          onClick={() => setIsToggle(true)} // Ensure setIsToggle is defined in your component
-          className="py-3 px-4 text-sm bg-mutedblack text-mutedgray rounded-full cursor-pointer"
-        >
-          Add Category
-        </span>
-      </div>
-    </aside>
-    </div>
+              <div className="flex justify-center gap-x-6 w-full mt-5">
+                <select className="w-full bg-extraLightGray border border-gray-300 text-sm rounded-lg p-2.5" defaultValue="Select category" name="">
+                  <option value="Select category" disabled>
+                    Select category
+                  </option>
+                  {categories?.map((category) => (
+                    <option
+                      value={category.category}
+                      key={`${category.id} - ${category.category}`}
+                    >
+                      {category.category}
+                    </option>
+                  ))}
+                </select>
+
+                <span
+                  onClick={() => setIsToggle(true)} // Ensure setIsToggle is defined in your component
+                  className="w-72 py-3 px-4 text-sm bg-mutedblack text-mutedgray text-center rounded-full cursor-pointer"
+                >
+                  Add Category
+                </span>
+              </div>
+            </aside>
+          </div>
         </form>
 
+        {/* Adding new category */}
         {isToggle && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <form
-              action=""
+              onSubmit={handleSubmit}
               className="bg-white rounded-lg p-6 w-4/5 md:w-96 shadow-lg"
             >
               <div className="flex justify-between mb-10">
@@ -194,7 +285,9 @@ export default function AddProduct() {
                 <input
                   className="bg-mutedgray py-2 px-4 rounded-lg outline-none"
                   type="text"
-                  name=""
+                  value={newCategory}
+                  name="newCategory"
+                  onChange={(e) => setNewCategory(e.target.value)}
                 />
               </label>
 
@@ -202,6 +295,9 @@ export default function AddProduct() {
                 <button className="flex items-center gap-x-3 bg-green-400 text-sm text-stone-900 font-medium py-2 px-3 rounded-full">
                   <FaCheck /> Add Category
                 </button>
+
+                {mutationLoading && <p>Adding category...</p>}
+                {mutationError && <p>Error: {mutationError.message}</p>}
               </div>
             </form>
           </div>
