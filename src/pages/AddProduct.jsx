@@ -17,6 +17,15 @@ const fetchCategories = async () => {
   }
 };
 
+// PostInsert Data
+const insertNewProduct = async (formData) => {
+  await axios.post("http://localhost:8080/api/product/add-product", formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+}
+
 // Add new category
 const addCategory = async (newCategory) => {
   await axios.post(
@@ -32,13 +41,38 @@ const addCategory = async (newCategory) => {
 
 export default function AddProduct() {
   const [isToggle, setIsToggle] = useState(false);
+  const [product, setProduct] = useState({
+    name: '',
+    price: '',
+    category: '',
+    description:'',
+    stock: '',
+    brand: '',
+    rating: '',
+    reviewCount: '',
+    ingredients: '',
+    usageInstructions: '',
+    expirationDate: ''
+  });
+  const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
   const [newCategory, setNewCategory] = useState("");
   const queryClient = useQueryClient();
 
+  const onDrop = useCallback((acceptedFiles) => {
+    if (acceptedFiles.length > 0) {
+      const file = acceptedFiles[0]; // Accepts single file only
+      const previewURL = URL.createObjectURL(file);
+      setPreview(previewURL);
+      setImage(file);
+    }
+  }, []);
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
+  // Fetch data
   const {
     data: categories,
-    isLoading,
+    isLoading: fetchLoading,
     error,
   } = useQuery({
     queryKey: ["category"],
@@ -46,6 +80,7 @@ export default function AddProduct() {
     staleTime: 10000,
   });
 
+  // Add Category
   const {
     mutate: addCategoryMutate,
     isLoading: mutationLoading,
@@ -71,7 +106,9 @@ export default function AddProduct() {
     },
   });
 
-  const handleSubmit = (e) => {
+  const { mutation: addProduct, isLoading }
+
+  const handleCategorySubmit = (e) => {
     e.preventDefault();
     if (newCategory.trim()) {
       addCategoryMutate(newCategory);
@@ -82,26 +119,48 @@ export default function AddProduct() {
     }
   };
 
-  const onDrop = useCallback((acceptedFiles) => {
-    if (acceptedFiles.length > 0) {
-      const file = acceptedFiles[0];
-      const previewURL = URL.createObjectURL(file);
-      setPreview(previewURL);
-    }
 
-    console.log(acceptedFiles);
-    // Upload to backend
-  }, []);
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
+  const handleChange = (e) => {
+      const { name, value } = e.target;
+      setProduct((prevProduct) => ({ ...prevProduct, [name]: value }));
+  }
+
+
+  const handleProductForm = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+
+    Object.entries(product).forEach(([key, value]) => {
+        formData.append(key, value);
+    
+    if(image) {
+      formData.append("image", image[0]);
+    };
+
+
+   // Log all key-value pairs in formData
+  for (const [key, value] of formData.entries()) {
+    if (value instanceof File) {
+      console.log(`Key: ${key}, Value: Name: ${value.name}, Size: ${value.size}, Type: ${value.type}`);
+    } else {
+      console.log(`Key: ${key}, Value: ${value}`);
+    }
+  }
+      
+    
+    })
+  }
 
   if (isLoading) return <div>Loading Category...</div>;
   if (error) return <div>Error fetching data: {error.message}</div>;
+
 
   return (
     <div className="mb-20">
       <hr className="h-px my-8 bg-gray-200 border" />
       <section className="mx-20 flex flex-col">
-        <form action="" className="">
+        <form onSubmit={handleProductForm} className="">
           <header className="flex justify-between items-center sticky bg-offwhite top-0 py-3 z-10 mb-10">
             <h1 className="font-semibold text-2xl">Add New Product</h1>
             <button
@@ -124,6 +183,8 @@ export default function AddProduct() {
                   <input
                     className="bg-mutedgray rounded-lg py-3 px-3 outline-none"
                     type="text"
+                    name="name"
+                    onChange={handleChange}
                     placeholder="Name of product"
                   />
                 </label>
@@ -133,6 +194,8 @@ export default function AddProduct() {
                   <textarea
                     className="bg-mutedgray rounded-lg py-3 px-3"
                     type="text"
+                    name="description"
+                    onChange={handleChange}
                     placeholder="Description of the product..."
                   />
                 </label>
@@ -142,6 +205,8 @@ export default function AddProduct() {
                   <input
                     className="bg-mutedgray rounded-lg py-3 px-3 w-full"
                     type="text"
+                    name="brand"
+                    onChange={handleChange}
                     placeholder="Brand"
                   />
                 </label>
@@ -151,6 +216,8 @@ export default function AddProduct() {
                   <textarea
                     className="bg-mutedgray rounded-lg py-3 px-3"
                     type="text"
+                    name="ingredients"
+                    onChange={handleChange}
                     placeholder="Ingredients of the product..."
                   />
                 </label>
@@ -160,6 +227,8 @@ export default function AddProduct() {
                   <textarea
                     className="bg-mutedgray rounded-lg py-3 px-3"
                     type="text"
+                    name="usageInstructions"
+                    onChange={handleChange}
                     placeholder="Usage of the product..."
                   />
                 </label>
@@ -169,6 +238,8 @@ export default function AddProduct() {
                   <input
                     className="bg-mutedgray rounded-lg py-3 px-3"
                     type="date"
+                    onChange={handleChange}
+                    name="expirationDate"
                   />
                 </label>
               </div>
@@ -185,6 +256,8 @@ export default function AddProduct() {
                     <input
                       className="bg-mutedgray rounded-lg py-3 px-3"
                       type="number"
+                      name="price"
+                      onChange={handleChange}
                       placeholder="Price"
                     />
                   </label>
@@ -194,6 +267,8 @@ export default function AddProduct() {
                     <input
                       className="bg-mutedgray rounded-lg py-3 px-3"
                       type="number"
+                      name="stock"
+                      onChange={handleChange}
                       placeholder="Stock"
                     />
                   </label>
@@ -240,7 +315,7 @@ export default function AddProduct() {
               </figure>
 
               <div className="flex justify-center gap-x-6 w-full mt-5">
-                <select className="w-full bg-extraLightGray border border-gray-300 text-sm rounded-lg p-2.5" defaultValue="Select category" name="">
+                <select className="w-full bg-extraLightGray border border-gray-300 text-sm rounded-lg p-2.5" defaultValue="Select category" name="category" onChange={handleChange} >
                   <option value="Select category" disabled>
                     Select category
                   </option>
@@ -269,7 +344,7 @@ export default function AddProduct() {
         {isToggle && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <form
-              onSubmit={handleSubmit}
+              onSubmit={handleCategorySubmit}
               className="bg-white rounded-lg p-6 w-4/5 md:w-96 shadow-lg"
             >
               <div className="flex justify-between mb-10">
