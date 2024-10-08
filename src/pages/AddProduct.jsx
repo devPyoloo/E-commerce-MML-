@@ -18,13 +18,12 @@ const fetchCategories = async () => {
 };
 
 // PostInsert Data
-const insertNewProduct = async (formData) => {
-  await axios.post("http://localhost:8080/api/product/add-product", formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }
-  })
-}
+const insertNewProduct = async (productData) => {
+  await axios.post(
+    "http://localhost:8080/api/product/add-product",
+    productData
+  );
+};
 
 // Add new category
 const addCategory = async (newCategory) => {
@@ -42,19 +41,19 @@ const addCategory = async (newCategory) => {
 export default function AddProduct() {
   const [isToggle, setIsToggle] = useState(false);
   const [product, setProduct] = useState({
-    name: '',
-    price: '',
-    category: '',
-    description:'',
-    stock: '',
-    brand: '',
-    rating: '',
-    reviewCount: '',
-    ingredients: '',
-    usageInstructions: '',
-    expirationDate: ''
+    name: "",
+    category: "",
+    description: "",
+    imageFile: null,
+    price: "",
+    stock: "",
+    brand: "",
+    rating: "",
+    reviewCount: "",
+    ingredients: "",
+    usageInstructions: "",
+    expirationDate: "",
   });
-  const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
   const [newCategory, setNewCategory] = useState("");
   const queryClient = useQueryClient();
@@ -64,7 +63,7 @@ export default function AddProduct() {
       const file = acceptedFiles[0]; // Accepts single file only
       const previewURL = URL.createObjectURL(file);
       setPreview(previewURL);
-      setImage(file);
+      setProduct((prev) => ({ ...prev, imageFile: file }));
     }
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
@@ -72,8 +71,8 @@ export default function AddProduct() {
   // Fetch data
   const {
     data: categories,
-    isLoading: fetchLoading,
-    error,
+    isLoading: categoriesLoading,
+    error: categorieError,
   } = useQuery({
     queryKey: ["category"],
     queryFn: fetchCategories,
@@ -83,7 +82,7 @@ export default function AddProduct() {
   // Add Category
   const {
     mutate: addCategoryMutate,
-    isLoading: mutationLoading,
+    isLoading: addLoading,
     error: mutationError,
   } = useMutation({
     mutationFn: addCategory,
@@ -99,19 +98,38 @@ export default function AddProduct() {
     },
     onError: (error, _newCategory, context) => {
       queryClient.setQueryData(["category"], context.previousData);
-      mutationError(error.message || "An error occured while adding category");
+      console.log(error.message || "An error occured while adding category");
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["category"]);
     },
   });
 
-  const { mutation: addProduct, isLoading }
+  // Add Product
+  const { mutate: addProduct, isLoading: postLoading } = useMutation({
+    mutationFn: insertNewProduct,
+    onMutate: async (productData) => {
+      await queryClient.cancelQueries(["product"]);
+      const previousData = queryClient.getQueryData(["product"]);
+      queryClient.setQueryData(["product"], (oldProductData) => {
+        return [...oldProductData, productData];
+      });
+
+      return { previousData };
+    },
+    onError: (error, _productData, context) => {
+      queryClient.setQueryData(["category"], context.previousData);
+      console.log(error.message || "An error occured while adding product");
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["product"]);
+    },
+  });
 
   const handleCategorySubmit = (e) => {
     e.preventDefault();
     if (newCategory.trim()) {
-      addCategoryMutate(newCategory);
+      addCategoryMutate({ category: newCategory});
       setNewCategory("");
       setIsToggle(false);
     } else {
@@ -119,42 +137,21 @@ export default function AddProduct() {
     }
   };
 
-
-
   const handleChange = (e) => {
-      const { name, value } = e.target;
-      setProduct((prevProduct) => ({ ...prevProduct, [name]: value }));
-  }
-
+    const { name, value } = e.target;
+    setProduct((prevProduct) => ({ ...prevProduct, [name]: value }));
+  };
 
   const handleProductForm = (e) => {
     e.preventDefault();
     const formData = new FormData();
+    formData.append("productDTO", new Blob([JSON.stringify(product)]), {
+      type: "application/json",
+    });
+    formData.append("imageFile", product.imageFile);
 
-    Object.entries(product).forEach(([key, value]) => {
-        formData.append(key, value);
-    
-    if(image) {
-      formData.append("image", image[0]);
-    };
-
-
-   // Log all key-value pairs in formData
-  for (const [key, value] of formData.entries()) {
-    if (value instanceof File) {
-      console.log(`Key: ${key}, Value: Name: ${value.name}, Size: ${value.size}, Type: ${value.type}`);
-    } else {
-      console.log(`Key: ${key}, Value: ${value}`);
-    }
-  }
-      
-    
-    })
-  }
-
-  if (isLoading) return <div>Loading Category...</div>;
-  if (error) return <div>Error fetching data: {error.message}</div>;
-
+    addProduct(formData);
+  };
 
   return (
     <div className="mb-20">
@@ -169,6 +166,7 @@ export default function AddProduct() {
             >
               <FaCheck /> Add Product
             </button>
+            {postLoading && <p>Adding product...</p>}
           </header>
 
           <div className="flex gap-x-5">
@@ -315,19 +313,30 @@ export default function AddProduct() {
               </figure>
 
               <div className="flex justify-center gap-x-6 w-full mt-5">
-                <select className="w-full bg-extraLightGray border border-gray-300 text-sm rounded-lg p-2.5" defaultValue="Select category" name="category" onChange={handleChange} >
-                  <option value="Select category" disabled>
-                    Select category
-                  </option>
-                  {categories?.map((category) => (
-                    <option
-                      value={category.category}
-                      key={`${category.id} - ${category.category}`}
-                    >
-                      {category.category}
+                {categoriesLoading ? (
+                  categorieError ? (
+                    <p>Error: {categorieError.message}</p>
+                  ) : ( <p>Loading categories</p>)   
+                ) : (
+                  <select
+                    className="w-full bg-extraLightGray border border-gray-300 text-sm rounded-lg p-2.5"
+                    defaultValue="Select category"
+                    name="category"
+                    onChange={handleChange}
+                  >
+                    <option value="Select category" disabled>
+                      Select category
                     </option>
-                  ))}
-                </select>
+                    {categories?.map((category) => (
+                      <option
+                        value={category.category}
+                        key={`${category.id} - ${category.category}`}
+                      >
+                        {category.category}
+                      </option>
+                    ))}
+                  </select>
+                )}
 
                 <span
                   onClick={() => setIsToggle(true)} // Ensure setIsToggle is defined in your component
@@ -371,7 +380,7 @@ export default function AddProduct() {
                   <FaCheck /> Add Category
                 </button>
 
-                {mutationLoading && <p>Adding category...</p>}
+                {addLoading && <p>Adding category...</p>}
                 {mutationError && <p>Error: {mutationError.message}</p>}
               </div>
             </form>
