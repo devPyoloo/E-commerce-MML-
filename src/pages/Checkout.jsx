@@ -1,11 +1,29 @@
+import { useState } from "react";
 import { useStore } from "../store/useStore";
 
 export default function Checkout() {
   const cart = useStore((state) => state.cart);
   const subTotal = useStore((state) => state.total);
+  const [checkoutDetails, setCheckoutDetails] = useState({
+    email: '',
+    phoneNumber: '',
+    firstName: '',
+    lastName: '',
+    barangay: '',
+    city: '',
+    province: '',
+    zipCode: '',
+    paymentMethod: '',
+  })
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+      setCheckoutDetails((prev) => ({...prev, [name]: value}));
+  }
 
   const handleSubmitOrder = (e) => {
     e.preventDefault();
+
   };
 
   return (
@@ -19,14 +37,16 @@ export default function Checkout() {
             <h1 className="group text-xl font-semibold">Contact</h1>
             <input
               className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray"
-              type="text"
-              name=""
+              type="email"
+              name="email"
+              onChange={handleChange}
               placeholder="Email *"
             />
             <input
               className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray"
-              type="text"
-              name=""
+              type="number"
+              name="phoneNumber"
+              onChange={handleChange}
               placeholder="Phone Number *"
             />
           </div>
@@ -37,26 +57,30 @@ export default function Checkout() {
               <input
                 className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray"
                 type="text"
-                name=""
+                name="firstName"
+                onChange={handleChange}
                 placeholder="First Name *"
               />
               <input
                 className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray"
                 type="text"
-                name=""
+                name="lastName"
+                onChange={handleChange}
                 placeholder="Last Name *"
               />
             </div>
             <input
               className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray"
               type="text"
-              name=""
+              name="barangay"
+              onChange={handleChange}
               placeholder="Barangay *"
             />
             <input
               className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray"
               type="text"
-              name=""
+              name="city"
+              onChange={handleChange}
               placeholder="City *"
             />
 
@@ -64,13 +88,15 @@ export default function Checkout() {
               <input
                 className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray"
                 type="text"
-                name=""
+                name="province"
+                onChange={handleChange}
                 placeholder="Province *"
               />
               <input
                 className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray"
-                type="text"
-                name=""
+                type="number"
+                name="zipCode"
+                onChange={handleChange}
                 placeholder="Zip Code *"
               />
             </div>
@@ -88,7 +114,8 @@ export default function Checkout() {
                 <input
                   className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray"
                   type="radio"
-                  name="card"
+                  onChange={handleChange}
+                  name="paymentMethod"
                 />
               </label>
             </div>
@@ -102,7 +129,8 @@ export default function Checkout() {
                 <input
                   className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray"
                   type="radio"
-                  name="card"
+                  onChange={handleChange}
+                  name="paymentMethod"
                 />
               </label>
             </div>
@@ -113,7 +141,8 @@ export default function Checkout() {
                 <input
                   className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray"
                   type="radio"
-                  name="card"
+                  onChange={handleChange}
+                  name="paymentMethod"
                 />
               </label>
             </div>
@@ -128,7 +157,8 @@ export default function Checkout() {
                 <input
                   className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray checked:border-indigo-500"
                   type="radio"
-                  name="card"
+                  onChange={handleChange}
+                  name="paymentMethod"
                 />
               </label>
             </div>
