@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import { MdCancel } from "react-icons/md";
 import { FaCheck } from "react-icons/fa6";
+import { MdAddBusiness } from "react-icons/md";
 import { TbCloudUpload } from "react-icons/tb";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
@@ -18,24 +19,33 @@ const fetchCategories = async () => {
 };
 
 // PostInsert Data
-const insertNewProduct = async (productData) => {
-  await axios.post(
-    "http://localhost:8080/api/product/add-product",
-    productData
-  );
+const insertNewProduct = async (formData) => {
+  // addProductMutate(formData)
+  try {
+    await axios.post(
+      "http://localhost:8080/api/product/add-product",
+      formData,
+    );
+  } catch (error) {
+    console.error("Error adding product:", error);
+  }
 };
 
 // Add new category
 const addCategory = async (newCategory) => {
-  await axios.post(
-    "http://localhost:8080/api/category/add-category",
-    { category: newCategory },
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  try {
+    await axios.post(
+      "http://localhost:8080/api/category/add-category",
+      newCategory,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  } catch (error) {
+    console.error("Error adding category:", error);
+  }
 };
 
 export default function AddProduct() {
@@ -44,7 +54,6 @@ export default function AddProduct() {
     name: "",
     category: "",
     description: "",
-    imageFile: null,
     price: "",
     stock: "",
     brand: "",
@@ -54,8 +63,10 @@ export default function AddProduct() {
     usageInstructions: "",
     expirationDate: "",
   });
+  const [imageFile, setImageFile] = useState(null);
+
   const [preview, setPreview] = useState(null);
-  const [newCategory, setNewCategory] = useState("");
+  const [newCategory, setNewCategory] = useState({ category: "" });
   const queryClient = useQueryClient();
 
   const onDrop = useCallback((acceptedFiles) => {
@@ -63,7 +74,7 @@ export default function AddProduct() {
       const file = acceptedFiles[0]; // Accepts single file only
       const previewURL = URL.createObjectURL(file);
       setPreview(previewURL);
-      setProduct((prev) => ({ ...prev, imageFile: file }));
+      setImageFile(file);
     }
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
@@ -105,20 +116,20 @@ export default function AddProduct() {
     },
   });
 
-  // Add Product
-  const { mutate: addProduct, isLoading: postLoading } = useMutation({
+  // // Add Product
+  const { mutate: addProductMutate } = useMutation({
     mutationFn: insertNewProduct,
-    onMutate: async (productData) => {
+    onMutate: async (formData) => {
       await queryClient.cancelQueries(["product"]);
       const previousData = queryClient.getQueryData(["product"]);
-      queryClient.setQueryData(["product"], (oldProductData) => {
-        return [...oldProductData, productData];
+      queryClient.setQueryData(["product"], (oldProductData =[]) => {
+        return [...oldProductData, formData];
       });
 
       return { previousData };
     },
-    onError: (error, _productData, context) => {
-      queryClient.setQueryData(["category"], context.previousData);
+    onError: (error, _formData, context) => {
+      queryClient.setQueryData(["product"], context.previousData);
       console.log(error.message || "An error occured while adding product");
     },
     onSuccess: () => {
@@ -128,9 +139,9 @@ export default function AddProduct() {
 
   const handleCategorySubmit = (e) => {
     e.preventDefault();
-    if (newCategory.trim()) {
-      addCategoryMutate({ category: newCategory});
-      setNewCategory("");
+    if (newCategory.category.trim()) {
+      addCategoryMutate(newCategory);
+      setNewCategory({ category: "" });
       setIsToggle(false);
     } else {
       alert("Category name cannot be empty.");
@@ -144,53 +155,76 @@ export default function AddProduct() {
 
   const handleProductForm = (e) => {
     e.preventDefault();
+  
+    // Creating FormData
     const formData = new FormData();
-    formData.append("productDTO", new Blob([JSON.stringify(product)]), {
-      type: "application/json",
+    formData.append(
+      "productDTO",
+      new Blob([JSON.stringify(product)], { type: "application/json" })
+    );
+    if (imageFile) {
+      formData.append("imageFile", imageFile);
+    }
+  
+    addProductMutate(formData, {
+      onError: (error) => {
+        console.error("Failed to add product", error);
+      },
     });
-    formData.append("imageFile", product.imageFile);
 
-    addProduct(formData);
   };
 
   return (
     <div className="mb-20">
       <hr className="h-px my-8 bg-gray-200 border" />
       <section className="mx-20 flex flex-col">
-        <form onSubmit={handleProductForm} className="">
+        <form onSubmit={handleProductForm}>
           <header className="flex justify-between items-center sticky bg-offwhite top-0 py-3 z-10 mb-10">
-            <h1 className="font-semibold text-2xl">Add New Product</h1>
+            <h1 className="font-semibold lg:text-2xl flex items-center gap-x-5 2xl:text-4xl"><MdAddBusiness />Add New Product</h1>
             <button
               type="submit"
-              className="flex items-center gap-x-3 font-medium bg-green-400 text-xl text-stone-900 py-3 px-5 rounded-full"
+              className="flex items-center gap-x-3 font-medium bg-green-400 text-xl text-stone-900 py-3 px-5 rounded-full shadow-md"
             >
               <FaCheck /> Add Product
             </button>
-            {postLoading && <p>Adding product...</p>}
+            {/* {postLoading && <p>Adding product...</p>} */}
           </header>
 
           <div className="flex gap-x-5">
             {/* Product Details Form */}
             <main className="flex flex-col lg:w-3/5 gap-y-5">
-              <div className="p-5 rounded-md bg-extraLightGray">
+              <div className="p-5 rounded-md bg-extraLightGray shadow-sm">
                 <h1 className="text-xl font-semibold mb-5">
                   General Information
                 </h1>
-                <label className="flex flex-col gap-y-2 mb-5">
+                <div className="flex gap-x-5">
+                <label className="flex flex-col gap-y-2 mb-5 w-full">
                   Name Product
                   <input
-                    className="bg-mutedgray rounded-lg py-3 px-3 outline-none"
+                    className="bg-mutedgray border border-neutral-400 outline-lightgray/85 rounded-lg py-3 px-3 placeholder:text-sm placeholder:text-lightgray placeholder:font-light"
                     type="text"
                     name="name"
                     onChange={handleChange}
                     placeholder="Name of product"
                   />
                 </label>
+                <label className="flex flex-col gap-y-2 mb-5 w-full">
+                  Brand
+                  <input
+                    className="bg-mutedgray border border-neutral-400 outline-lightgray/85 rounded-lg py-3 px-3 placeholder:text-sm placeholder:text-lightgray placeholder:font-light w-full"
+                    type="text"
+                    name="brand"
+                    onChange={handleChange}
+                    placeholder="Brand"
+                  />
+                </label>
+                </div>
+                
 
                 <label className="flex flex-col gap-y-2 mb-5">
                   Description
                   <textarea
-                    className="bg-mutedgray rounded-lg py-3 px-3"
+                    className="bg-mutedgray border border-neutral-400 outline-lightgray/85 rounded-lg py-3 px-3 placeholder:text-sm placeholder:text-lightgray placeholder:font-light"
                     type="text"
                     name="description"
                     onChange={handleChange}
@@ -198,21 +232,11 @@ export default function AddProduct() {
                   />
                 </label>
 
-                <label className="flex flex-col gap-y-2 mb-5 w-full">
-                  Brand
-                  <input
-                    className="bg-mutedgray rounded-lg py-3 px-3 w-full"
-                    type="text"
-                    name="brand"
-                    onChange={handleChange}
-                    placeholder="Brand"
-                  />
-                </label>
 
                 <label className="flex flex-col gap-y-2 mb-5">
                   Ingredients
                   <textarea
-                    className="bg-mutedgray rounded-lg py-3 px-3"
+                    className="bg-mutedgray border border-neutral-400 outline-lightgray/85 rounded-lg py-3 px-3  placeholder:text-sm placeholder:text-lightgray placeholder:font-light"
                     type="text"
                     name="ingredients"
                     onChange={handleChange}
@@ -223,7 +247,7 @@ export default function AddProduct() {
                 <label className="flex flex-col gap-y-2 mb-5">
                   Usage
                   <textarea
-                    className="bg-mutedgray rounded-lg py-3 px-3"
+                    className="bg-mutedgray border border-neutral-400 outline-lightgray/85 rounded-lg py-3 px-3  placeholder:text-sm placeholder:text-lightgray placeholder:font-light"
                     type="text"
                     name="usageInstructions"
                     onChange={handleChange}
@@ -234,7 +258,7 @@ export default function AddProduct() {
                 <label className="flex flex-col gap-y-2 mb-5">
                   Expiration Date
                   <input
-                    className="bg-mutedgray rounded-lg py-3 px-3"
+                    className="bg-mutedgray border border-neutral-400 outline-lightgray/85 rounded-lg py-3 px-3"
                     type="date"
                     onChange={handleChange}
                     name="expirationDate"
@@ -243,7 +267,7 @@ export default function AddProduct() {
               </div>
 
               {/* Pricing and Stock Details */}
-              <div className="p-5 rounded-md bg-extraLightGray">
+              <div className="p-5 rounded-md bg-extraLightGray shadow-sm">
                 <h1 className="text-xl font-semibold mb-5">
                   Pricing and Stock
                 </h1>
@@ -252,7 +276,7 @@ export default function AddProduct() {
                   <label className="flex flex-col gap-y-2 mb-5 w-full">
                     Base Pricing
                     <input
-                      className="bg-mutedgray rounded-lg py-3 px-3"
+                      className="bg-mutedgray border border-neutral-400 outline-lightgray/85 rounded-lg py-3 px-3 placeholder:text-sm placeholder:text-lightgray placeholder:font-light"
                       type="number"
                       name="price"
                       onChange={handleChange}
@@ -263,7 +287,7 @@ export default function AddProduct() {
                   <label className="flex flex-col gap-y-2 w-full">
                     Stock
                     <input
-                      className="bg-mutedgray rounded-lg py-3 px-3"
+                      className="bg-mutedgray border border-neutral-400 outline-lightgray/85 rounded-lg py-3 px-3  placeholder:text-sm placeholder:text-lightgray placeholder:font-light"
                       type="number"
                       name="stock"
                       onChange={handleChange}
@@ -275,7 +299,7 @@ export default function AddProduct() {
             </main>
 
             <aside className="lg:w-1/3">
-              <figure className="p-5 rounded-md bg-extraLightGray">
+              <figure className="p-5 rounded-md bg-extraLightGray shadow-sm">
                 <h1 className="text-xl font-medium mb-5">Upload Image</h1>
                 <label
                   {...getRootProps()}
@@ -316,7 +340,9 @@ export default function AddProduct() {
                 {categoriesLoading ? (
                   categorieError ? (
                     <p>Error: {categorieError.message}</p>
-                  ) : ( <p>Loading categories</p>)   
+                  ) : (
+                    <p>Loading categories</p>
+                  )
                 ) : (
                   <select
                     className="w-full bg-extraLightGray border border-gray-300 text-sm rounded-lg p-2.5"
@@ -369,9 +395,9 @@ export default function AddProduct() {
                 <input
                   className="bg-mutedgray py-2 px-4 rounded-lg outline-none"
                   type="text"
-                  value={newCategory}
+                  value={newCategory.category}
                   name="newCategory"
-                  onChange={(e) => setNewCategory(e.target.value)}
+                  onChange={(e) => setNewCategory({ category: e.target.value })}
                 />
               </label>
 
