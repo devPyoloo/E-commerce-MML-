@@ -8,6 +8,7 @@ import Checkout from "./pages/Checkout"
 import Products from "./pages/Products"
 import Favourite from "./pages/Favourite"
 import AddProduct from "./pages/AddProduct"
+import PaymentSuccess from "./pages/PaymentSuccess"
 
 
 const router = createBrowserRouter(
@@ -25,6 +26,7 @@ const router = createBrowserRouter(
       <Route path="favourite" element={<Favourite />} />
 
       <Route path="add-product" element={<AddProduct />} />
+      <Route path="payment-success" element={<PaymentSuccess />} />
     </Route> 
   )
 )

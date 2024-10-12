@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useStore } from "../store/useStore";
 import { loadStripe } from "@stripe/stripe-js";
 import {
@@ -8,12 +8,15 @@ import {
   useElements,
 } from '@stripe/react-stripe-js';
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PK);
 
-function CheckoutComponent() {
+function CheckoutComponent({clientSecret, subTotal}) {
   const cart = useStore((state) => state.cart);
-  const subTotal = useStore((state) => state.total);
-  const [clientSecret, setClientSecret] = useState(""); 
+  const navigate = useNavigate();
+
+
   const [checkoutDetails, setCheckoutDetails] = useState({
     email: '',
     phoneNumber: '',
@@ -29,6 +32,8 @@ function CheckoutComponent() {
   const elements = useElements();
 
 
+ 
+
   const handleChange = (e) => {
     const { name, value } = e.target;
       setCheckoutDetails((prev) => ({...prev, [name]: value}));
@@ -38,41 +43,48 @@ function CheckoutComponent() {
     e.preventDefault();
     if (!stripe || !elements) return;
 
+
     try {
-      // Create payment intent by sending a request to your backend
-      const { data: paymentIntent  } = await axios.post('http://localhost:8000/api/checkout/create-payment-intent', {
-        amount: subTotal * 100, // Amount in cents
-        currency: 'usd',
-        items: cart,
-        ...checkoutDetails
-      });
 
-      setClientSecret(paymentIntent.clientSecret)
+       // 2. Confirm the payment
+    const { error, paymentIntent } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        // return_url: "http://localhost:5173/payment-success", // Update with your route
+      },
+      redirect: 'if_required'
+    });
 
-      const { error, paymentIntent: confirmedPaymentIntent } = await stripe.confirmPayment({
-        elements,
-        confirmParams: {
-          return_url: "http://localhost:5173/checkout-success",
-        },
-      });
 
-      if (error) {
-        console.error(error.message);
-      } else if (confirmedPaymentIntent.status === "succeeded") {
-        console.log("Payment successful:", confirmedPaymentIntent);
-        // Optionally, send the order details to the server here
-        await axios.post('http://localhost:8000/api/checkout/save', {
-          ...checkoutDetails,
-          items: cart,
-          total: subTotal,
-        });
-      }
-    } catch (error) {
+    if (error) {
       console.error(error.message);
+    } else if (paymentIntent.status === "succeeded") { 
+      console.log("Payment successful:", paymentIntent);
+
+      // 3. Save order details in backend
+      const filteredCart = cart.map(item => ({
+        productId: item.id,
+        name: item.name,
+        quantity: item.quantity,
+        price: item.price,
+      }));
+
+      await axios.post('http://localhost:8080/api/checkout/save', {
+        ...checkoutDetails,
+        amount: subTotal,
+        stripePaymentIntentId: paymentIntent.id,
+        cartItems: filteredCart,
+      });
+
+      navigate("/payment-success");
     }
+  } catch (error) {
+    console.error("Payment error:", error.message);
+  }
   };
 
-  console.log(cart)
+
+
 
   return (
     <div className="flex flex-col mx-10 lg:mx-20 pt-20">
@@ -99,7 +111,7 @@ function CheckoutComponent() {
             />
           </div>
 
-          <div className="address flex flex-col gap-y-5 pb-10">
+          <div className="address flex flex-col gap-y-5 pb-5">
             <h1 className="group text-xl font-semibold">Address</h1>
             <div className="grid grid-cols-2 gap-5">
               <input
@@ -149,39 +161,14 @@ function CheckoutComponent() {
               />
             </div>
           </div>
+          <label className="text-xl font-semibold text-mutedblack">
+            <input className="mr-2 w-4 h-4" type="checkbox" checked readOnly/>
+            Billing address same as shipping
+          </label>
 
 
-          <div className="card-details flex flex-col gap-y-5 pb-10">
-            <h1 className="group text-xl font-semibold">Billing Address</h1>
-            <input
-              className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray"
-              type="text"
-              name=""
-              placeholder="Street Address"
-            />
-            <div className="grid grid-cols-2 gap-5">
-              <input
-                className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray"
-                type="text"
-                name=""
-                placeholder="City"
-              />
-              <input
-                className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray"
-                type="text"
-                name=""
-                placeholder="Zip Code"
-              />
-            </div>
-            <input
-              className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray"
-              type="text"
-              name=""
-              placeholder="Country"
-            />
-          </div>
 
-          <div className="flex justify-center">
+          <div className="flex justify-end mt-16">
           {clientSecret && <PaymentElement />}
             <button type="submit" disabled={!stripe || !elements} className="w-1/2 rounded-full text-xl py-6 bg-mutedblack text-white hover:opacity-90">
               Place Order
@@ -240,13 +227,72 @@ function CheckoutComponent() {
 }
 
 export default function Checkout() {
+  const subTotal = useStore((state) => state.total);
+  const [clientSecret, setClientSecret] = useState(null); 
+
+  useEffect(() => {
+    const fetchClientSecret = async () => {
+      if (subTotal <= 0) return; // Prevent API call if subtotal is 0 or less
+      try {
+        const { data } = await axios.post('http://localhost:8080/api/checkout/create-payment-intent', {
+          amount: subTotal * 100, // Amount in cents
+        });
+        
+        // Ensure you set the clientSecret correctly
+        if (data.clientSecret) {
+          // console.log("Client Secret:", data.clientSecret);
+          setClientSecret(data.clientSecret);
+        } else {
+          console.error("Client Secret not found in response");
+        }
+      } catch (error) {
+        console.error("Error fetching clientSecret:", error);
+      }
+    };
+    fetchClientSecret();
+  }, [subTotal]);
+  
+  if (!clientSecret) {
+    return <p>Loading...</p>; // Or a loading spinner
+  }
+  
+
   return (
-    <Elements stripe={stripePromise}>
-      <CheckoutComponent />
+    <Elements stripe={stripePromise} options={{clientSecret}} >
+      <CheckoutComponent clientSecret={clientSecret} subTotal={subTotal} />
     </Elements>
   );
 }
 
+{/* <div className="card-details flex flex-col gap-y-5 pb-10">
+  <h1 className="group text-xl font-semibold">Billing Address</h1>
+  <input
+    className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray"
+    type="text"
+    name=""
+    placeholder="Street Address"
+  />
+  <div className="grid grid-cols-2 gap-5">
+    <input
+      className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray"
+      type="text"
+      name=""
+      placeholder="City"
+    />
+    <input
+      className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray"
+      type="text"
+      name=""
+      placeholder="Zip Code"
+    />
+  </div>
+  <input
+    className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray"
+    type="text"
+    name=""
+    placeholder="Country"
+  />
+</div> */}
 
           {/* <div className="payment flex flex-col gap-y-5 pb-10">
             <h1 className="text-xl font-semibold">Payment</h1>
