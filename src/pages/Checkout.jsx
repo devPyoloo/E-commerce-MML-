@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useStore } from "../store/useStore";
 import { loadStripe } from "@stripe/stripe-js";
+import PropTypes from "prop-types"
 import {
   PaymentElement,
   Elements,
@@ -65,6 +66,8 @@ function CheckoutComponent({clientSecret, subTotal}) {
       const filteredCart = cart.map(item => ({
         productId: item.id,
         name: item.name,
+        imageFile: item.image,
+        category: item.category,
         quantity: item.quantity,
         price: item.price,
       }));
@@ -76,7 +79,7 @@ function CheckoutComponent({clientSecret, subTotal}) {
         cartItems: filteredCart,
       });
 
-      navigate("/payment-success");
+      navigate(`/payment-success/${paymentIntent.id.toString()}`);
     }
   } catch (error) {
     console.error("Payment error:", error.message);
@@ -226,13 +229,18 @@ function CheckoutComponent({clientSecret, subTotal}) {
   );
 }
 
+CheckoutComponent.propTypes = {
+  clientSecret: PropTypes.string.isRequired,
+  subTotal: PropTypes.number.isRequired
+}
+
 export default function Checkout() {
   const subTotal = useStore((state) => state.total);
   const [clientSecret, setClientSecret] = useState(null); 
 
   useEffect(() => {
     const fetchClientSecret = async () => {
-      if (subTotal <= 0) return; // Prevent API call if subtotal is 0 or less
+      if (subTotal <= 0) return;
       try {
         const { data } = await axios.post('http://localhost:8080/api/checkout/create-payment-intent', {
           amount: subTotal * 100, // Amount in cents
@@ -240,7 +248,6 @@ export default function Checkout() {
         
         // Ensure you set the clientSecret correctly
         if (data.clientSecret) {
-          // console.log("Client Secret:", data.clientSecret);
           setClientSecret(data.clientSecret);
         } else {
           console.error("Client Secret not found in response");

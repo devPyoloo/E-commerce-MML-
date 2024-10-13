@@ -26,7 +26,7 @@ const router = createBrowserRouter(
       <Route path="favourite" element={<Favourite />} />
 
       <Route path="add-product" element={<AddProduct />} />
-      <Route path="payment-success" element={<PaymentSuccess />} />
+      <Route path="payment-success/:stripePaymentIntentId" element={<PaymentSuccess />} />
     </Route> 
   )
 )
