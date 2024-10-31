@@ -1,93 +1,83 @@
 import { useEffect, useState } from "react";
 import { useStore } from "../store/useStore";
 import { loadStripe } from "@stripe/stripe-js";
-import PropTypes from "prop-types"
+import PropTypes from "prop-types";
 import {
   PaymentElement,
   Elements,
   useStripe,
   useElements,
-} from '@stripe/react-stripe-js';
+} from "@stripe/react-stripe-js";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PK);
 
-function CheckoutComponent({clientSecret, subTotal}) {
+function CheckoutComponent({ clientSecret, subTotal }) {
   const cart = useStore((state) => state.cart);
   const navigate = useNavigate();
 
-
   const [checkoutDetails, setCheckoutDetails] = useState({
-    email: '',
-    phoneNumber: '',
-    firstName: '',
-    lastName: '',
-    barangay: '',
-    city: '',
-    province: '',
-    zipCode: '',
+    email: "",
+    phoneNumber: "",
+    firstName: "",
+    lastName: "",
+    barangay: "",
+    city: "",
+    province: "",
+    zipCode: "",
   });
 
   const stripe = useStripe();
   const elements = useElements();
 
-
- 
-
   const handleChange = (e) => {
     const { name, value } = e.target;
-      setCheckoutDetails((prev) => ({...prev, [name]: value}));
-  }
+    setCheckoutDetails((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmitOrder = async (e) => {
     e.preventDefault();
     if (!stripe || !elements) return;
 
-
     try {
-
-       // 2. Confirm the payment
-    const { error, paymentIntent } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        // return_url: "http://localhost:5173/payment-success", // Update with your route
-      },
-      redirect: 'if_required'
-    });
-
-
-    if (error) {
-      console.error(error.message);
-    } else if (paymentIntent.status === "succeeded") { 
-      console.log("Payment successful:", paymentIntent);
-
-      // 3. Save order details in backend
-      const filteredCart = cart.map(item => ({
-        productId: item.id,
-        name: item.name,
-        imageFile: item.image,
-        category: item.category,
-        quantity: item.quantity,
-        price: item.price,
-      }));
-
-      await axios.post('http://localhost:8080/api/checkout/save', {
-        ...checkoutDetails,
-        amount: subTotal,
-        stripePaymentIntentId: paymentIntent.id,
-        cartItems: filteredCart,
+      // 2. Confirm the payment
+      const { error, paymentIntent } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          // return_url: "http://localhost:5173/payment-success", // Update with your route
+        },
+        redirect: "if_required",
       });
 
-      navigate(`/payment-success/${paymentIntent.id.toString()}`);
+      if (error) {
+        console.error(error.message);
+      } else if (paymentIntent.status === "succeeded") {
+        console.log("Payment successful:", paymentIntent);
+
+        // 3. Save order details in backend
+        const filteredCart = cart.map((item) => ({
+          productId: item.id,
+          name: item.name,
+          imageFile: item.image,
+          category: item.category,
+          quantity: item.quantity,
+          price: item.price,
+        }));
+
+        await axios.post("http://localhost:8080/api/checkout/save", {
+          ...checkoutDetails,
+          amount: subTotal,
+          stripePaymentIntentId: paymentIntent.id,
+          cartItems: filteredCart,
+        });
+
+        navigate(`/payment-success/${paymentIntent.id.toString()}`);
+      }
+    } catch (error) {
+      console.error("Payment error:", error.message);
     }
-  } catch (error) {
-    console.error("Payment error:", error.message);
-  }
   };
-
-
-
 
   return (
     <div className="flex flex-col mx-10 lg:mx-20 pt-20">
@@ -95,7 +85,10 @@ function CheckoutComponent({clientSecret, subTotal}) {
         CHECKOUT
       </h1>
       <section className="flex flex-col-reverse justify-evenly items-start lg:flex-row">
-        <form onSubmit={handleSubmitOrder} className="mt-10 mb-40 lg:w-3/5 lg:pr-56 lg:mt-0">
+        <form
+          onSubmit={handleSubmitOrder}
+          className="mt-10 mb-40 lg:w-3/5 lg:pr-56 lg:mt-0"
+        >
           <div className="contact flex flex-col gap-y-5 pb-10">
             <h1 className="group text-xl font-semibold">Contact</h1>
             <input
@@ -165,15 +158,18 @@ function CheckoutComponent({clientSecret, subTotal}) {
             </div>
           </div>
           <label className="text-xl font-semibold text-mutedblack">
-            <input className="mr-2 w-4 h-4" type="checkbox" checked readOnly/>
+            <input className="mr-2 w-4 h-4" type="checkbox" checked readOnly />
             Billing address same as shipping
           </label>
 
-
+          <div className="mt-10">{clientSecret && <PaymentElement />}</div>
 
           <div className="flex justify-end mt-16">
-          {clientSecret && <PaymentElement />}
-            <button type="submit" disabled={!stripe || !elements} className="w-1/2 rounded-full text-xl py-6 bg-mutedblack text-white hover:opacity-90">
+            <button
+              type="submit"
+              disabled={!stripe || !elements}
+              className="w-1/2 rounded-full text-xl py-6 bg-mutedblack text-white hover:opacity-90"
+            >
               Place Order
             </button>
           </div>
@@ -231,21 +227,24 @@ function CheckoutComponent({clientSecret, subTotal}) {
 
 CheckoutComponent.propTypes = {
   clientSecret: PropTypes.string.isRequired,
-  subTotal: PropTypes.number.isRequired
-}
+  subTotal: PropTypes.number.isRequired,
+};
 
 export default function Checkout() {
   const subTotal = useStore((state) => state.total);
-  const [clientSecret, setClientSecret] = useState(null); 
+  const [clientSecret, setClientSecret] = useState(null);
 
   useEffect(() => {
     const fetchClientSecret = async () => {
       if (subTotal <= 0) return;
       try {
-        const { data } = await axios.post('http://localhost:8080/api/checkout/create-payment-intent', {
-          amount: subTotal * 100, // Amount in cents
-        });
-        
+        const { data } = await axios.post(
+          "http://localhost:8080/api/checkout/create-payment-intent",
+          {
+            amount: subTotal * 100, // Amount in cents
+          }
+        );
+
         // Ensure you set the clientSecret correctly
         if (data.clientSecret) {
           setClientSecret(data.clientSecret);
@@ -258,20 +257,20 @@ export default function Checkout() {
     };
     fetchClientSecret();
   }, [subTotal]);
-  
+
   if (!clientSecret) {
     return <p>Loading...</p>; // Or a loading spinner
   }
-  
 
   return (
-    <Elements stripe={stripePromise} options={{clientSecret}} >
+    <Elements stripe={stripePromise} options={{ clientSecret }}>
       <CheckoutComponent clientSecret={clientSecret} subTotal={subTotal} />
     </Elements>
   );
 }
 
-{/* <div className="card-details flex flex-col gap-y-5 pb-10">
+{
+  /* <div className="card-details flex flex-col gap-y-5 pb-10">
   <h1 className="group text-xl font-semibold">Billing Address</h1>
   <input
     className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray"
@@ -299,9 +298,11 @@ export default function Checkout() {
     name=""
     placeholder="Country"
   />
-</div> */}
+</div> */
+}
 
-          {/* <div className="payment flex flex-col gap-y-5 pb-10">
+{
+  /* <div className="payment flex flex-col gap-y-5 pb-10">
             <h1 className="text-xl font-semibold">Payment</h1>
             <div className="hover:bg-mutedgray p-4 rounded-sm">
               <label className="flex justify-between">
@@ -389,4 +390,5 @@ export default function Checkout() {
               name=""
               placeholder="Cardholder's Name *"
             />
-          </div> */}
+          </div> */
+}
