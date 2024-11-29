@@ -6,6 +6,8 @@ import { TbCloudUpload } from "react-icons/tb";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { CgSpinner } from "react-icons/cg";
 
 // Fetch data
 const fetchCategories = async () => {
@@ -21,13 +23,16 @@ const fetchCategories = async () => {
 // PostInsert Data
 const insertNewProduct = async (formData) => {
   // addProductMutate(formData)
-  try {
-    await axios.post(
+   try {
+    const response = await axios.post(
       "http://localhost:8080/api/product/add-product",
-      formData,
+      formData
     );
+    console.log("Product Insert Response:", response);
+    return response.data;
   } catch (error) {
     console.error("Error adding product:", error);
+    throw error;
   }
 };
 
@@ -54,17 +59,16 @@ export default function AddProduct() {
     name: "",
     category: "",
     description: "",
-    price: "",
-    stock: "",
+    price: 0,
+    stock: 0,
     brand: "",
-    rating: "",
-    reviewCount: "",
+    rating: 0,
+    reviewCount: 0,
     ingredients: "",
     usageInstructions: "",
     expirationDate: "",
   });
   const [imageFile, setImageFile] = useState(null);
-
   const [preview, setPreview] = useState(null);
   const [newCategory, setNewCategory] = useState({ category: "" });
   const queryClient = useQueryClient();
@@ -93,7 +97,7 @@ export default function AddProduct() {
   // Add Category
   const {
     mutate: addCategoryMutate,
-    isLoading: addLoading,
+    isPending: pendingCategory,
     error: mutationError,
   } = useMutation({
     mutationFn: addCategory,
@@ -117,12 +121,12 @@ export default function AddProduct() {
   });
 
   // // Add Product
-  const { mutate: addProductMutate } = useMutation({
+  const { mutate: addProductMutate, isPending: pendingProduct} = useMutation({
     mutationFn: insertNewProduct,
     onMutate: async (formData) => {
       await queryClient.cancelQueries(["product"]);
       const previousData = queryClient.getQueryData(["product"]);
-      queryClient.setQueryData(["product"], (oldProductData =[]) => {
+      queryClient.setQueryData(["product"], (oldProductData = []) => {
         return [...oldProductData, formData];
       });
 
@@ -134,6 +138,13 @@ export default function AddProduct() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["product"]);
+      toast.success("New product has been added!", {
+        style: {
+          borderRadius: "5px",
+          background: "#424141",
+          color: "#FAF9F6",
+        },
+      });
     },
   });
 
@@ -155,7 +166,7 @@ export default function AddProduct() {
 
   const handleProductForm = (e) => {
     e.preventDefault();
-  
+
     // Creating FormData
     const formData = new FormData();
     formData.append(
@@ -165,14 +176,14 @@ export default function AddProduct() {
     if (imageFile) {
       formData.append("imageFile", imageFile);
     }
-  
-    addProductMutate(formData, {
-      onError: (error) => {
-        console.error("Failed to add product", error);
-      },
-    });
+
+    addProductMutate(formData);
 
   };
+
+  console.log("Adding Product Loading State:", pendingProduct);
+  // console.log("Adding Category Loading State:", addingCategory);
+
 
   return (
     <div className="mb-20">
@@ -180,14 +191,17 @@ export default function AddProduct() {
       <section className="mx-20 flex flex-col">
         <form onSubmit={handleProductForm}>
           <header className="flex justify-between items-center sticky bg-offwhite top-0 py-3 z-10 mb-10">
-            <h1 className="font-semibold lg:text-2xl flex items-center gap-x-5 2xl:text-4xl"><MdAddBusiness />Add New Product</h1>
+            <h1 className="font-semibold lg:text-2xl flex items-center gap-x-5 2xl:text-4xl">
+              <MdAddBusiness />
+              Add New Product
+            </h1>
             <button
               type="submit"
               className="flex items-center gap-x-3 font-medium bg-green-400 text-xl text-stone-900 py-3 px-5 rounded-full shadow-md"
+              disabled={pendingProduct}
             >
-              <FaCheck /> Add Product
+              {pendingProduct ? (<p className="flex items-center gap-x-3"><CgSpinner className="animate-spin text-2xl" /> Adding product...</p>) : (<p className="flex items-center gap-x-3"><FaCheck className="text-2xl" /> Add Product</p>)}
             </button>
-            {/* {postLoading && <p>Adding product...</p>} */}
           </header>
 
           <div className="flex gap-x-5">
@@ -198,28 +212,27 @@ export default function AddProduct() {
                   General Information
                 </h1>
                 <div className="flex gap-x-5">
-                <label className="flex flex-col gap-y-2 mb-5 w-full">
-                  Name Product
-                  <input
-                    className="bg-mutedgray border border-neutral-400 outline-lightgray/85 rounded-lg py-3 px-3 placeholder:text-sm placeholder:text-lightgray placeholder:font-light"
-                    type="text"
-                    name="name"
-                    onChange={handleChange}
-                    placeholder="Name of product"
-                  />
-                </label>
-                <label className="flex flex-col gap-y-2 mb-5 w-full">
-                  Brand
-                  <input
-                    className="bg-mutedgray border border-neutral-400 outline-lightgray/85 rounded-lg py-3 px-3 placeholder:text-sm placeholder:text-lightgray placeholder:font-light w-full"
-                    type="text"
-                    name="brand"
-                    onChange={handleChange}
-                    placeholder="Brand"
-                  />
-                </label>
+                  <label className="flex flex-col gap-y-2 mb-5 w-full">
+                    Name Product
+                    <input
+                      className="bg-mutedgray border border-neutral-400 outline-lightgray/85 rounded-lg py-3 px-3 placeholder:text-sm placeholder:text-lightgray placeholder:font-light"
+                      type="text"
+                      name="name"
+                      onChange={handleChange}
+                      placeholder="Name of product"
+                    />
+                  </label>
+                  <label className="flex flex-col gap-y-2 mb-5 w-full">
+                    Brand
+                    <input
+                      className="bg-mutedgray border border-neutral-400 outline-lightgray/85 rounded-lg py-3 px-3 placeholder:text-sm placeholder:text-lightgray placeholder:font-light w-full"
+                      type="text"
+                      name="brand"
+                      onChange={handleChange}
+                      placeholder="Brand"
+                    />
+                  </label>
                 </div>
-                
 
                 <label className="flex flex-col gap-y-2 mb-5">
                   Description
@@ -231,7 +244,6 @@ export default function AddProduct() {
                     placeholder="Description of the product..."
                   />
                 </label>
-
 
                 <label className="flex flex-col gap-y-2 mb-5">
                   Ingredients
@@ -279,6 +291,7 @@ export default function AddProduct() {
                       className="bg-mutedgray border border-neutral-400 outline-lightgray/85 rounded-lg py-3 px-3 placeholder:text-sm placeholder:text-lightgray placeholder:font-light"
                       type="number"
                       name="price"
+                      value={product.price}
                       onChange={handleChange}
                       placeholder="Price"
                     />
@@ -290,6 +303,7 @@ export default function AddProduct() {
                       className="bg-mutedgray border border-neutral-400 outline-lightgray/85 rounded-lg py-3 px-3  placeholder:text-sm placeholder:text-lightgray placeholder:font-light"
                       type="number"
                       name="stock"
+                      value={product.stock}
                       onChange={handleChange}
                       placeholder="Stock"
                     />
@@ -406,7 +420,7 @@ export default function AddProduct() {
                   <FaCheck /> Add Category
                 </button>
 
-                {addLoading && <p>Adding category...</p>}
+                {pendingCategory && <p>Adding category...</p>}
                 {mutationError && <p>Error: {mutationError.message}</p>}
               </div>
             </form>

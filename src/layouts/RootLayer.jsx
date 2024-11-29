@@ -4,7 +4,6 @@ import { Outlet } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useRef } from "react";
 
-
 export default function RootLayer() {
   const aboutRef = useRef(null)
 
