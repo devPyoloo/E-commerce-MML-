@@ -9,7 +9,7 @@ import Products from "./pages/Products"
 import Favourite from "./pages/Favourite"
 import AddProduct from "./pages/AddProduct"
 import PaymentSuccess from "./pages/PaymentSuccess"
-import LoginForm from "./components/LoginPage/LoginForm"
+import LoginForm from "./pages/LoginPage/LoginForm"
 
 
 const router = createBrowserRouter(

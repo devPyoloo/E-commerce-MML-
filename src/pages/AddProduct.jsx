@@ -68,6 +68,19 @@ export default function AddProduct() {
     usageInstructions: "",
     expirationDate: "",
   });
+  const initialProductState = {
+    name: "",
+    category: "",
+    description: "",
+    price: 0,
+    stock: 0,
+    brand: "",
+    rating: 0,
+    reviewCount: 0,
+    ingredients: "",
+    usageInstructions: "",
+    expirationDate: "",
+  };
   const [imageFile, setImageFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [newCategory, setNewCategory] = useState({ category: "" });
@@ -86,8 +99,6 @@ export default function AddProduct() {
   // Fetch data
   const {
     data: categories,
-    isLoading: categoriesLoading,
-    error: categorieError,
   } = useQuery({
     queryKey: ["category"],
     queryFn: fetchCategories,
@@ -138,6 +149,10 @@ export default function AddProduct() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["product"]);
+      setProduct(initialProductState);
+      setImageFile(null);             
+      setPreview(null); 
+      // setNewCategory({ category: "" })
       toast.success("New product has been added!", {
         style: {
           borderRadius: "5px",
@@ -147,7 +162,6 @@ export default function AddProduct() {
       });
     },
   });
-
   const handleCategorySubmit = (e) => {
     e.preventDefault();
     if (newCategory.category.trim()) {
@@ -217,6 +231,7 @@ export default function AddProduct() {
                     <input
                       className="bg-mutedgray border border-neutral-400 outline-lightgray/85 rounded-lg py-3 px-3 placeholder:text-sm placeholder:text-lightgray placeholder:font-light"
                       type="text"
+                      value={product.name}
                       name="name"
                       onChange={handleChange}
                       placeholder="Name of product"
@@ -228,6 +243,7 @@ export default function AddProduct() {
                       className="bg-mutedgray border border-neutral-400 outline-lightgray/85 rounded-lg py-3 px-3 placeholder:text-sm placeholder:text-lightgray placeholder:font-light w-full"
                       type="text"
                       name="brand"
+                      value={product.brand}
                       onChange={handleChange}
                       placeholder="Brand"
                     />
@@ -240,6 +256,7 @@ export default function AddProduct() {
                     className="bg-mutedgray border border-neutral-400 outline-lightgray/85 rounded-lg py-3 px-3 placeholder:text-sm placeholder:text-lightgray placeholder:font-light"
                     type="text"
                     name="description"
+                    value={product.description}
                     onChange={handleChange}
                     placeholder="Description of the product..."
                   />
@@ -251,6 +268,7 @@ export default function AddProduct() {
                     className="bg-mutedgray border border-neutral-400 outline-lightgray/85 rounded-lg py-3 px-3  placeholder:text-sm placeholder:text-lightgray placeholder:font-light"
                     type="text"
                     name="ingredients"
+                    value={product.ingredients}
                     onChange={handleChange}
                     placeholder="Ingredients of the product..."
                   />
@@ -262,6 +280,7 @@ export default function AddProduct() {
                     className="bg-mutedgray border border-neutral-400 outline-lightgray/85 rounded-lg py-3 px-3  placeholder:text-sm placeholder:text-lightgray placeholder:font-light"
                     type="text"
                     name="usageInstructions"
+                    value={product.usageInstructions}
                     onChange={handleChange}
                     placeholder="Usage of the product..."
                   />
@@ -272,6 +291,7 @@ export default function AddProduct() {
                   <input
                     className="bg-mutedgray border border-neutral-400 outline-lightgray/85 rounded-lg py-3 px-3"
                     type="date"
+                    value={product.expirationDate}
                     onChange={handleChange}
                     name="expirationDate"
                   />
@@ -351,13 +371,6 @@ export default function AddProduct() {
               </figure>
 
               <div className="flex justify-center gap-x-6 w-full mt-5">
-                {categoriesLoading ? (
-                  categorieError ? (
-                    <p>Error: {categorieError.message}</p>
-                  ) : (
-                    <p>Loading categories</p>
-                  )
-                ) : (
                   <select
                     className="w-full bg-extraLightGray border border-gray-300 text-sm rounded-lg p-2.5"
                     defaultValue="Select category"
@@ -376,7 +389,6 @@ export default function AddProduct() {
                       </option>
                     ))}
                   </select>
-                )}
 
                 <span
                   onClick={() => setIsToggle(true)} // Ensure setIsToggle is defined in your component
