@@ -14,7 +14,7 @@ export default function Footer() {
           <h1 className="text-center text-xl font-medium md:text-2xl">Social Media</h1>
           <div className="flex gap-x-5">
           <img
-            src="/assets/twitter_logo.png"
+            src="https://res.cloudinary.com/du1mw6ozf/image/upload/v1733220626/twitter_logo_fhhhhr.png"
             alt="Twitter Logo"
             aria-label="Twitter"
             className="w-11 h-11 md:w-16 md:h-auto hover:scale-110 transition-all duration-500 ease-in-out cursor-pointer"
@@ -48,19 +48,20 @@ export default function Footer() {
         <section className="grid grid-cols-2 pt-10">
           <div className="flex flex-col gap-5">
             <h1 className="font-semibold text-xl md:text-2xl text-white">Shop</h1>
-            <Link className="md:text-xl text-white font-light ">Skin care</Link>
-            <Link className="md:text-xl text-white font-light">Hair care</Link>
-            <Link className="md:text-xl text-white font-light">Body care</Link>
-            <Link className="md:text-xl text-white font-light">Supplement</Link>
+            <Link to={"/products/Skincare"} className="md:text-xl text-white font-light ">Skincare</Link>
+            <Link to={"/products/Haircare"} className="md:text-xl text-white font-light">Haircare</Link>
+            <Link to={"/products/Fragrance"} className="md:text-xl text-white font-light">Fragrance</Link>
+            <Link to={"/products/Makeup"} className="md:text-xl text-white font-light">Makeup</Link>
+            <Link to={"/products/Bodycare"} className="md:text-xl text-white font-light">Bodycare</Link>
+            <Link to={"/products/Supplements"} className="md:text-xl text-white font-light">Supplements</Link>
           </div>
           <div className="">
             <h1 className="font-semibold text-xl md:text-2xl text-white ">Location</h1>
             <p className="md:text-xl text-white font-light my-5">
-              Region II Isabela, San Mateo, Isabela, 3318
+              Tuen Mun, New Territories, Hong Kong 999077
             </p>
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3817.9327646631955!2d121.58532583176859!3d16.879220218672526!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x338fffac24e3646f%3A0x97a960f422502093!2sDr.%20Jose%20Rizal%20Park%2C%20Santiago%20-%20Tuguegarao%20Rd%2C%20San%20Mateo%2C%20Isabela!5e0!3m2!1sen!2sph!4v1725083184931!5m2!1sen!2sph"
-             
+              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d27753236.830687936!2d92.4351123!3d31.8835959!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3403fb3b950dba4f%3A0xf6e98875cffa2a82!2sTuen%20Mun%2C%20Hong%20Kong!5e0!3m2!1sen!2sph!4v1733220301316!5m2!1sen!2sph"
               style={{ border: 0 }}
               allowFullScreen=""
               loading="lazy"

@@ -155,16 +155,16 @@ export default function ProductCart() {
             </div>
             <div className="grid grid-cols-2 place-items-center gap-y-10 lg:flex justify-between gap-x-6 text-3xl">
               <span className="border">
-                <img className="w-16 lg:w-12" src="/assets/visa-icon.png" alt="Visa" />
+                <img className="w-16 lg:w-12" src="https://res.cloudinary.com/du1mw6ozf/image/upload/v1733220604/visa-icon_r6tcyy.png" alt="Visa" />
               </span>
               <span>
-              <img className="w-16 lg:w-12" src="/assets/mastercard-icon.png" alt="Mastercard" />
+              <img className="w-16 lg:w-12" src="https://res.cloudinary.com/du1mw6ozf/image/upload/v1733220601/mastercard-icon_ohn8kf.png" alt="Mastercard" />
               </span>
               <span>
-              <img className="w-24 lg:w-20" src="/assets/alipay-icon.png" alt="Alipay" />
+              <img className="w-24 lg:w-20" src="https://res.cloudinary.com/du1mw6ozf/image/upload/v1733220598/alipay-icon_bw43d6.png" alt="Alipay" />
               </span>
               <span>
-              <img className="w-24 lg:w-16" src="/assets/paypal-icon.png" alt="Paypal" />
+              <img className="w-24 lg:w-16" src="https://res.cloudinary.com/du1mw6ozf/image/upload/v1733220600/paypal-icon_fx1l4z.png" alt="Paypal" />
               </span>
             </div>
           </div>

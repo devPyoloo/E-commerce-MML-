@@ -84,7 +84,7 @@ export default function ProductsList() {
       <MenuBar setSortBy={setSortBy} category={category} handleCategoryChange={handleCategoryChange} />
 
       {isLoading ? (
-        <p className="text-center"><CgSpinner className="animate-spin text-2xl" /> Loading...</p>
+        <p className="my-28 flex items-center justify-center gap-x-2 text-center text-xl lg:text-2xl"><CgSpinner className="animate-spin lg:text-4xl text-xl" /> Loading...</p>
       ) : ( 
         <div className="lg:flex justify-evenly items-start mx-5 lg:mx-20">
           {/* CategoryFilter */}

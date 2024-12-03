@@ -28,7 +28,7 @@ export default function SlideShow() {
       <Carousel responsive={responsive}>
         <Link to={"/products/Skincare"}>
           <ProductCard
-            imgSrc={"The_Ordinary.png"}
+            imgSrc={"The_Ordinary_eyrlll.png"}
             altText={"Skincare Photo"}
             customCss={"w-24 md:pt-5"}
             labelText={"SKIN CARE"}
@@ -37,7 +37,7 @@ export default function SlideShow() {
 
         <Link to={"/products/Haircare"}>
           <ProductCard
-            imgSrc={"haircare.png"}
+            imgSrc={"haircare_f6obev.png"}
             altText={"Haircare Photo"}
             customCss={"w-44 pt-12"}
             labelText={"HAIR CARE"}
@@ -46,7 +46,7 @@ export default function SlideShow() {
 
         <Link to={"/products/Makeup"}>
           <ProductCard
-            imgSrc={"makeup.png"}
+            imgSrc={"makeup_l8g6yv.png"}
             altText={"Makeup Photo"}
             customCss={"w-24 pt-3"}
             labelText={"MAKEUP"}
@@ -55,7 +55,7 @@ export default function SlideShow() {
 
         <Link to={"/products/Bodycare"}>
           <ProductCard
-            imgSrc={"bodycare.png"}
+            imgSrc={"bodycare_huipyk.png"}
             altText={"Bodycare Photo"}
             customCss={"w-20 pt-5"}
             labelText={"BODY CARE"}
@@ -64,7 +64,7 @@ export default function SlideShow() {
 
         <Link to={"/products/Fragrance"}>
           <ProductCard
-            imgSrc={"fragrance.png"}
+            imgSrc={"fragrance_fia8qk.png"}
             altText={"Fragrance Photo"}
             customCss={"w-28 pt-2"}
             labelText={"FRAGRANCE"}
@@ -73,7 +73,7 @@ export default function SlideShow() {
 
         <Link to={"/products/Supplements"}>
           <ProductCard
-            imgSrc={"supplement.png"}
+            imgSrc={"supplement_bxbwqm.png"}
             altText={"Supplement Photo"}
             customCss={"w-24 pt-9"}
             labelText={"SUPPLEMENT"}

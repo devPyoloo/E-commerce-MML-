@@ -25,7 +25,7 @@ export default function HeroSection() {
           </section>
 
           <img
-            src="/assets/landing_img.png"
+            src="https://res.cloudinary.com/du1mw6ozf/image/upload/v1733220606/landing_img_cqmmt6.png"
             className="md:w-80 md:block drop-shadow-2xl hidden"
             alt="Perfume Photo"
             loading="lazy"
