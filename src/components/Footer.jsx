@@ -21,21 +21,21 @@ export default function Footer() {
             loading="lazy"
           />
           <img
-            src="/assets/fb_logo.png"
+            src="https://res.cloudinary.com/du1mw6ozf/image/upload/v1733220598/fb_logo_cvbire.png"
             alt="Facebook Logo"
             aria-label="Facebook"
             className="w-11 h-11 md:w-16 md:h-auto hover:scale-110 transition-all duration-500 ease-in-out cursor-pointer"
             loading="lazy"
           />
           <img
-            src="/assets/ig_logo.png"
+            src="https://res.cloudinary.com/du1mw6ozf/image/upload/v1733220611/ig_logo_ic4qr9.png"
             alt="Instagram Logo"
             aria-label="Instagram"
             className="w-11 h-11 md:w-16 md:h-auto hover:scale-110 transition-all duration-500 ease-in-out cursor-pointer"
             loading="lazy"
           />
           <img
-            src="/assets/tiktok_logo.png"
+            src="https://res.cloudinary.com/du1mw6ozf/image/upload/v1733220602/tiktok_logo_x1tz2m.png"
             alt="Tiktok Logo"
             aria-label="Tiktok"
             className="w-11 h-11 md:w-16 md:h-auto hover:scale-110 transition-all duration-500 ease-in-out cursor-pointer"

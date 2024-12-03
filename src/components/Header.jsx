@@ -101,7 +101,7 @@ export default function Header({ aboutRef }) {
 
         {/* LOGO */}
         <img
-          src="/assets/logo.png"
+          src="https://res.cloudinary.com/du1mw6ozf/image/upload/v1733220599/logo_spm0hd.png"
           alt="Logo"
           className="drop-shadow-2xl w-32 lg:w-60"
           loading="lazy"
@@ -191,7 +191,7 @@ export default function Header({ aboutRef }) {
         <NavLink to={"/"}>Home</NavLink>
         <NavLink to={"about"}>About us</NavLink>
         <img
-          src="/assets/logo.png"
+          src="https://res.cloudinary.com/du1mw6ozf/image/upload/v1733220599/logo_spm0hd.png"
           alt="Logo"
           className="drop-shadow-2xl"
           loading="lazy"

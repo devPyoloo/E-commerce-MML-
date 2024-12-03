@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useStore } from "../store/useStore";
 import { loadStripe } from "@stripe/stripe-js";
 import PropTypes from "prop-types";
+import { CgSpinner } from "react-icons/cg";
 import {
   PaymentElement,
   Elements,
@@ -259,7 +260,7 @@ export default function Checkout() {
   }, [subTotal]);
 
   if (!clientSecret) {
-    return <p>Loading...</p>; // Or a loading spinner
+    return <p className="my-28 flex items-center justify-center gap-x-2 text-center text-xl lg:text-2xl"><CgSpinner className="animate-spin lg:text-4xl text-xl" /> Loading...</p>; // Or a loading spinner
   }
 
   return (
