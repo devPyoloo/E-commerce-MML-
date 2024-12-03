@@ -7,13 +7,14 @@ import CategoryFilter from "../components/Products Page/CategoryFilter";
 import RenderProducts from "../components/Products Page/RenderProducts";
 import MenuBar from "../components/Products Page/MenuBar";
 import { useNavigate, useParams } from "react-router-dom";
+import { CgSpinner } from "react-icons/cg";
 
 const fetchProductsData = async ({ pageParam = 1 }) => {
   const { data } = await axios.get(BASE_API_URL);
   const productsPerPage = 24;
   const start = (pageParam - 1) * productsPerPage;
   const end = start + productsPerPage;
-  return data.products.slice(start, end);
+  return data.slice(start, end);
 };
 
 export default function ProductsList() {
@@ -83,7 +84,7 @@ export default function ProductsList() {
       <MenuBar setSortBy={setSortBy} category={category} handleCategoryChange={handleCategoryChange} />
 
       {isLoading ? (
-        <p className="text-center">Loading...</p>
+        <p className="text-center"><CgSpinner className="animate-spin text-2xl" /> Loading...</p>
       ) : ( 
         <div className="lg:flex justify-evenly items-start mx-5 lg:mx-20">
           {/* CategoryFilter */}

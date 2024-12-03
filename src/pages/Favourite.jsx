@@ -32,7 +32,7 @@ export default function Favourite() {
                       </button>
                   <img
                     className="2xl:w-28 w-20 object-center drop-shadow-md"
-                    src={item.image}
+                    src={item.imageFile}
                     alt={item.name}
                   />
                 </div>

@@ -44,7 +44,7 @@ export default function ProductCart() {
                     <img
                       className={`2xl:w-28 lg:w-20 w-12 object-center drop-shadow-lg"
                     }`}
-                      src={item.image}
+                      src={item.imageFile}
                       alt={item.name}
                     />
                   </div>

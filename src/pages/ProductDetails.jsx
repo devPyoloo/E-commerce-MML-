@@ -17,10 +17,9 @@ import StarRating from "../components/StarRating";
 //Fetch product details
 const fetchProductDetails = async (productId) => {
   const { data } = await axios.get(BASE_API_URL);
-  const product = data.products.find(
+  const product = data.find(
     (product) => product.id === parseInt(productId)
   );
-
   return product;
 };
 
@@ -60,7 +59,7 @@ export default function ProductDetails() {
     ingredients,
     category,
     price,
-    image,
+    imageFile,
     stock,
     size,
     usage,
@@ -78,7 +77,7 @@ export default function ProductDetails() {
           </span>
           <img
             className="w-40 lg:w-56 object-center drop-shadow-lg py-5"
-            src={image}
+            src={imageFile}
             alt={name}
           />
         </figure>

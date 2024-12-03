@@ -25,7 +25,7 @@ const RenderProducts = React.forwardRef(function RenderProducts({
                     className={`2xl:w-28 md:w-20 w-16 object-center drop-shadow-md hover:scale-125 transition-transform duration-300 ease-out ${
                       imageLoaded[product.id] ? "block" : "hidden"
                     }`}
-                    src={product.image}
+                    src={product.imageFile}
                     alt={product.name}
                     onLoad={() => handleImageLoad(product.id)}
                   />

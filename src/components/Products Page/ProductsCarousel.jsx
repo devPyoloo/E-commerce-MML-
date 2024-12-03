@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
 // Fetch product data based on category
 const fetchProductsData = async (category) => {
   const { data } = await axios.get(BASE_API_URL);
-  const filteredProducts = data.products.filter(
+  const filteredProducts = data.filter(
     (product) => product.category !== category
   );
   return filteredProducts;
@@ -67,7 +67,7 @@ export default function ProductsCarousel({ category }) {
               <div className="bg-mutedgray mb-3 flex justify-center items-center w-72 h-72 hover:cursor-pointer hover:shadow-md">
                 <img
                   className="md:w-24 w-24 object-center drop-shadow-lg"
-                  src={product.image}
+                  src={product.imageFile}
                   alt={product.name}
                 />
               </div>

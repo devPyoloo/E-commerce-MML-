@@ -1,1 +1,1 @@
-export const BASE_API_URL = "/products.json";
+export const BASE_API_URL = "http://localhost:8080/api/v1/public/all-products";

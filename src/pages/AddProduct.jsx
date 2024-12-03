@@ -25,7 +25,7 @@ const insertNewProduct = async (formData) => {
   // addProductMutate(formData)
    try {
     const response = await axios.post(
-      "http://localhost:8080/api/product/add-product",
+      "http://localhost:8080/api/v1/admin/add-product",
       formData
     );
     console.log("Product Insert Response:", response);
@@ -152,7 +152,6 @@ export default function AddProduct() {
       setProduct(initialProductState);
       setImageFile(null);             
       setPreview(null); 
-      // setNewCategory({ category: "" })
       toast.success("New product has been added!", {
         style: {
           borderRadius: "5px",
@@ -373,11 +372,11 @@ export default function AddProduct() {
               <div className="flex justify-center gap-x-6 w-full mt-5">
                   <select
                     className="w-full bg-extraLightGray border border-gray-300 text-sm rounded-lg p-2.5"
-                    defaultValue="Select category"
                     name="category"
+                    value={product.category}
                     onChange={handleChange}
                   >
-                    <option value="Select category" disabled>
+                    <option value="">
                       Select category
                     </option>
                     {categories?.map((category) => (
