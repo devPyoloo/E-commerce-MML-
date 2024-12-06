@@ -14,7 +14,7 @@ export default function LoginForm() {
         </label>
 
         <div className="flex justify-between">
-          <button>Cancel</button>
+          <button className="bg-lightgray">Cancel</button>
           <button>Login</button>
         </div>
       </form>

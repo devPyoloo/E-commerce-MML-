@@ -60,7 +60,7 @@ function CheckoutComponent({ clientSecret, subTotal }) {
         const filteredCart = cart.map((item) => ({
           productId: item.id,
           name: item.name,
-          imageFile: item.image,
+          imageFile: item.imageFile,
           category: item.category,
           quantity: item.quantity,
           price: item.price,
@@ -205,7 +205,7 @@ function CheckoutComponent({ clientSecret, subTotal }) {
               <div className="bg-mutedgray mb-3 flex justify-center items-center w-44 h-44">
                 <img
                   className="w-14 object-center drop-shadow-lg"
-                  src={item.image}
+                  src={item.imageFile}
                   alt={item.name}
                 />
               </div>
