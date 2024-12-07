@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useState, useMemo, useEffect } from "react";
-import { BASE_API_URL } from '../../public/api';
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 import CategoryFilter from "../components/Products Page/CategoryFilter";
@@ -8,6 +7,8 @@ import RenderProducts from "../components/Products Page/RenderProducts";
 import MenuBar from "../components/Products Page/MenuBar";
 import { useNavigate, useParams } from "react-router-dom";
 import { CgSpinner } from "react-icons/cg";
+
+const BASE_API_URL = "http://localhost:8080/api/v1/public/all-products";
 
 const fetchProductsData = async ({ pageParam = 1 }) => {
   const { data } = await axios.get(BASE_API_URL);

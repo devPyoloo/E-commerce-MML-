@@ -89,10 +89,10 @@ export default function PaymentSuccess() {
             {cartItems && cartItems.length > 0 ? (
               cartItems.map((item) => (
                 <li key={item.id}>
-                  <p className="grid grid-cols-3 place-items-end border-b-2 py-2">
-                    <span className="truncate w-full">{item.name}</span>{" "}
-                    <span className="w-10 text-center">x{item.quantity} </span>{" "}
-                    <span className="text-lg font-semibold">${item.price}</span>{" "}
+                  <p className="grid grid-cols-4 place-items-end border-b-2 py-2">
+                    <span className="flex items-center col-span-2"> <img className="w-12 mr-3" src={item.imageFile} alt={item.name} /><p className="text-xs">{item.name}</p></span>
+                    <span className="w-2 text-center">x{item.quantity} </span>
+                    <span className="text-lg font-semibold">${item.price}</span>
                   </p>
                 </li>
               ))

@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { BASE_API_URL } from '../../public/api';
 import { useQuery } from "@tanstack/react-query";
 import {
   IoMdHeartEmpty,
@@ -13,6 +12,8 @@ import { useStore } from "../store/useStore";
 import ProductsCarousel from "../components/Products Page/ProductsCarousel";
 import Button from "../components/Button";
 import StarRating from "../components/StarRating";
+
+const BASE_API_URL = "http://localhost:8080/api/v1/public/all-products";
 
 //Fetch product details
 const fetchProductDetails = async (productId) => {
