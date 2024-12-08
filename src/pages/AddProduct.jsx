@@ -102,7 +102,6 @@ export default function AddProduct() {
   } = useQuery({
     queryKey: ["category"],
     queryFn: fetchCategories,
-    staleTime: 10000,
   });
 
   // Add Category
@@ -116,9 +115,7 @@ export default function AddProduct() {
       await queryClient.cancelQueries(["category"]);
       const previousData = queryClient.getQueryData(["category"]);
 
-      queryClient.setQueryData(["category"], (oldData) => {
-        return [...oldData, newCategory];
-      });
+      queryClient.setQueryData(["category"], (oldData) => [...oldData, newCategory]);
 
       return { previousData };
     },
@@ -136,6 +133,7 @@ export default function AddProduct() {
     mutationFn: insertNewProduct,
     onMutate: async (formData) => {
       await queryClient.cancelQueries(["product"]);
+      await queryClient.cancelQueries(["category"]);
       const previousData = queryClient.getQueryData(["product"]);
       queryClient.setQueryData(["product"], (oldProductData = []) => {
         return [...oldProductData, formData];

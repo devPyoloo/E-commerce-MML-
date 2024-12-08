@@ -10,12 +10,14 @@ import Favourite from "./pages/Favourite"
 import AddProduct from "./pages/AddProduct"
 import PaymentSuccess from "./pages/PaymentSuccess"
 import LoginForm from "./pages/LoginPage/LoginForm"
+import RegisterForm from "./pages/LoginPage/RegisterForm"
 
 
 const router = createBrowserRouter(
   createRoutesFromChildren(
     <Route path="/" element={<RootLayer />}>
       <Route path="login" element={<LoginForm />} />
+      <Route path="register" element={<RegisterForm />} />
       <Route index element={<Home />} /> 
 
       <Route path="products/:category" element={<ProductsLayer />}>
