@@ -9,9 +9,6 @@ export default function ProtectedRoute({ children }) {
     isAuthenticated: state.isAuthenticated
   }));
 
-  const { toggleModal } = useModalStore((state) => ({
-    toggleModal: state.toggleModal
-  }));
 
 
   return isAuthenticated ? <Outlet /> : <Navigate to={"/login"} />;

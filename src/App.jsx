@@ -41,9 +41,9 @@ const router = createBrowserRouter(
       <Route element={<ProtectedRoute />}>
       {/* <Route path="login" element={<Navigate to={"/"} />} /> */}
         <Route path="favourite" element={<Favourite />} />
-        <Route path="checkout" element={<Checkout />} />
       </Route>
 
+        <Route path="checkout" element={<Checkout />} />
       <Route path="add-product" element={<AddProduct />} />
 
       <Route

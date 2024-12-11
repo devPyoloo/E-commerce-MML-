@@ -11,12 +11,17 @@ import {
 } from "@stripe/react-stripe-js";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useUserStore } from "../store/useUserStore";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PK);
 
 function CheckoutComponent({ clientSecret, subTotal }) {
   const cart = useStore((state) => state.cart);
   const navigate = useNavigate();
+  const { user } = useUserStore((state) => ({
+    user: state.user
+  }));
+
 
   const [checkoutDetails, setCheckoutDetails] = useState({
     email: "",
@@ -66,12 +71,20 @@ function CheckoutComponent({ clientSecret, subTotal }) {
           price: item.price,
         }));
 
-        await axios.post("http://localhost:8080/api/checkout/save", {
-          ...checkoutDetails,
-          amount: subTotal,
-          stripePaymentIntentId: paymentIntent.id,
-          cartItems: filteredCart,
-        });
+        await axios.post(
+          "http://localhost:8080/api/v1/user/save-order",
+          {
+            ...checkoutDetails,
+            amount: subTotal,
+            stripePaymentIntentId: paymentIntent.id,
+            cartItems: filteredCart,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${user.jwtToken}`,
+            },
+          }
+        );
 
         navigate(`/payment-success/${paymentIntent.id.toString()}`);
       }
@@ -79,6 +92,8 @@ function CheckoutComponent({ clientSecret, subTotal }) {
       console.error("Payment error:", error.message);
     }
   };
+
+
 
   return (
     <div className="flex flex-col mx-10 lg:mx-20 pt-20">
@@ -234,15 +249,22 @@ CheckoutComponent.propTypes = {
 export default function Checkout() {
   const subTotal = useStore((state) => state.total);
   const [clientSecret, setClientSecret] = useState(null);
+  const { user } = useUserStore((state) => ({
+    user: state.user
+  }));
+
 
   useEffect(() => {
     const fetchClientSecret = async () => {
       if (subTotal <= 0) return;
       try {
         const { data } = await axios.post(
-          "http://localhost:8080/api/checkout/create-payment-intent",
+          "http://localhost:8080/api/v1/user/create-payment-intent",
           {
             amount: subTotal * 100, // Amount in cents
+          },
+          {
+            headers: { Authorization: `Bearer ${user.jwtToken}` }
           }
         );
 
@@ -260,7 +282,11 @@ export default function Checkout() {
   }, [subTotal]);
 
   if (!clientSecret) {
-    return <p className="my-28 flex items-center justify-center gap-x-2 text-center text-xl lg:text-2xl"><CgSpinner className="animate-spin lg:text-4xl text-xl" /> Loading...</p>; // Or a loading spinner
+    return (
+      <p className="my-28 flex items-center justify-center gap-x-2 text-center text-xl lg:text-2xl">
+        <CgSpinner className="animate-spin lg:text-4xl text-xl" /> Loading...
+      </p>
+    );
   }
 
   return (
@@ -268,128 +294,4 @@ export default function Checkout() {
       <CheckoutComponent clientSecret={clientSecret} subTotal={subTotal} />
     </Elements>
   );
-}
-
-{
-  /* <div className="card-details flex flex-col gap-y-5 pb-10">
-  <h1 className="group text-xl font-semibold">Billing Address</h1>
-  <input
-    className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray"
-    type="text"
-    name=""
-    placeholder="Street Address"
-  />
-  <div className="grid grid-cols-2 gap-5">
-    <input
-      className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray"
-      type="text"
-      name=""
-      placeholder="City"
-    />
-    <input
-      className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray"
-      type="text"
-      name=""
-      placeholder="Zip Code"
-    />
-  </div>
-  <input
-    className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray"
-    type="text"
-    name=""
-    placeholder="Country"
-  />
-</div> */
-}
-
-{
-  /* <div className="payment flex flex-col gap-y-5 pb-10">
-            <h1 className="text-xl font-semibold">Payment</h1>
-            <div className="hover:bg-mutedgray p-4 rounded-sm">
-              <label className="flex justify-between">
-                <img
-                  className="w-24"
-                  src="/assets/paypal-icon.png"
-                  alt="Paypal"
-                />
-                <input
-                  className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray"
-                  type="radio"
-                  onChange={handleChange}
-                  name="paymentMethod"
-                />
-              </label>
-            </div>
-            <div className="hover:bg-mutedgray p-4 rounded-sm">
-              <label className="flex justify-between">
-                <img
-                  className="w-14"
-                  src="/assets/mastercard-icon.png"
-                  alt="mastercard"
-                />
-                <input
-                  className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray"
-                  type="radio"
-                  onChange={handleChange}
-                  name="paymentMethod"
-                />
-              </label>
-            </div>
-
-            <div className="hover:bg-mutedgray p-4 rounded-sm">
-              <label className="flex justify-between">
-                <img className="w-16" src="/assets/visa-icon.png" alt="visa" />
-                <input
-                  className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray"
-                  type="radio"
-                  onChange={handleChange}
-                  name="paymentMethod"
-                />
-              </label>
-            </div>
-
-            <div className="hover:bg-mutedgray p-4 rounded-sm ">
-              <label className="flex justify-between has-[:checked]:bg-indigo-50 has-[:checked]:text-indigo-900 has-[:checked]:ring-indigo-200">
-                <img
-                  className="w-24"
-                  src="/assets/alipay-icon.png"
-                  alt="Alipay"
-                />
-                <input
-                  className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray checked:border-indigo-500"
-                  type="radio"
-                  onChange={handleChange}
-                  name="paymentMethod"
-                />
-              </label>
-            </div>
-          </div>
-
-          <div className="card-details flex flex-col gap-y-5 pb-10">
-            <h1 className="text-xl font-semibold">Card Details</h1>
-            <input
-              className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray"
-              type="text"
-              name=""
-              placeholder="Card Number *"
-            />
-            <input
-              className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray"
-              type="text"
-              name=""
-              placeholder="Expiration Date *"
-            />
-            <input
-              className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray"
-              type="text"
-              name=""
-              placeholder="CVC/CVV *"
-            />
-            <input
-              className="p-5 rounded-sm bg-transparent text-lightgray border border-lightgray placeholder:text-lightgray"
-              type="text"
-              name=""
-              placeholder="Cardholder's Name *"
-            />
-          </div> */
 }
