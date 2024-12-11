@@ -1,11 +1,11 @@
 import axios from "axios";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { BASE_API_URL } from "../../../public/api";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
+const BASE_API_URL = "http://localhost:8080/api/v1/public/all-products";
 // Fetch product data based on category
 const fetchProductsData = async (category) => {
   const { data } = await axios.get(BASE_API_URL);

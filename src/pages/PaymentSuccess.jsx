@@ -11,7 +11,7 @@ export default function PaymentSuccess() {
     const fetchCheckoutDetails = async () => {
       try {
         const { data } = await axios.get(
-          `http://localhost:8080/api/checkout/checkout-details/${stripePaymentIntentId}`
+          `http://localhost:8080/api/v1/checkout/checkout-details/${stripePaymentIntentId}`
         );
         setCheckoutDetails(data);
       } catch (error) {

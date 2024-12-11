@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdCancel } from "react-icons/md";
 import { useModalStore } from "../../store/useModalStore";
 import axios from "axios";
@@ -21,12 +21,17 @@ const loginUser = async (formData) => {
 
 export default function LoginForm() {
   const { isToggleModal, toggleModal } = useModalStore();
-  const {setUser} = useUserStore();
+  const {setUser, setIsAuthenticated} = useUserStore((state) => ({
+    setUser: state.setUser,
+    setIsAuthenticated: state.setIsAuthenticated
+  }));
   const [errorMessage, setErroMessage] = useState();
   const [formData, setFormData] = useState({
     "username": "",
     "password": "",
   });
+
+  const navigate = useNavigate();
 
   const {mutate: loginUserMutate, isPending, error} = useMutation({
     mutationFn: loginUser,
@@ -36,6 +41,8 @@ export default function LoginForm() {
     onSuccess: (data) => {
         console.log("Login successfully", data)
         setUser(data)
+        toggleModal();
+        setIsAuthenticated();
     }
   })
 
@@ -49,6 +56,7 @@ export default function LoginForm() {
 
     loginUserMutate(formData)
   };
+
   return (
     <>
       {isToggleModal && (
@@ -65,7 +73,7 @@ export default function LoginForm() {
             className="bg-white py-16 w-2/6 px-10 rounded-sm grid grid-cols-1 gap-y-5 shadow-lg"
           >
             <MdCancel
-              onClick={() => toggleModal()}
+              onClick={() => navigate("/")}
               className="text-2xl fill-mutedblack cursor-pointer -mt-10 -ml-5"
             />
             <h1 className="font-bold lg:text-4xl -mb-5">Welcome back</h1>
