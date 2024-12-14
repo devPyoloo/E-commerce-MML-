@@ -19,10 +19,6 @@ import LoginForm from "./pages/LoginPage/LoginForm";
 import RegisterForm from "./pages/LoginPage/RegisterForm";
 import ProtectedRoute from "./layouts/ProtectedRoute";
 
-
-
-
-
 const router = createBrowserRouter(
   createRoutesFromChildren(
     <Route path="/" element={<RootLayer />}>
@@ -39,17 +35,15 @@ const router = createBrowserRouter(
 
       {/* Protected Routes (authenticated user) */}
       <Route element={<ProtectedRoute />}>
-      {/* <Route path="login" element={<Navigate to={"/"} />} /> */}
         <Route path="favourite" element={<Favourite />} />
+        <Route path="checkout" element={<Checkout />} />
+        <Route
+          path="payment-success/:stripePaymentIntentId"
+          element={<PaymentSuccess />}
+        />
       </Route>
 
-        <Route path="checkout" element={<Checkout />} />
       <Route path="add-product" element={<AddProduct />} />
-
-      <Route
-        path="payment-success/:stripePaymentIntentId"
-        element={<PaymentSuccess />}
-      />
     </Route>
   )
 );

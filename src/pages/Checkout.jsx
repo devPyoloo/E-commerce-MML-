@@ -11,16 +11,15 @@ import {
 } from "@stripe/react-stripe-js";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useUserStore } from "../store/useUserStore";
+import { useAuthStore } from "../store/useAuthStore";
+import api from "../utils/apiInterceptors";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PK);
 
 function CheckoutComponent({ clientSecret, subTotal }) {
-  const cart = useStore((state) => state.cart);
+  const { cart, clearCart } = useStore();
   const navigate = useNavigate();
-  const { user } = useUserStore((state) => ({
-    user: state.user
-  }));
+  const { accessToken } = useAuthStore.getState(); 
 
 
   const [checkoutDetails, setCheckoutDetails] = useState({
@@ -71,21 +70,17 @@ function CheckoutComponent({ clientSecret, subTotal }) {
           price: item.price,
         }));
 
-        await axios.post(
+        await api.post(
           "http://localhost:8080/api/v1/user/save-order",
           {
             ...checkoutDetails,
             amount: subTotal,
             stripePaymentIntentId: paymentIntent.id,
             cartItems: filteredCart,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${user.jwtToken}`,
-            },
           }
         );
 
+        clearCart();
         navigate(`/payment-success/${paymentIntent.id.toString()}`);
       }
     } catch (error) {
@@ -249,22 +244,15 @@ CheckoutComponent.propTypes = {
 export default function Checkout() {
   const subTotal = useStore((state) => state.total);
   const [clientSecret, setClientSecret] = useState(null);
-  const { user } = useUserStore((state) => ({
-    user: state.user
-  }));
-
 
   useEffect(() => {
     const fetchClientSecret = async () => {
       if (subTotal <= 0) return;
       try {
-        const { data } = await axios.post(
+        const { data } = await api.post(
           "http://localhost:8080/api/v1/user/create-payment-intent",
           {
             amount: subTotal * 100, // Amount in cents
-          },
-          {
-            headers: { Authorization: `Bearer ${user.jwtToken}` }
           }
         );
 

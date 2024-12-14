@@ -4,12 +4,15 @@ import { useModalStore } from "../../store/useModalStore";
 import axios from "axios";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { useUserStore } from "../../store/useUserStore";
 import { CgSpinner } from "react-icons/cg";
+import { useAuthStore } from "../../store/useAuthStore";
 
 const loginUser = async (formData) => {
   try {
-    const response = await axios.post("http://localhost:8080/api/v1/public/login",formData);
+    const response = await axios.post(
+      "http://localhost:8080/api/v1/public/login",
+      formData
+    );
     console.log("Login response", response);
 
     return response.data;
@@ -21,30 +24,38 @@ const loginUser = async (formData) => {
 
 export default function LoginForm() {
   const { isToggleModal, toggleModal } = useModalStore();
-  const {setUser, setIsAuthenticated} = useUserStore((state) => ({
-    setUser: state.setUser,
-    setIsAuthenticated: state.setIsAuthenticated
-  }));
+  const { setAuth } = useAuthStore();
   const [errorMessage, setErroMessage] = useState();
   const [formData, setFormData] = useState({
-    "username": "",
-    "password": "",
+    username: "",
+    password: "",
   });
 
   const navigate = useNavigate();
 
-  const {mutate: loginUserMutate, isPending, error} = useMutation({
+  const {
+    mutate: loginUserMutate,
+    isPending,
+    error,
+  } = useMutation({
     mutationFn: loginUser,
     onError: (error) => {
-      setErroMessage(error.response?.data || "An error occured, please try again.")
+      setErroMessage(
+        error.response?.data?.message || "An error occured, please try again."
+      );
     },
     onSuccess: (data) => {
-        console.log("Login successfully", data)
-        setUser(data)
-        toggleModal();
-        setIsAuthenticated();
-    }
-  })
+      console.log("Login successfully", data);
+      setAuth({
+        user: data.username,
+        accessToken: data.tokens.accessToken,
+        refreshToken: data.tokens.refreshToken,
+        roles: data.roles,
+      });
+      toggleModal();
+      navigate("/");
+    },
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -54,20 +65,25 @@ export default function LoginForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    loginUserMutate(formData)
+    loginUserMutate(formData);
   };
 
   return (
     <>
       {isToggleModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            {isPending && (
-        <div className="fixed inset-0 bg-black bg-opacity-35 flex items-center justify-center z-60"
-        aria-live="polite"
-    aria-busy="true">
-          <p className="flex items-center gap-x-3 text-2xl text-extraLightGray"><CgSpinner className="animate-spin text-4xl" />Logging you in...</p>
-          </div>
-      )}
+          {isPending && (
+            <div
+              className="fixed inset-0 bg-black bg-opacity-35 flex items-center justify-center z-60"
+              aria-live="polite"
+              aria-busy="true"
+            >
+              <p className="flex items-center gap-x-3 text-2xl text-extraLightGray">
+                <CgSpinner className="animate-spin text-4xl" />
+                Logging you in...
+              </p>
+            </div>
+          )}
           <form
             onSubmit={handleSubmit}
             className="bg-white py-16 w-2/6 px-10 rounded-sm grid grid-cols-1 gap-y-5 shadow-lg"
@@ -98,6 +114,12 @@ export default function LoginForm() {
               type="password"
               name="password"
             />
+
+            {errorMessage && (
+              <div className="text-red-500 text-sm mt-2">
+                <p>*{errorMessage}</p>
+              </div>
+            )}
 
             <div className="flex justify-between">
               <button className="bg-mutedblack text-white w-full py-2 rounded-md hover:bg-opacity-90">

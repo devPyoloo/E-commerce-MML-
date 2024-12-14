@@ -1,13 +1,10 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useUserStore } from "../store/useUserStore"
 import PropTypes from "prop-types";
-import { useModalStore } from "../store/useModalStore";
+import { useAuthStore } from "../store/useAuthStore";
 
 
 export default function ProtectedRoute({ children }) {
-  const { isAuthenticated } = useUserStore((state) => ({
-    isAuthenticated: state.isAuthenticated
-  }));
+  const { isAuthenticated } = useAuthStore.getState();
 
 
 

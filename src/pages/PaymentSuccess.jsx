@@ -1,7 +1,7 @@
 import { FaCheckCircle } from "react-icons/fa";
 import { useEffect, useMemo, useState } from "react";
-import axios from "axios";
 import { useParams } from "react-router-dom";
+import api from "../utils/apiInterceptors";
 
 export default function PaymentSuccess() {
   const { stripePaymentIntentId } = useParams();
@@ -10,8 +10,8 @@ export default function PaymentSuccess() {
   useEffect(() => {
     const fetchCheckoutDetails = async () => {
       try {
-        const { data } = await axios.get(
-          `http://localhost:8080/api/v1/checkout/checkout-details/${stripePaymentIntentId}`
+        const { data } = await api.get(
+          `http://localhost:8080/api/v1/user/checkout-details/${stripePaymentIntentId}`
         );
         setCheckoutDetails(data);
       } catch (error) {

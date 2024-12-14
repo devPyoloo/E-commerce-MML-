@@ -78,6 +78,8 @@ export const useStore = create(
           return { cart: updatedCart };
         }),
 
+      clearCart: () => set({ cart: [] }),
+
       addtoFavourite: (product) =>
         set((state) => {
           const isFavourite = state.favourite.some(

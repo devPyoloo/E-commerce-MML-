@@ -10,7 +10,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { IoChevronDownSharp } from "react-icons/io5";
 import { AiFillProduct } from "react-icons/ai";
 import { MdAddBusiness } from "react-icons/md";
-import { useUserStore } from "../store/useUserStore";
+import { useAuthStore } from "../store/useAuthStore";
 
 
 
@@ -26,9 +26,7 @@ export default function Header({ aboutRef }) {
     favourite: state.favourite,
   }));
   const navigate = useNavigate();
-  const { user } = useUserStore((state) => ({
-    user: state.user
-  }))
+  const { roles } = useAuthStore.getState();
 
   const scrollToAbout = () => {
     aboutRef.current.scrollIntoView({ behavior: "smooth" });
@@ -223,7 +221,7 @@ export default function Header({ aboutRef }) {
                 List Products
               </span>
             </MenuItem>
-            {user?.roles.includes("ROLE_ADMIN") && (
+            {roles.includes("ROLE_ADMIN") && (
               <MenuItem>
               <span
                 className="flex p-3 gap-x-2 font-lora text-base text-lightgray data-[focus]:bg-gray-100  hover:cursor-pointer"
