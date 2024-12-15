@@ -7,9 +7,9 @@ export default function ProductCard({imgSrc, altText, customCss, labelText}) {
       <img
             src={`https://res.cloudinary.com/du1mw6ozf/image/upload/v1733220598/${imgSrc}`}
             alt={`${altText}`}
-            className={`drop-shadow-sm lg:drop-shadow-2xl ${customCss}`}
+            className={`drop-shadow-sm lg:drop-shadow-2xl ${customCss} -ml-6`}
           />
-          <label className="text-center text-xl font-poppins">{labelText}</label>
+          <label className="text-center text-xl font-poppins -ml-6">{labelText}</label>
       </div>
      
 

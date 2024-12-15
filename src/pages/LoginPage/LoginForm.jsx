@@ -86,13 +86,13 @@ export default function LoginForm() {
           )}
           <form
             onSubmit={handleSubmit}
-            className="bg-white py-16 w-2/6 px-10 rounded-sm grid grid-cols-1 gap-y-5 shadow-lg"
+            className="bg-white py-16 lg:w-2/6 px-10 rounded-sm grid grid-cols-1 gap-y-5 shadow-lg"
           >
             <MdCancel
               onClick={() => navigate("/")}
               className="text-2xl fill-mutedblack cursor-pointer -mt-10 -ml-5"
             />
-            <h1 className="font-bold lg:text-4xl -mb-5">Welcome back</h1>
+            <h1 className="font-bold text-4xl -mb-5">Welcome back</h1>
             <h3 className="text-lightgray font-light">
               Please enter your details
             </h3>

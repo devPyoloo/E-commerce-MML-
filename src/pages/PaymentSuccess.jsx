@@ -45,41 +45,41 @@ export default function PaymentSuccess() {
   const formattedDate = useMemo(() => formatDate(createdAt), []);
 
   return (
-    <section className="mx-20 mb-20 p-10 rounded-lg gap-y-10 py-24">
-      <h1 className="flex text-3xl font-bold mb-3"><FaCheckCircle className="text-green-500 mr-2" />Thanks for your order!</h1>
+    <section className="mx-10 lg:mx-20 mb-20 lg:p-10 rounded-lg gap-y-10 py-24">
+      <h1 className="flex text-xl lg:text-3xl font-bold mb-3 text-lightblack"><FaCheckCircle className="text-green-500 mr-2" />Thanks for your order!</h1>
       <p className="text-lightgray">
         Your order will be processed within 24 hours during working days. We
         will notify you by email once your order has been shipped.
       </p>
-      <div className="grid grid-cols-2 gap-x-20 my-10">
-        <main className="w-full flex flex-col p-4 text-lg">
-          <label className="grid grid-cols-2">
-            <span className="text-lightgray">Payment Id</span>{" "}
-            <span className="font-semibold">{stripePaymentIntentId}</span>
+      <div className="flex lg:flex-row flex-col lg:gap-x-20 my-10">
+        <main className="w-full flex flex-col p-y-4  xl:text-lg">
+          <label className="flex py-4 justify-between border-b-gray-300 border-b">
+            <span className="text-lightgray">Payment number</span>
+            <span className="font-medium">#{stripePaymentIntentId}</span>
           </label>
-          <label className="grid grid-cols-2">
+          <label className="flex py-4 justify-between border-b-gray-300 border-b">
             <span className="text-lightgray">Date</span>
-            <span className="font-semibold">{formattedDate}</span>
+            <span className="font-medium">{formattedDate}</span>
           </label>
-          <label className="grid grid-cols-2">
+          <label className="flex py-4 justify-between border-b-gray-300 border-b">
             <span className="text-lightgray">Name</span>
-            <span className="font-semibold">
+            <span className="font-medium">
               {firstName} {lastName}
             </span>
           </label>
-          <label className="grid grid-cols-2">
+          <label className="flex py-4 justify-between border-b-gray-300 border-b">
             <span className="text-lightgray">Address</span>
-            <span className="font-semibold">
+            <span className="font-medium">
               {barangay}, {city} {province}, {zipCode}
             </span>
           </label>
-          <label className="grid grid-cols-2">
+          <label className="flex py-4 justify-between border-b-gray-300 border-b">
             <span className="text-lightgray">Phone</span>
-            <span className="font-semibold">{phoneNumber}</span>
+            <span className="font-medium">{phoneNumber}</span>
           </label>
-          <label className="grid grid-cols-2">
+          <label className="flex py-4 justify-between border-b-gray-300 border-b">
             <span className="text-lightgray">Email</span>
-            <span className="font-semibold">{email}</span>
+            <span className="font-medium">{email}</span>
           </label>
         </main>
 
@@ -89,9 +89,9 @@ export default function PaymentSuccess() {
             {cartItems && cartItems.length > 0 ? (
               cartItems.map((item) => (
                 <li key={item.id}>
-                  <p className="grid grid-cols-4 place-items-end border-b-2 py-2">
-                    <span className="flex items-center col-span-2"> <img className="w-12 mr-3" src={item.imageFile} alt={item.name} /><p className="text-xs">{item.name}</p></span>
-                    <span className="w-2 text-center">x{item.quantity} </span>
+                  <p className="grid grid-cols-4 items-center place-items-end border-b-2 py-2">
+                    <span className="flex items-center col-span-2 w-full"> <img className="w-12 mr-3" src={item.imageFile} alt={item.name} /><p className="w-full text-sm font-medium truncate">{item.name}</p></span>
+                    <span className="text-center">x{item.quantity} </span>
                     <span className="text-lg font-semibold">${item.price}</span>
                   </p>
                 </li>

@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { BsHandbag } from "react-icons/bs";
+import { BsFullscreen, BsHandbag } from "react-icons/bs";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 import { useEffect, useState } from "react";
@@ -57,12 +57,14 @@ export default function Header({ aboutRef }) {
 
   const menuVariants = {
     hidden: {
+      x: "100%",
       height: 0,
       opacity: 0,
       transition: { duration: 0.2 },
     },
     visible: {
-      height: "auto",
+      x: "0%",
+      height: "100vh",
       opacity: 1,
       transition: { duration: 0.1 },
     },
@@ -111,7 +113,7 @@ export default function Header({ aboutRef }) {
 
         {/* HAMBURGER MENU TOGGLE */}
         <button
-          className="text-3xl lg:text-5xl"
+          className="text-3xl lg:text-5xl z-10"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           <motion.div
@@ -119,7 +121,7 @@ export default function Header({ aboutRef }) {
             animate={{ rotate: menuOpen ? 90 : 0 }}
             transition={{ duration: 0.2, ease: "easeInOut" }}
           >
-            {menuOpen ? <HiOutlineX /> : <HiOutlineMenu />}
+            {menuOpen ? <HiOutlineX className={`${menuOpen} text-extraLightGray`} /> : <HiOutlineMenu />}
           </motion.div>
         </button>
 
@@ -132,7 +134,7 @@ export default function Header({ aboutRef }) {
               animate="visible"
               exit="hidden"
               variants={menuVariants}
-              className="absolute grid grid-cols-1 py-7 justify-items-center gap-y-5 top-24 left-0 right-0 bg-mutedgray shadow-2xl mx-5 font-semibold"
+              className="absolute flex flex-col items-end pt-40 pr-4 py-7 justify-items-center gap-y-4 top-0 left-36 right-0 bottom-0 bg-lightblack text-extraLightGray shadow-2xl font-semibold"
             >
               <motion.div
                 initial={{ scale: 0.8, opacity: 0 }}
