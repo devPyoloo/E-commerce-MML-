@@ -18,6 +18,7 @@ import PaymentSuccess from "./pages/PaymentSuccess";
 import LoginForm from "./pages/LoginPage/LoginForm";
 import RegisterForm from "./pages/LoginPage/RegisterForm";
 import ProtectedRoute from "./layouts/ProtectedRoute";
+import ViewOrders from "./pages/ViewOrders";
 
 const router = createBrowserRouter(
   createRoutesFromChildren(
@@ -37,10 +38,8 @@ const router = createBrowserRouter(
       <Route element={<ProtectedRoute />}>
         <Route path="favourite" element={<Favourite />} />
         <Route path="checkout" element={<Checkout />} />
-        <Route
-          path="payment-success/:stripePaymentIntentId"
-          element={<PaymentSuccess />}
-        />
+        <Route path="payment-success/:stripePaymentIntentId" element={<PaymentSuccess />} />
+        <Route path="view-orders" element={<ViewOrders />} />
       </Route>
 
       <Route path="add-product" element={<AddProduct />} />

@@ -284,7 +284,7 @@ export default function Header({ aboutRef }) {
             )}
           </button>
 
-          {/* ANIMATED MENU */}
+          {/* ANIMATED PROFILE NAV */}
         <AnimatePresence>
           {profileOpen && (
             <motion.div
@@ -320,7 +320,7 @@ export default function Header({ aboutRef }) {
                   delay: 0.1,
                 }}
               >
-                <NavLink className="hover:border-b-2" onClick={() => { setMenuOpen(prev => !prev); scrollToAbout
+                <NavLink to={"view-orders"} className="hover:border-b-2" onClick={() => { setProfileOpen(prev => !prev); scrollToAbout
                }}>
                 View Orders
                 </NavLink>
@@ -336,7 +336,7 @@ export default function Header({ aboutRef }) {
                   delay: 0.2,
                 }}
               >
-               <NavLink className="hover:border-b-2" onClick={() => setMenuOpen(prev => !prev)} to={"products/All"}>
+               <NavLink className="hover:border-b-2" onClick={() => setProfileOpen(prev => !prev)} to={"products/All"}>
                 Order History
                 </NavLink>
               </motion.div>
@@ -351,7 +351,7 @@ export default function Header({ aboutRef }) {
                   delay: 0.2,
                 }}
               >
-               <NavLink className="hover:border-b-2" onClick={() => setMenuOpen(prev => !prev)} to={"products/All"}>
+               <NavLink className="hover:border-b-2" onClick={() => setProfileOpen(prev => !prev)} to={"products/All"}>
                 Logout
                 </NavLink>
               </motion.div>
