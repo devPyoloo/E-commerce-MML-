@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import api from "../utils/apiInterceptors";
 import { useQuery } from "@tanstack/react-query";
 import Button from "../components/Button";
+import { format } from "rsuite/esm/internals/utils/date";
 
 const fetchCheckout = async () => {
   try {
@@ -37,48 +38,43 @@ export default function Vieworders() {
     return <p>Error fetching orders. Please try again later.</p>;
   }
 
-  if (!orders?.cartItems || orders.cartItems.length === 0) {
-    return <p>No ordersed items.</p>;
+  if (!orders || orders.length === 0) {
+    return <p>No ordered items.</p>;
   }
 
-  console.log(orders.city);
 
   return (
     <>
-      <h1>View orders</h1>
-      <p>
-        <strong>City:</strong> {orders.city}
-      </p>
-      {orders.cartItems.length > 0 ? (
-        <div className="mb-40 pt-20 lg:pt-32 mx-10 lg:mx-20">
+      {orders.map((order, index) => (
+        <div key={order.stripePaymentIntentId} className="lg:mb-40 pt-20 lg:pt-32 mx-10 lg:mx-20">
           <section className="flex flex-col justify-between lg:flex-row lg:items-start">
-            <div className="flex flex-col lg:w-1/2">
-              <h1 className="text-3xl font-semibold">{orders.cartItems.length >= 1 ? 'Item' : 'Items'}</h1>
-              {orders.cartItems.map((item) => (
+            <div className="flex flex-col lg:w-full">
+              <h1 className="text-3xl font-semibold">Item {index + 1}</h1>
+              {order.cartItems.map((item, index) => (
                 <figure
-                  className="flex justify-between items-center lg:items-start borders-b borders-b-gray-200 py-10"
-                  key={item.category}
+                  className="flex justify-between items-center lg:items-start borders-b borders-b-gray-200 py-2 lg:py-10 gap-x-10"
+                  key={index}
                 >
-                  <div className="bg-mutedgray mb-3 flex justify-center items-center 2xl:w-72 2xl:h-72 lg:w-56 lg:h-56 w-32 h-32">
+                  <div className="bg-mutedgray mb-3 flex justify-center items-center 2xl:w-72 2xl:h-72 lg:w-36 lg:h-36 w-32 h-32">
                     <img
-                      className={`2xl:w-28 lg:w-20 w-12 object-center drop-shadow-lg"
+                      className={`2xl:w-28 lg:w-12 w-12 object-center drop-shadow-lg"
                        }`}
                       src={item.imageFile}
                       alt={item.name}
                     />
                   </div>
 
-                  <div className="relative w-1/2 flex flex-col items-start gap-y-5 lg:gap-y-10 text-sm 2xl:text-xl lg:text-lg">
-                    <div className="flex flex-col gap-y-2">
+                  <div className="w-full flex flex-col items-start gap-y-5 lg:gap-y-10 text-sm 2xl:text-xl lg:text-lg">
+                    <div className="flex flex-col lg:gap-y-2">
                       <label className="font-semibold lg:truncate lg:w-full">
                         {item.name}
                       </label>
                       <label className="text-gray-700">{item.category}</label>
-                      <label className="text-gray-700 flex gap-x-6 py-1 lg:py-3">
+                      <label className="text-gray-700 flex gap-x-6">
                         Quantity: {item.quantity}
                       </label>
                       <label className="text-base lg:text-xl font-semibold">
-                        $ {item.price}
+                        ${item.price.toFixed(2)}
                       </label>
                     </div>
                   </div>
@@ -86,31 +82,55 @@ export default function Vieworders() {
               ))}
             </div>
 
-            <aside className="mt-10 lg:w-1/2 lg:mt-0">
+            <aside className="bg-extraLightGray border border-lightgray/15 p-4 rounded-lg mt-10 lg:w-full lg:mt-0">
               <div className="flex flex-col gap-4 text-base lg:text-xl">
                 <h1 className="text-2xl font-medium">Order Summary</h1>
 
                 <p className="grid grid-cols-2">
-                  Total: <span>${orders.amount.toFixed(2)}</span>
+                  Total: <span>${order.amount.toFixed(2)}</span>
                 </p>
 
                 <p className="grid grid-cols-2">
                   Delivery address:
                   <span>
-                    {orders.barangay}, {orders.city}, {orders.province}gdfgzfdxzc
+                    {order.barangay}, {order.city}, {order.province}
                   </span>
                 </p>
 
                 <p className="grid grid-cols-2">
-                  Order Status: <span className="font-semibold">{orders.orderStatus === null ? 'Not yet processed' : orders.orderStatus}</span>
+                  Order Status: <span className="font-semibold">{order.orderStatus === null ? 'Not yet processed' : order.orderStatus}</span>
                 </p>
 
                 <p className="grid grid-cols-2">
-                  Order On: <span>{orders.createdAt}</span>
+                  Order On: <span>{format(new Date(order.createdAt), 'MMMM dd, yyyy, hh:mm a')}</span>
                 </p>
               </div>
 
-              <div className="w-full flex flex-col gap-5 mt-20 mb-10">
+            </aside>
+          </section>
+        </div>
+      // ) : (
+      //   <div className="flex justify-center items-center h-96 w-full">
+      //     <div className="flex flex-col">
+      //       <p className="text-4xl font-bold text-center mb-8">
+      //         NO ORDERED ITEMS
+      //       </p>
+      //       <div className="flex justify-between gap-7">
+      //         <Link to={"/products/All"}>
+      //           <button className="bg-lightblack rounded-sm text-white text-xl py-2 px-4">
+      //             Discover Products
+      //           </button>
+      //         </Link>
+      //         <Link to={"/"}>
+      //           <button className="rounded-sm text-lightgray borders borders-lightgray text-xl py-2 px-4">
+      //             Home Page
+      //           </button>
+      //         </Link>
+      //       </div>
+      //     </div>
+      //   </div>
+      ))}
+      <div className="w-full flex flex-col gap-5 mt-20 mb-10 px-16">
                 <Link to={"/checkout"}>
                   <Button buttonType={"primary"}>Order history</Button>
                 </Link>
@@ -121,30 +141,6 @@ export default function Vieworders() {
 
                 <button className=""></button>
               </div>
-            </aside>
-          </section>
-        </div>
-      ) : (
-        <div className="flex justify-center items-center h-96 w-full">
-          <div className="flex flex-col">
-            <p className="text-4xl font-bold text-center mb-8">
-              NO ORDERED ITEMS
-            </p>
-            <div className="flex justify-between gap-7">
-              <Link to={"/products/All"}>
-                <button className="bg-lightblack rounded-sm text-white text-xl py-2 px-4">
-                  Discover Products
-                </button>
-              </Link>
-              <Link to={"/"}>
-                <button className="rounded-sm text-lightgray borders borders-lightgray text-xl py-2 px-4">
-                  Home Page
-                </button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 }
