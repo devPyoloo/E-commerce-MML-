@@ -86,7 +86,7 @@ export default function PaymentSuccess() {
             <span className="font-medium">{email}</span>
           </label>
         <div className="flex gap-x-5 mt-10">
-        <Link to={"/track-order"}>
+        <Link to={"/view-orders"}>
           <button className="bg-mutedblack text-white hover:opacity-85 rounded-lg lg:text-base p-2">Track your order</button>
         </Link>
        
@@ -102,8 +102,8 @@ export default function PaymentSuccess() {
           <ul>
             {cartItems && cartItems.length > 0 ? (
               cartItems.map((item) => (
-                <li key={item.id}>
-                  <p className="grid grid-cols-4 items-center place-items-end border-b-2 py-2">
+                <li key={item.id || item.name} >
+                  <figure className="grid grid-cols-4 items-center place-items-end border-b-2 py-2">
                     <span className="flex items-center col-span-2 w-full">
                       {" "}
                       <img
@@ -117,7 +117,7 @@ export default function PaymentSuccess() {
                     </span>
                     <span className="text-center">x{item.quantity} </span>
                     <span className="text-lg font-semibold">${item.price}</span>
-                  </p>
+                  </figure>
                 </li>
               ))
             ) : (
