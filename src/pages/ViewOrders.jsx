@@ -47,7 +47,7 @@ export default function Vieworders() {
     <>
       {orders.map((order, index) => (
         <div key={order.stripePaymentIntentId} className="lg:mb-40 pt-20 lg:pt-32 mx-10 lg:mx-20">
-          <section className="flex flex-col justify-between lg:flex-row lg:items-start">
+          <section className="flex flex-col justify-between lg:flex-row lg:items-center">
             <div className="flex flex-col lg:w-full">
               <h1 className="text-3xl font-semibold">Item {index + 1}</h1>
               {order.cartItems.map((item, index) => (

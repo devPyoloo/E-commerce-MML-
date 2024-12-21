@@ -1,7 +1,6 @@
 import {
   createBrowserRouter,
   createRoutesFromChildren,
-  Navigate,
   Route,
   RouterProvider,
 } from "react-router-dom";
@@ -19,13 +18,18 @@ import LoginForm from "./pages/LoginPage/LoginForm";
 import RegisterForm from "./pages/LoginPage/RegisterForm";
 import ProtectedRoute from "./layouts/ProtectedRoute";
 import ViewOrders from "./pages/ViewOrders";
+import AdminDashboard from "./pages/AdminDashboard";
+import LogoutForm from "./pages/LoginPage/LogoutForm";
 
 const router = createBrowserRouter(
   createRoutesFromChildren(
     <Route path="/" element={<RootLayer />}>
       <Route path="login" element={<LoginForm />} />
       <Route path="register" element={<RegisterForm />} />
+      <Route path="logout" element={<LogoutForm />} />
       <Route index element={<Home />} />
+
+      <Route path="admin-dashboard" element={<AdminDashboard />} />
 
       <Route path="products/:category" element={<ProductsLayer />}>
         <Route index element={<Products />} />

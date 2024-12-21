@@ -79,6 +79,7 @@ export const useStore = create(
         }),
 
       clearCart: () => set({ cart: [] }),
+      setTotal: () => set({total: 0}),
 
       addtoFavourite: (product) =>
         set((state) => {

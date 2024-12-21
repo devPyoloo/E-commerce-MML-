@@ -9,17 +9,14 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "../store/useAuthStore";
 import api from "../utils/apiInterceptors";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PK);
 
 function CheckoutComponent({ clientSecret, subTotal }) {
-  const { cart, clearCart } = useStore();
+  const { cart, clearCart, setTotal } = useStore();
   const navigate = useNavigate();
-  const { accessToken } = useAuthStore.getState(); 
 
 
   const [checkoutDetails, setCheckoutDetails] = useState({
@@ -81,6 +78,7 @@ function CheckoutComponent({ clientSecret, subTotal }) {
         );
 
         clearCart();
+        setTotal();
         navigate(`/payment-success/${paymentIntent.id.toString()}`);
       }
     } catch (error) {
