@@ -1,6 +1,5 @@
 🚀 E-commerce MML — Cosmetics Online Store
 
-[Live Demo]([url](https://e-commerce-mml.vercel.app/))
 
 Technologies: React, Spring Boot, PostgreSQL, Stripe API, JPA, Hibernate, Spring Security, JWT
 
