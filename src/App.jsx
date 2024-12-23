@@ -47,6 +47,8 @@ const router = createBrowserRouter(
       </Route>
 
       <Route path="add-product" element={<AddProduct />} />
+      <Route path="admin-dashboard" element={<AdminDashboard />} />
+
     </Route>
   )
 );
