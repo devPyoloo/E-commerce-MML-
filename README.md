@@ -1,8 +1,18 @@
-# React + Vite
+🚀 E-commerce MML — Cosmetics Online Store
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+Technologies: React, Spring Boot, PostgreSQL, Stripe API, JPA, Hibernate, Spring Security, JWT
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+📌 Key Features:
+
+🛒 Full-Stack E-commerce Platform: Built a robust platform enabling smooth online shopping experiences.
+
+🔒 Secure Payment Integration: Implemented Stripe API for secure payment processing.
+
+⚡ Optimized Data Fetching: Utilized React Query for efficient API handling.
+
+📦 State Management: Managed application state seamlessly with Zustand.
+
+🔄 RESTful APIs: Ensured seamless front-end and back-end communication.
+
+🗄️ Database Integration: Leveraged Spring Data JPA and PostgreSQL for reliable database operations.
