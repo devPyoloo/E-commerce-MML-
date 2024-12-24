@@ -44,10 +44,10 @@ export default function Vieworders() {
 
 
   return (
-    <>
+    <section className="lg:pt-32">
       {orders.map((order, index) => (
-        <div key={order.stripePaymentIntentId} className="lg:mb-40 pt-20 lg:pt-32 mx-10 lg:mx-20">
-          <section className="flex flex-col justify-between lg:flex-row lg:items-center">
+        <div key={order.stripePaymentIntentId} className="lg:mb-40 pt-0 border-b-2 border-b-lightgray/15 mx-10 lg:mx-20">
+          <main className="flex flex-col justify-between lg:flex-row lg:items-center">
             <div className="flex flex-col lg:w-full">
               <h1 className="text-3xl font-semibold">Item {index + 1}</h1>
               {order.cartItems.map((item, index) => (
@@ -82,7 +82,7 @@ export default function Vieworders() {
               ))}
             </div>
 
-            <aside className="bg-extraLightGray border border-lightgray/15 p-4 rounded-lg mt-10 lg:w-full lg:mt-0">
+            <aside className="bg-extraLightGray border mb-10 border-lightgray/15 p-4 rounded-lg mt-10 lg:w-full lg:mt-0">
               <div className="flex flex-col gap-4 text-base lg:text-xl">
                 <h1 className="text-2xl font-medium">Order Summary</h1>
 
@@ -107,7 +107,7 @@ export default function Vieworders() {
               </div>
 
             </aside>
-          </section>
+          </main>
         </div>
       // ) : (
       //   <div className="flex justify-center items-center h-96 w-full">
@@ -141,6 +141,6 @@ export default function Vieworders() {
 
                 <button className=""></button>
               </div>
-    </>
+    </section>
   );
 }

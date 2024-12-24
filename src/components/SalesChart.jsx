@@ -28,14 +28,17 @@ const SalesChart = () => {
   // Initialize months and revenues with default values (0)
   let months = Array.from({ length: 12 }, (_, i) => i + 1); // [1, 2, 3, ..., 12]
   let revenues = Array(12).fill(0); // Set all months' revenues to 0 by default
-  let monthlyTotal = Array(12).fill(0); // Set all months' totals to 0 by default
+  let monthlyCount = Array(12).fill(0); // Set all months' totals to 0 by default
 
   // Map the fetched data to the appropriate months, revenue, and total values
-  data.forEach((item) => {
+  data?.forEach((item) => {
     const monthIndex = item.month - 1; // Adjust for zero-based index
     revenues[monthIndex] = item.monthlyRevenue; // Set revenue for the month
-    monthlyTotal[monthIndex] = item.total; // Set total for the month
+    monthlyCount[monthIndex] = item.monthlyCount; // Set total for the month
   });
+
+  
+  
 
   const chartOptions = {
     chart: {
@@ -86,14 +89,14 @@ const SalesChart = () => {
     },
     {
       name: 'Monthly Total',
-      data: monthlyTotal,
+      data: monthlyCount,
     },
   ];
 
   return (
     <div>
       <h2 className="text-xl font-semibold mb-4">Sales Overview</h2>
-      <ReactApexChart options={chartOptions} series={series} type="bar" height={350} />
+      <ReactApexChart options={chartOptions} series={series} type="bar" height={250} />
     </div>
   );
 };
