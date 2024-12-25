@@ -1,5 +1,5 @@
 import ReactApexChart from 'react-apexcharts';
-import api from '../utils/apiInterceptors';
+import api from '../../utils/apiInterceptors';
 import { useQuery } from '@tanstack/react-query';
 
 const fetchMonthlyRevenueData = async () => {
@@ -15,7 +15,7 @@ const fetchMonthlyRevenueData = async () => {
   }
 }
 
-const SalesChart = () => {
+const MonthlySalesChart = () => {
 
   const { data } = useQuery({
     queryKey: ["salesData"],
@@ -48,7 +48,7 @@ const SalesChart = () => {
     plotOptions: {
       bar: {
         horizontal: false,
-        columnWidth: '55%',
+        columnWidth: '85%',
         endingShape: 'rounded',
       },
     },
@@ -94,11 +94,11 @@ const SalesChart = () => {
   ];
 
   return (
-    <div>
-      <h2 className="text-xl font-semibold mb-4">Sales Overview</h2>
-      <ReactApexChart options={chartOptions} series={series} type="bar" height={250} />
+    <div className="bg-white drop-shadow-xl p-6 col-span-2">
+      <h2 className="text-2xl font-bold mb-4">Monthly Sales</h2>
+      <ReactApexChart options={chartOptions} series={series} type="bar" height={350} />
     </div>
   );
 };
 
-export default SalesChart;
+export default MonthlySalesChart;

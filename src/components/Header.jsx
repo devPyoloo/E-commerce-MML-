@@ -74,7 +74,6 @@ export default function Header({ aboutRef }) {
   const profileVariants = {
     hidden: {
       x: "100%",
-      height: 0,
       opacity: 0,
       transition: { duration: 0.2 },
     },
@@ -82,9 +81,25 @@ export default function Header({ aboutRef }) {
       x: "0%",
       height: "100vh",
       opacity: 1,
-      transition: { duration: 0.1 },
+      transition: { duration: 0.3 },
     },
   };
+
+  const adminVariants = {
+    hidden: {
+      x: "-100%", // Start fully off-screen to the left
+      height: "100vh",
+      opacity: 0,
+      transition: { duration: 0.3, ease: "easeInOut" },
+    },
+    visible: {
+      x: "-65%", // Slide fully into view
+      height: "100vh",
+      opacity: 1,
+      transition: { duration: 0.3, ease: "easeInOut" },
+    },
+  };
+  
   return (
     <header className="fixed top-0 left-0 right-0 group flex justify-center items-center z-20">
       <div
@@ -217,7 +232,120 @@ export default function Header({ aboutRef }) {
           onScroll.showNav ? "opacity-100" : "opacity-0"
         } mt-7 w-full md:flex items-center justify-center space-x-40 font-lora text-xl px-5 pb-8 font-medium text-lightblack z-10 hidden`}
       >
-        <NavLink to={"/"}>Home</NavLink>
+        {/* HAMBURGER MENU TOGGLE */}
+        <button
+          className="text-3xl lg:text-5xl z-10"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <motion.div
+            initial={{ rotate: 0 }}
+            animate={{ rotate: menuOpen ? 90 : 0 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
+          >
+            {menuOpen ? (
+              <HiOutlineX className={`${menuOpen} text-extraLightGray`} />
+            ) : (
+              <HiOutlineMenu />
+            )}
+          </motion.div>
+        </button>
+
+        {roles.includes("ROLE_ADMIN") ? (
+          <AnimatePresence>
+            {menuOpen && (
+              <motion.div
+              key="menu"
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              variants={adminVariants}
+              className="absolute flex flex-col items-start pl-8 pt-20 gap-y-8 top-0 left-0 bottom-0 w-64 bg-lightblack text-extraLightGray font-light shadow-lg"
+            >
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 260,
+                    damping: 20,
+                    delay: 0,
+                  }}
+                >
+                  <NavLink
+                    className="hover:border-b-2"
+                    onClick={() => setMenuOpen((prev) => !prev)}
+                    to={"/"}
+                  >
+                    Profile Overview
+                  </NavLink>
+                </motion.div>
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 260,
+                    damping: 20,
+                    delay: 0.1,
+                  }}
+                >
+                  <NavLink
+                    to={"view-orders"}
+                    className="hover:border-b-2"
+                    onClick={() => {
+                      setProfileOpen((prev) => !prev);
+                      scrollToAbout;
+                    }}
+                  >
+                    View Orders
+                  </NavLink>
+                </motion.div>
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 260,
+                    damping: 20,
+                    delay: 0.2,
+                  }}
+                >
+                  <NavLink
+                    className="hover:border-b-2"
+                    onClick={() => setMenuOpen((prev) => !prev)}
+                    to={"admin-dashboard"}
+                  >
+                    Dashboard
+                  </NavLink>
+                </motion.div>
+
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 260,
+                    damping: 20,
+                    delay: 0.2,
+                  }}
+                >
+                  <NavLink
+                    to={"logout"}
+                    className="hover:border-b-2"
+                    onClick={() => {
+                      setProfileOpen((prev) => !prev);
+                      setIsOpen(true);
+                    }}
+                  >
+                    Logout
+                  </NavLink>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        ) : (
+          <NavLink to={"/"}>Home</NavLink>
+        )}
         <NavLink to={"about"}>About us</NavLink>
         <img
           src="https://res.cloudinary.com/du1mw6ozf/image/upload/v1733220599/logo_spm0hd.png"
@@ -285,6 +413,7 @@ export default function Header({ aboutRef }) {
             )}
           </NavLink>
 
+          {roles.includes("ROLE_USER") && (
           <button
             onClick={() => setProfileOpen(!profileOpen)}
             className={`relative z-10`}
@@ -300,6 +429,7 @@ export default function Header({ aboutRef }) {
               </span>
             )}
           </button>
+          )}
 
           {/* ANIMATED PROFILE NAV */}
           <AnimatePresence>
